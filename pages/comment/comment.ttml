@@ -1,0 +1,20 @@
+<view class="comment">
+  <view class="userprofile">
+    <image class="avatar" src="{{ avatar }}"></image>
+    <view class="userinfo">
+      <text class="username">{{ username }}</text>
+    </view>
+  </view>
+  <text class="content">{{ content }}</text>
+
+  <view class="action-bar">
+    <view class="like-reply-section">
+      <view class="like-section" bindtap="handleLike">
+        <image class="like-icon" src="{{ isLiked==1? './liked.png' : './like.png' }}"></image>
+        <text class="like-count">{{ likeCount }}</text>
+      </view>
+      <text class="reply-button" bindtap="handleReply">回复</text>
+    </view>
+    <view class="timestamp">{{ timestamp }}</view>
+  </view>
+</view>

@@ -1,0 +1,14 @@
+<view class="bottom-navbar">
+  <view class="nav-item" bindtap="handleCheckIn">
+    <image class="nav-icon" src="./checkin.png" />
+    <text class="nav-text">开工</text>
+  </view>
+  <view class="nav-item center-item" bindtap="handleSearch">
+    <image class="nav-icon" src="./newtopic.png"></image>
+    <text class="nav-text">发帖</text>
+  </view>
+  <view class="nav-item" bindtap="handleProfile">
+    <image class="nav-icon" src="./me.png" />
+    <text class="nav-text">我的</text>
+  </view>
+</view>
