@@ -1,11 +1,16 @@
 App({
+  username: "",
+  avatar: "",
   onLaunch: function () {
+    var that = this;
     tt.login({
       success: function () {
         tt.getUserInfo({
-          withCredentials: false,
+          withCredentials: true,
           success(res) {
-            console.log(JSON.stringify(res));
+            const data = res.userInfo;
+            that.username = data.nickName;
+            that.avatar = data.avatarUrl
           },
           fail(res) {
             console.log(`getUserInfo fail: ${JSON.stringify(res)}`);
@@ -13,5 +18,10 @@ App({
         });
       }
     });
-  }
+  },
+  onPageNotFound(res) {
+    tt.redirectTo({
+      url: 'pages/index/index'
+    })
+  },
 })

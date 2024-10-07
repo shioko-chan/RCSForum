@@ -10,7 +10,11 @@ Page({
 
   sendHello: function () {
     tt.request({
-      url: "http://127.0.0.1:5000/fuck",
+      url: "http://127.0.0.1:5000/checkin",
+      method: "POST",
+      data: {
+        foo: "hello",
+      },
       success: res => { console.log(res) }
     });
   },
@@ -21,7 +25,7 @@ Page({
 
   handleCheckIn: function () {
     if (!this.data.isActive) {
-      console.log(this.sendHello());
+      this.sendHello();
       this.startTimer();
     }
     else {

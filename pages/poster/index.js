@@ -3,7 +3,6 @@ Page({
 
   },
   onLoad: function () {
-    console.log('Welcome to Mini Code');
 
     // tt.request({
     //   url: "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal",

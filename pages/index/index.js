@@ -6,7 +6,6 @@ Page({
     }
   },
   onLoad: function () {
-    console.log('Welcome to Mini Code');
     // tt.request({
     //   url: "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal",
     //   method: "POST",
@@ -21,10 +20,6 @@ Page({
     //     console.log(res, "fail");
     //   }
     // })
-    tt.request({
-      url: "http://127.0.0.1:5000/fuck",
-      success: res => { console.log(res) }
-    });
   },
   handleEmoji: function () {
     this.setData({ showEmojiArea: !this.data.showEmojiArea });

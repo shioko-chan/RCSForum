@@ -1,10 +1,9 @@
 <view class="user-info">
   <view class="avatar-container">
-    <image class="avatar" src="avatar.png" alt="User Avatar" />
+    <image class="avatar" src="{{ avatar }}" />
   </view>
   <view class="user-details">
-    <view class="username">John Doe</view>
-    <view class="unread-message">Unread messages: <span id="unread-count">3</span></view>
+    <view class="username">{{ username }}</view>
   </view>
 </view>
 <navbar></navbar>
