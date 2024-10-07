@@ -3,7 +3,7 @@
     <image class="nav-icon" src="./checkin.png" />
     <text class="nav-text">开工</text>
   </view>
-  <view class="nav-item center-item" bindtap="handleSearch">
+  <view class="nav-item center-item" bindtap="handleNewTopic">
     <image class="nav-icon" src="./newtopic.png"></image>
     <text class="nav-text">发帖</text>
   </view>

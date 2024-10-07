@@ -1,0 +1,45 @@
+.user-info {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+}
+
+.avatar-container {
+    margin-right: 15px;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #007bff;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.unread-message {
+    margin-top: 8px;
+    font-size: 16px;
+    color: #888;
+}
+
+.unread-message span {
+    font-weight: bold;
+    color: #ff6347;
+}

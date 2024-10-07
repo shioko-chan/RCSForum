@@ -1,0 +1,10 @@
+<view class="checkin-page {{ isActive ? 'active' : 'inactive' }}">
+  <view class="checkin-button" bindtap="handleCheckIn">
+    {{ displayText }}
+  </view>
+  <view class="ocean">
+    <view class="wave"></view>
+    <view class="deep-water"></view>
+  </view>
+</view>
+<navbar></navbar>

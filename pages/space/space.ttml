@@ -1,0 +1,10 @@
+<view class="user-info">
+  <view class="avatar-container">
+    <image class="avatar" src="avatar.png" alt="User Avatar" />
+  </view>
+  <view class="user-details">
+    <view class="username">John Doe</view>
+    <view class="unread-message">Unread messages: <span id="unread-count">3</span></view>
+  </view>
+</view>
+<navbar></navbar>

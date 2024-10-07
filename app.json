@@ -1,12 +1,15 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/space/space",
+    "pages/checkin/checkin"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Gadget",
-    "navigationBarTextStyle": "black"
+    "navigationBarTitleText": "RCSForum",
+    "navigationBarTextStyle": "black",
+    "pageOrientation": "portrait"
   },
   "newFramework": {
     "enabled": true,

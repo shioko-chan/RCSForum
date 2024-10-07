@@ -1,0 +1,103 @@
+.checkin-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.checkin-button {
+    width: 300rpx;
+    height: 300rpx;
+    border-radius: 50%;
+    background-color: #28a745;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48rpx;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+
+.inactive .checkin-button {
+    background-color: #28a745;
+}
+
+.active .checkin-button {
+    background-color: #007bff;
+}
+
+.ocean {
+    position: fixed;
+    width: 750rpx;
+    bottom: 0rpx;
+    background-color: #007bff;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.deep-water {
+    width: 100%;
+    height: 250rpx;
+}
+
+.wave {
+    position: relative;
+    width: 750rpx;
+    height: 750rpx;
+    overflow: hidden;
+}
+
+.inactive .ocean {
+    background-color: #28a745;
+}
+
+.active .ocean {
+    background-color: #007bff;
+}
+
+.wave::before,
+.wave::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 500%;
+    height: 500%;
+    background-color: #f0f0f0;
+    transform: translateX(-50%);
+    animation: rotate 15s linear infinite;
+}
+
+.wave::before {
+    bottom: 10%;
+    opacity: .5;
+    border-radius: 47%;
+}
+
+.wave::after {
+    bottom: 15%;
+    border-radius: 45%;
+}
+
+.inactive .wave::before,
+.inactive .wave::after {
+    animation-play-state: paused;
+}
+
+.active .wave::before,
+.active .wave::after {
+    animation-play-state: running;
+}
+
+@keyframes rotate {
+    from {
+        transform: translateX(-50%) rotateZ(0deg);
+    }
+
+    to {
+        transform: translateX(-50%) rotateZ(360deg);
+    }
+}
