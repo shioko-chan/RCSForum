@@ -4,6 +4,20 @@
     "pages/space/space",
     "pages/checkin/checkin"
   ],
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index"
+      },
+      {
+        "pagePath": "pages/space/space"
+      },
+      {
+        "pagePath": "pages/checkin/checkin"
+      }
+    ],
+    "display": "none"
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
@@ -12,7 +26,7 @@
     "pageOrientation": "portrait"
   },
   "newFramework": {
-    "enabled": true,
+    "enabled": false,
     "minimumSupportedVersion": "5.12"
   }
 }

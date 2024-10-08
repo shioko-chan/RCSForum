@@ -6,27 +6,55 @@ Page({
     m: 0,
     s: 0,
     intervalId: null,
+    checkedIn: false,
   },
 
   sendHello: function () {
+    var that = this;
     tt.request({
       url: "http://127.0.0.1:5000/checkin",
       method: "POST",
       data: {
         foo: "hello",
       },
-      success: res => { console.log(res) }
+      success: res => {
+        that.startTimer();
+      },
+      fail: res => {
+        tt.showModal({
+          title: "连接服务器失败",
+          confirmText: "确认",
+          showCancel: false,
+        });
+      },
     });
   },
 
   keepAlive: function () {
+    var that = this;
+    tt.request({
+      url: "http://127.0.0.1:5000/checkin",
+      method: "POST",
+      data: {
+        foo: "hello",
+      },
+      success: res => {
 
+      },
+      fail: res => {
+        tt.showModal({
+          title: "已断开与服务器的连接",
+          confirmText: "确认",
+          showCancel: false,
+        });
+        that.stopTimer();
+      },
+    });
   },
 
   handleCheckIn: function () {
     if (!this.data.isActive) {
       this.sendHello();
-      this.startTimer();
     }
     else {
       this.stopTimer();
@@ -56,10 +84,15 @@ Page({
         s += 1;
       }
       if (m >= 60) {
+        tt.showModal({
+          title: "工作一小时了，休息一下吧",
+          confirmText: "确认",
+          showCancel: false,
+        });
         m = 0;
         h += 1;
       }
-      if (s == 0 && m % 5 == 0) {
+      if (s == 0) {
         this.keepAlive();
       }
       this.setData({

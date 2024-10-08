@@ -7,7 +7,7 @@ Component({
     },
     methods: {
         handleCheckIn: function () {
-            tt.redirectTo({
+            tt.switchTab({
                 "url": "../checkin/checkin", success(res) {
                     console.log(JSON.stringify(res));
                 },
@@ -17,7 +17,7 @@ Component({
             });
         },
         handleProfile: function () {
-            tt.redirectTo({
+            tt.switchTab({
                 "url": "../space/space", success(res) {
                     console.log(JSON.stringify(res));
                 },
