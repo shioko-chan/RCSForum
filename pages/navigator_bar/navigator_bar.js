@@ -1,9 +1,13 @@
 Component({
     properties: {
-
+        navItem1: { type: Boolean, value: false },
+        navItem2: { type: Boolean, value: false },
     },
     data: {
-        defaultStates: {}
+        defaultStates: {},
+    },
+    attached: function () {
+        console.log(this.data.navItem1);
     },
     methods: {
         handleCheckIn: function () {
@@ -19,6 +23,16 @@ Component({
         handleProfile: function () {
             tt.switchTab({
                 "url": "../space/space", success(res) {
+                    console.log(JSON.stringify(res));
+                },
+                fail(res) {
+                    console.log(`navigateTo fail: ${JSON.stringify(res)}`);
+                }
+            });
+        },
+        handleMainPage: function () {
+            tt.switchTab({
+                "url": "../index/index", success(res) {
                     console.log(JSON.stringify(res));
                 },
                 fail(res) {

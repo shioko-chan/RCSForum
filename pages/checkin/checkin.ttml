@@ -7,4 +7,4 @@
     <view class="deep-water"></view>
   </view>
 </view>
-<navbar></navbar>
+<navbar navItem1="{{ navItem1 }}" navItem2="{{ navItem2 }}"></navbar>

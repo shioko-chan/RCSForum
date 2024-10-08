@@ -5,7 +5,7 @@ App({
     tt.hideTabBar({
       animation: false,
       success(res) {
-        console.log(JSON.stringify(res));
+        // console.log(JSON.stringify(res));
       },
       fail(res) {
         console.log("hideTabBar fail");
@@ -20,6 +20,7 @@ App({
             const data = res.userInfo;
             that.username = data.nickName;
             that.avatar = data.avatarUrl
+            console.log(data);
           },
           fail(res) {
             console.log(`getUserInfo fail: ${JSON.stringify(res)}`);
@@ -29,7 +30,7 @@ App({
     });
     tt.getConnectedWifi({
       success(res) {
-        console.log(JSON.stringify(res));
+        // console.log(JSON.stringify(res));
       },
       fail(res) {
         console.log(`getConnectedWifi fail: ${JSON.stringify(res)}`);
