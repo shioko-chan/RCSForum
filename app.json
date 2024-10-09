@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/space/space",
-    "pages/checkin/checkin"
+    "pages/checkin/checkin",
+    "pages/newtopic/newtopic"
   ],
   "tabBar": {
     "list": [
@@ -14,6 +15,9 @@
       },
       {
         "pagePath": "pages/checkin/checkin"
+      },
+      {
+        "pagePath": "pages/newtopic/newtopic"
       }
     ],
     "display": "none"

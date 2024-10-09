@@ -1,0 +1,1 @@
+<navbar centerItem="{{ centerItem }}"></navbar>

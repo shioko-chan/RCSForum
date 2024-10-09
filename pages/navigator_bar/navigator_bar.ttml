@@ -7,9 +7,13 @@
     <image class="nav-icon" src="./home.png" />
     <text class="nav-text">返回主页</text>
   </view>
-  <view class="nav-item center-item" bindtap="handleNewTopic">
+  <view class="nav-item center-item" hidden="{{ centerItem }}" bindtap=" handleNewTopic">
     <image class="nav-icon" src="./newtopic.png"></image>
     <text class="nav-text">发帖</text>
+  </view>
+  <view class="nav-item center-item" hidden="{{ !centerItem }}" bindtap=" handleMainPage">
+    <image class="nav-icon" src="./home.png"></image>
+    <text class="nav-text">返回主页</text>
   </view>
   <view class="nav-item" hidden="{{ navItem2 }}" bindtap="handleProfile">
     <image class="nav-icon" src="./me.png" />

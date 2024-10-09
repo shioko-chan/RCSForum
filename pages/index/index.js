@@ -1,8 +1,6 @@
 Page({
   data: {
     showEmojiArea: false,
-    navItem1: false,
-    navItem2: false,
   },
   onLoad: function () {
     // tt.request({

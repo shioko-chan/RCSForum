@@ -8,7 +8,6 @@ Page({
     intervalId: null,
     checkedIn: false,
     navItem1: true,
-    navItem2: false,
   },
 
   sendHello: function () {
