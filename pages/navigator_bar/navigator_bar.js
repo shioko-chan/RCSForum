@@ -7,14 +7,11 @@ Component({
     data: {
         defaultStates: {},
     },
-    attached: function () {
-        console.log(this.data.navItem1);
-    },
     methods: {
         handleCheckIn: function () {
             tt.switchTab({
                 "url": "../checkin/checkin", success(res) {
-                    console.log(JSON.stringify(res));
+                    // console.log(JSON.stringify(res));
                 },
                 fail(res) {
                     console.log(`navigateTo fail: ${JSON.stringify(res)}`);

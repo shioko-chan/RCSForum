@@ -1,88 +1,56 @@
-.bottom-container {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+.container {
+    width: 750rpx;
+    padding: 16rpx;
 }
 
-.emoji-container {
-    width: 100%;
-    display: flex;
-    justify-content: start;
-    padding: 10rpx 20rpx;
-    background-color: #ffffff;
-    border-top: 1rpx solid #ddd;
-    box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    overflow-x: auto;
+.input-section {
+    width: 718rpx;
+    margin-bottom: 45rpx;
 }
 
-.reply-container {
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    align-items: center;
+.title-input {
+    width: 696rpx;
     padding: 10rpx;
-    background-color: #f9f9f9;
-    border-top: 1rpx solid #ddd;
-    box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.1);
+    border: 1rpx solid #ccc;
+    border-radius: 4rpx;
+    margin-bottom: 20rpx;
 }
 
-.icon-bar {
-    width: 100%;
+.content-input {
+    width: 696rpx;
+    padding: 10rpx;
+    height: 400rpx;
+    border: 1rpx solid #ccc;
+    border-radius: 4rpx;
+}
+
+.plus-sign {
+    font-size: 60rpx;
+    color: #999;
+}
+
+.image-preview-section {
+    width: 718rpx;
     display: flex;
-    justify-content: start;
-    padding: 10rpx 20rpx;
-    background-color: #f9f9f9;
-    border-top: 1rpx solid #ddd;
-    box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
 }
 
-.reply-box {
-    flex: 1;
+.upload-btn {
+    width: 180rpx;
+    height: 180rpx;
+    background-color: #f0f0f0;
     display: flex;
-    box-sizing: border-box;
-    border: 2rpx solid #3c3c3c;
-    border-radius: 10rpx;
-    padding: 20rpx;
-    font-size: 28rpx;
-    line-height: 36rpx;
-    background-color: #ffffff;
-    color: #333333;
-    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
-    resize: none;
-    outline: none;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4rpx;
+    margin-right: 10rpx;
+    margin-bottom: 10rpx;
 }
 
-.reply-box:focus {
-    border-color: #3c3c3c;
-    box-shadow: 0 0 10rpx rgba(60, 60, 60, 0.5);
-}
-
-.send-button {
-    box-sizing: border-box;
-    text-align: center;
-    margin-left: 10rpx;
-    background-color: #345678;
-    color: #ffffff;
-    border-radius: 10rpx;
-    font-size: 26rpx;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
-}
-
-.emoji {
-    font-size: 40rpx;
-    margin-right: 20rpx;
-    cursor: pointer;
-    user-select: none;
-}
-
-.emoji-icon,
-.image-icon {
-    width: 60rpx;
-    height: 60rpx;
-    margin-right: 20rpx;
-    cursor: pointer;
+.preview-image {
+    width: 180rpx;
+    height: 180rpx;
+    border-radius: 4rpx;
+    margin-right: 10rpx;
+    margin-bottom: 10rpx;
 }

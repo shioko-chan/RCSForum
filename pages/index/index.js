@@ -21,5 +21,8 @@ Page({
   handleEmoji: function () {
     this.setData({ showEmojiArea: !this.data.showEmojiArea });
     console.log(123);
+  },
+  handleScrollUpdate: function () {
+    console.log("scrolled");
   }
 })

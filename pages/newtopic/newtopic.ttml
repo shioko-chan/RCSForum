@@ -1,1 +1,16 @@
+<view class="container">
+  <view class="input-section">
+    <input class="title-input" placeholder="请输入标题" />
+    <textarea class="content-input" placeholder="请输入内容"></textarea>
+  </view>
+  <view class="image-preview-section">
+    <view class="upload-btn" bindtap="chooseImage">
+      <text class="plus-sign">+</text>
+    </view>
+    <block tt:for="{{ images }}" tt:key="*this">
+      <image class="preview-image" src="{{ item }}" mode="aspectFit" />
+    </block>
+  </view>
+</view>
+
 <navbar centerItem="{{ centerItem }}"></navbar>

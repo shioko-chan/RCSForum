@@ -28,6 +28,16 @@ App({
         });
       }
     });
+    tt.setWindowSize({
+      windowWidth: 400,
+      windowHeight: 800,
+      success(res) {
+        // console.log('setWindowSize success', res);
+      },
+      fail(res) {
+        console.log('setWindowSize fail', res);
+      },
+    });
     tt.getConnectedWifi({
       success(res) {
         // console.log(JSON.stringify(res));
