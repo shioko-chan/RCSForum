@@ -1,26 +1,26 @@
 <view class="bottom-navbar">
   <view class="nav-item" hidden="{{ navItem1 }}" bindtap="handleCheckIn">
-    <image class="nav-icon" src="./checkin.png" />
+    <image class="nav-icon" src="/assets/images/checkin.png" />
     <text class="nav-text">开工</text>
   </view>
   <view class="nav-item" hidden="{{ !navItem1 }}" bindtap="handleMainPage">
-    <image class="nav-icon" src="./home.png" />
+    <image class="nav-icon" src="/assets/images/home.png" />
     <text class="nav-text">返回主页</text>
   </view>
   <view class="nav-item center-item" hidden="{{ centerItem }}" bindtap="handleNewTopic">
-    <image class="nav-icon" src="./newtopic.png"></image>
+    <image class="nav-icon" src="/assets/images/newtopic.png"></image>
     <text class="nav-text">发帖</text>
   </view>
   <view class="nav-item center-item" hidden="{{ !centerItem }}" bindtap="handleMainPage">
-    <image class="nav-icon" src="./home.png"></image>
+    <image class="nav-icon" src="/assets/images/home.png"></image>
     <text class="nav-text">返回主页</text>
   </view>
   <view class="nav-item" hidden="{{ navItem2 }}" bindtap="handleProfile">
-    <image class="nav-icon" src="./me.png" />
+    <image class="nav-icon" src="/assets/images/me.png" />
     <text class="nav-text">我的</text>
   </view>
   <view class="nav-item" hidden="{{ !navItem2 }}" bindtap="handleMainPage">
-    <image class="nav-icon" src="./home.png" />
+    <image class="nav-icon" src="/assets/images/home.png" />
     <text class="nav-text">返回主页</text>
   </view>
 </view>

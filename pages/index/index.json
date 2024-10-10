@@ -1,6 +1,6 @@
 {
     "usingComponents": {
-        "comment": "../comment/comment",
+        "poster": "../poster/poster",
         "bottom-bar": "../bottom_bar/bottom_bar",
         "navbar": "../navigator_bar/navigator_bar"
     }

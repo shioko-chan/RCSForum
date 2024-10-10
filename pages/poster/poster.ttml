@@ -7,13 +7,15 @@
   </view>
   <text class="title">{{ title }}</text>
   <text class="content">{{ content }}</text>
-  <view class="image-box">
-    <image tt:for="{{ images }}" />
+  <view class="image-display-container">
+    <block tt:for="{{ images }}">
+      <image class="image" src="{{ item }}" mode="aspectFill" bindtap="previewImage" data-index="{{ index }}" />
+    </block>
   </view>
   <view class="action-bar">
     <view class="like-reply-section">
       <view class="like-section" bindtap="handleLike">
-        <image class="like-icon" src="{{ isLiked==1? './liked.png' : './like.png' }}" />
+        <image class="like-icon" src="{{ isLiked==1? '/assets/images/liked.png' : '/assets/images/like.png' }}" />
         <text class="like-count">{{ likeCount }}</text>
       </view>
       <text class="reply-button" bindtap="handleReply">回复</text>

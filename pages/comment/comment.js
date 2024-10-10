@@ -6,19 +6,19 @@ Component({
     },
     username: {
       type: String,
-      value: "匿名用户",
+      value: "Anonymous",
     },
     timestamp: {
       type: String,
-      value: "2024-10-5",
+      value: "2024-10-5 18:00:00",
     },
     likeCount: {
       type: Number,
-      value: 100,
+      value: 0,
     },
     avatar: {
       type: String,
-      value: "./test.jpg",
+      value: "/assets/images/anon.png",
     },
     isLiked: {
       type: Boolean,

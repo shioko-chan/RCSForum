@@ -8,7 +8,12 @@
       <text class="plus-sign">+</text>
     </view>
     <block tt:for="{{ images }}" tt:key="*this">
-      <image class="preview-image" src="{{ item }}" mode="aspectFit" />
+      <view class="image-view">
+        <image class="remove-btn" src="/assets/images/cancel.png" mode="aspectFill" bindtap="removeImage"
+          data-index="{{ index }}" />
+        <image class="preview-image" src="{{ item }}" mode="aspectFill" bindtap="previewImage"
+          data-index="{{ index }}" />
+      </view>
     </block>
   </view>
   <view style="height: 100rpx;"></view>

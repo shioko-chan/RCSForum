@@ -1,20 +1,11 @@
 <view>
   <scroll-view bindscrolltolower="handleScrollUpdate">
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
-    <comment></comment>
+    <poster></poster>
+    <poster></poster>
+    <poster></poster>
+    <poster></poster>
+    <poster></poster>
+    <poster></poster>
     <view style="height: 100rpx;">
   </scroll-view>
 </view>

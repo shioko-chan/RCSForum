@@ -12,7 +12,14 @@ Page({
     console.log(123);
   },
   chooseImage: function () {
-    var showToast = function () {
+    const allSettled = promises => Promise.all(
+      promises.map(
+        promise => promise
+          .then(value => ({ status: 'fulfilled', value }))
+          .catch(reason => ({ status: 'rejected', reason }))
+      )
+    );
+    const showToast = () => {
       tt.showToast({
         "title": "上传图片上限9张",
         "duration": 2000,
@@ -30,13 +37,13 @@ Page({
       showToast();
       return;
     }
-    var that = this;
+    const that = this;
     tt.chooseImage({
       count: 9,
       sourceType: ['album', 'camera'],
       success: (result) => {
-        let compressPromises = result.tempFilePaths.map((tempFilePath) => {
-          return new Promise((resolve, reject) => {
+        let compressPromises = result.tempFilePaths.map(
+          tempFilePath => new Promise((resolve, reject) => {
             tt.compressImage({
               src: tempFilePath,
               quality: 30,
@@ -49,9 +56,9 @@ Page({
                 reject(res);
               }
             });
-          });
-        });
-        Promise.allSettled(compressPromises).then((values) => {
+          })
+        );
+        allSettled(compressPromises).then((values) => {
           let shouldShowToast = false;
           values.forEach(({ status, value }) => {
             if (status !== 'fulfilled') { return; }
@@ -73,5 +80,15 @@ Page({
         console.log("select image failed", result);
       }
     });
+  },
+  previewImage: function (event) {
+    const index = event.currentTarget.dataset.index;
+    const imageList = this.data.images;
+    const currentImage = this.data.images[index];
+    tt.previewImage({
+      urls: imageList,
+      current: currentImage,
+      shouldShowSaveOption: false,
+    })
   }
 })

@@ -10,7 +10,7 @@
   <view class="action-bar">
     <view class="like-reply-section">
       <view class="like-section" bindtap="handleLike">
-        <image class="like-icon" src="{{ isLiked==1? './liked.png' : './like.png' }}" />
+        <image class="like-icon" src="{{ isLiked==1? '/assets/images/liked.png' : './like.png' }}" />
         <text class="like-count">{{ likeCount }}</text>
       </view>
       <text class="reply-button" bindtap="handleReply">回复</text>

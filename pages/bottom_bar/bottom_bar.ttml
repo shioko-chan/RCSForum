@@ -14,7 +14,7 @@
     <button class="send-button" bindtap="handleSend">发送</button>
   </view>
   <view class="icon-bar">
-    <image class="emoji-icon" src="./emoji.png" bindtap="handleEmoji"></image>
-    <image class="image-icon" src="./image.png" bindtap="handleImage"></image>
+    <image class="emoji-icon" src="/assets/images/emoji.png" bindtap="handleEmoji"></image>
+    <image class="image-icon" src="/assets/images/image.png" bindtap="handleImage"></image>
   </view>
 </view>
