@@ -8,33 +8,31 @@ Page({
     intervalId: null,
     checkedIn: false,
     navItem1: true,
+    isProcessing: false,
   },
 
   sendHello: function () {
-    var that = this;
-    tt.request({
-      url: "http://127.0.0.1:5000/checkin",
-      method: "POST",
-      data: {
-        foo: "hello",
-      },
-      success: res => {
-        that.startTimer();
-      },
-      fail: res => {
-        tt.showModal({
-          title: "连接服务器失败",
-          confirmText: "确认",
-          showCancel: false,
-        });
-      },
+    return new Promise((resolve, reject) => {
+      tt.request({
+        url: "http://192.168.1.100:5000/checkin",
+        method: "POST",
+        data: {
+          foo: "hello",
+        },
+        success: res => {
+          resolve();
+        },
+        fail: res => {
+          reject();
+        },
+      });
     });
   },
 
   keepAlive: function () {
     var that = this;
     tt.request({
-      url: "http://127.0.0.1:5000/checkin",
+      url: "http://192.168.1.100:5000/checkin",
       method: "POST",
       data: {
         foo: "hello",
@@ -54,8 +52,25 @@ Page({
   },
 
   handleCheckIn: function () {
+    if (this.data.isProcessing) {
+      return;
+    }
     if (!this.data.isActive) {
-      this.sendHello();
+      this.setData({ isProcessing: true });
+      this.sendHello()
+        .then(() => {
+          this.startTimer();
+        })
+        .catch(() => {
+          tt.showModal({
+            title: "连接服务器失败",
+            confirmText: "确认",
+            showCancel: false,
+          });
+        })
+        .finally(() => {
+          this.setData({ isProcessing: false });
+        });
     }
     else {
       this.stopTimer();

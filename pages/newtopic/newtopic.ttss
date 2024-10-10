@@ -31,26 +31,23 @@
 
 .image-preview-section {
     width: 718rpx;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10rpx;
 }
 
 .upload-btn {
-    width: 180rpx;
-    height: 180rpx;
+    width: 175rpx;
+    height: 175rpx;
     background-color: #f0f0f0;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 4rpx;
-    margin-right: 10rpx;
-    margin-bottom: 10rpx;
+    border-radius: 10rpx;
 }
 
 .preview-image {
-    width: 180rpx;
-    height: 180rpx;
-    border-radius: 4rpx;
-    margin-right: 10rpx;
-    margin-bottom: 10rpx;
+    width: 175rpx;
+    height: 175rpx;
+    border-radius: 10rpx;
 }

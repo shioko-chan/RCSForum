@@ -1,20 +1,22 @@
-<scroll-view bindscrolltolower="handleScrollUpdate">
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <comment></comment>
-  <view style="height: 100rpx;">
-</scroll-view>
+<view>
+  <scroll-view bindscrolltolower="handleScrollUpdate">
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <comment></comment>
+    <view style="height: 100rpx;">
+  </scroll-view>
+</view>
 <!-- <bottom-bar></bottom-bar> -->
 <navbar></navbar>

@@ -1,0 +1,90 @@
+.poster {
+    background-color: #ffffff;
+    border-radius: 10rpx;
+    padding: 20rpx;
+    margin: 20rpx 0;
+    box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.userprofile {
+    display: flex;
+    align-items: start;
+    margin-bottom: 15rpx;
+}
+
+.avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+}
+
+.userinfo {
+    margin-left: 25rpx;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 30rpx;
+}
+
+.title {
+    font-size: 32rpx;
+    font-weight: bold;
+    line-height: 48rpx;
+    margin-bottom: 20rpx;
+}
+
+.content {
+    font-size: 28rpx;
+    line-height: 40rpx;
+    margin-bottom: 20rpx;
+}
+
+.action-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15rpx;
+}
+
+.timestamp {
+    font-size: 22rpx;
+    color: #888888;
+    margin-right: 20rpx;
+}
+
+.like-reply-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+
+.like-section {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.like-icon {
+    width: 40rpx;
+    height: 40rpx;
+}
+
+.like-count {
+    font-size: 28rpx;
+    margin-left: 10rpx;
+    color: #333333;
+}
+
+.reply-button {
+    cursor: pointer;
+    padding: 10rpx 30rpx;
+    color: #333333;
+    border-radius: 5rpx;
+    font-size: 26rpx;
+    border: none;
+    outline: none;
+    margin-left: 15rpx;
+}

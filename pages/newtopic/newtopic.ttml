@@ -11,6 +11,7 @@
       <image class="preview-image" src="{{ item }}" mode="aspectFit" />
     </block>
   </view>
+  <view style="height: 100rpx;"></view>
 </view>
 
 <navbar centerItem="{{ centerItem }}"></navbar>

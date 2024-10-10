@@ -1,8 +1,0 @@
-<view class="reply-container">
-  <textarea class="reply-box" type="text" maxlength="1000" cursor-spacing="70" auto-height />
-  <button class="send-button" bindtap="handleSend">发送</button>
-</view>
-<view class="icon-bar">
-  <image class="emoji-icon" src="./emoji.png" bindtap="handleEmoji"></image>
-  <image class="image-icon" src="./image.png" bindtap="handleImage"></image>
-</view>

@@ -1,12 +1,15 @@
-<view class="comment">
+<view class="poster">
   <view class="userprofile">
     <image class="avatar" src="{{ avatar }}"></image>
     <view class="userinfo">
       <text class="username">{{ username }}</text>
     </view>
   </view>
+  <text class="title">{{ title }}</text>
   <text class="content">{{ content }}</text>
-
+  <view class="image-box">
+    <image tt:for="{{ images }}" />
+  </view>
   <view class="action-bar">
     <view class="like-reply-section">
       <view class="like-section" bindtap="handleLike">

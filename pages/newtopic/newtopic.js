@@ -53,16 +53,15 @@ Page({
         });
         Promise.allSettled(compressPromises).then((values) => {
           let shouldShowToast = false;
-          values.forEach((value) => {
-            console.log(value);
-            if (value.status === 'fulfilled') {
-              if (that.data.images.length < 9) {
-                that.data.images.push(value.value);
-              }
-              else {
-                shouldShowToast = true;
-              }
+          values.forEach(({ status, value }) => {
+            if (status !== 'fulfilled') { return; }
+            if (that.data.images.length < 9) {
+              that.data.images.push(value);
             }
+            else {
+              shouldShowToast = true;
+            }
+
           });
           if (shouldShowToast) {
             showToast();
