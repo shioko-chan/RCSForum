@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/space/space",
     "pages/checkin/checkin",
-    "pages/newtopic/newtopic"
+    "pages/newtopic/newtopic",
+    "pages/topic/topic"
   ],
   "tabBar": {
     "list": [
@@ -19,12 +20,10 @@
       {
         "pagePath": "pages/newtopic/newtopic"
       }
-    ],
-    "display": "none"
+    ]
   },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "RCSForum",
     "navigationBarTextStyle": "black",
     "pageOrientation": "portrait"

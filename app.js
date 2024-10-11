@@ -1,6 +1,6 @@
 App({
-  username: "",
-  avatar: "",
+  username: "Anonymous",
+  avatar: "/assets/images/anon.png",
   onLaunch: function () {
     tt.hideTabBar({
       animation: false,
@@ -13,30 +13,27 @@ App({
     });
     var that = this;
     tt.login({
-      success: function () {
-        tt.getUserInfo({
-          withCredentials: true,
-          success(res) {
-            const data = res.userInfo;
-            that.username = data.nickName;
-            that.avatar = data.avatarUrl
-            console.log(data);
-          },
-          fail(res) {
-            console.log(`getUserInfo fail: ${JSON.stringify(res)}`);
+      success: function (res) {
+        tt.request({
+          url: "http://192.168.1.100:5000/login",
+          method: "POST",
+          data: {
+            code: res.code
           }
         });
+        // tt.getUserInfo({
+        //   withCredentials: true,
+        //   success(res) {
+        //     const data = res.userInfo;
+        //     that.username = data.nickName;
+        //     that.avatar = data.avatarUrl
+        //     console.log(data);
+        //   },
+        //   fail(res) {
+        //     console.log(`getUserInfo fail: ${JSON.stringify(res)}`);
+        //   }
+        // });
       }
-    });
-    tt.setWindowSize({
-      windowWidth: 400,
-      windowHeight: 800,
-      success(res) {
-        // console.log('setWindowSize success', res);
-      },
-      fail(res) {
-        console.log('setWindowSize fail', res);
-      },
     });
     tt.getConnectedWifi({
       success(res) {

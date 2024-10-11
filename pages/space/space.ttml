@@ -1,6 +1,6 @@
 <view class="user-info">
   <view class="avatar-container">
-    <image class="avatar" src="{{ avatar }}" />
+    <image class="avatar" src="{{ avatar }}" mode="aspect-fill" />
   </view>
   <view class="user-details">
     <view class="username">{{ username }}</view>

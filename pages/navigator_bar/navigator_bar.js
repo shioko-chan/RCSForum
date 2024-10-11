@@ -6,6 +6,7 @@ Component({
     },
     data: {
         defaultStates: {},
+        height: 0,
     },
     methods: {
         handleCheckIn: function () {
