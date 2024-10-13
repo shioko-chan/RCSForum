@@ -19,20 +19,19 @@ App({
           method: "POST",
           data: {
             code: res.code
+          },
+          success: function (res) {
+            console.log(res);
+            that.avatar = res.data.avatar;
+            that.username = res.data.name;
+          },
+          fail: function (res) {
+            console.log("request backend login failed: ", res);
           }
         });
-        // tt.getUserInfo({
-        //   withCredentials: true,
-        //   success(res) {
-        //     const data = res.userInfo;
-        //     that.username = data.nickName;
-        //     that.avatar = data.avatarUrl
-        //     console.log(data);
-        //   },
-        //   fail(res) {
-        //     console.log(`getUserInfo fail: ${JSON.stringify(res)}`);
-        //   }
-        // });
+      },
+      fail: function (res) {
+        console.log("login failed: ", res);
       }
     });
     tt.getConnectedWifi({
