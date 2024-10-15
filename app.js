@@ -1,8 +1,44 @@
 App({
   username: "Anonymous",
   avatar: "/assets/images/anon.png",
-  url: "https://127.0.0.1",
-  onLaunch: function () {
+  url: "http://192.168.3.2:8000",
+  token: "",
+  login: function () {
+    var that = this;
+    return new Promise((resolve, reject) => {
+      tt.login({
+        success: function (res) {
+          tt.request({
+            url: `${that.url}/login`,
+            header: { "content-type": "application/json" },
+            method: "POST",
+            data: {
+              "code": res.code
+            },
+            success: function (res) {
+              if (res.data.status !== 0) {
+                console.log(res.data.status);
+                reject(); return;
+              }
+              that.avatar = res.data.avatar;
+              that.username = res.data.name;
+              that.token = res.header.authorization;
+              resolve();
+            },
+            fail: function (res) {
+              console.log("request backend login failed: ", res);
+              reject();
+            }
+          });
+        },
+        fail: function (res) {
+          console.log("login failed: ", res);
+          reject();
+        }
+      });
+    });
+  },
+  onLaunch: async function () {
     tt.hideTabBar({
       animation: false,
       success(res) {
@@ -12,36 +48,12 @@ App({
         console.log("hideTabBar fail");
       }
     });
-    var that = this;
-    tt.login({
-      success: function (res) {
-        tt.request({
-          url: "http://192.168.1.100:5000/login",
-          method: "POST",
-          data: {
-            code: res.code
-          },
-          success: function (res) {
-            console.log(res);
-            that.avatar = res.data.avatar;
-            that.username = res.data.name;
-          },
-          fail: function (res) {
-            console.log("request backend login failed: ", res);
-          }
-        });
-      },
-      fail: function (res) {
-        console.log("login failed: ", res);
-      }
-    });
-    tt.getConnectedWifi({
-      success(res) {
-        // console.log(JSON.stringify(res));
-      },
-      fail(res) {
-        console.log(`getConnectedWifi fail: ${JSON.stringify(res)}`);
-      }
+    this.login().catch(() => {
+      tt.showModal({
+        title: "连接服务器失败",
+        confirmText: "确认",
+        showCancel: false,
+      });
     });
   },
   onPageNotFound(res) {

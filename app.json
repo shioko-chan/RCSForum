@@ -32,5 +32,8 @@
   "newFramework": {
     "enabled": false,
     "minimumSupportedVersion": "5.12"
+  },
+  "networkTimeout": {  
+    "request": 3000  
   }
 }

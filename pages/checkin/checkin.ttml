@@ -1,4 +1,17 @@
-<view class="checkin-page {{ isActive ? 'active' : 'inactive' }}">
+<view class="sidebar {{ isSidebarOpen ? 'open' : 'closed' }}">
+  <view class="sidebar-title">🏆 本周排行榜(每周一04:00更新)</view>
+  <view class="sidebar-item" tt:for="{{ ranks }}">
+    <view class="image-view">
+      <image class="avatar" src="{{ item.avatar }}" mode="aspectFill" />
+      <view class="text-group">
+        <text class="name">{{ item.name }}</text>
+        <text class="time">{{ item.time }} min</text>
+      </view>
+    </view>
+  </view>
+</view>
+<image class="sidebar-button" mode="aspectFill" src="/assets/images/menu.png" bindtap="showSidebar" />
+<view class="checkin-page {{ isActive ? 'active' : 'inactive' }}" bindtap="hideSidebar">
   <view class="checkin-button" bindtap="handleCheckIn">
     {{ displayText }}
   </view>
