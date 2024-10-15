@@ -1,6 +1,7 @@
 App({
   username: "Anonymous",
   avatar: "/assets/images/anon.png",
+  url: "https://127.0.0.1",
   onLaunch: function () {
     tt.hideTabBar({
       animation: false,
