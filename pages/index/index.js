@@ -1,28 +1,56 @@
 Page({
   data: {
     showEmojiArea: false,
+    topic_list: [],
+    page: 0,
+    finished: false,
   },
   onLoad: function () {
-    // tt.request({
-    //   url: "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal",
-    //   method: "POST",
-    //   data: {
-    //     app_id: "cli_a67536fc8d7c900c",
-    //     app_secret: "jP6JiySRzOLy6TiZEjS6GcK4eAU4QnmI",
-    //   },
-    //   success: res => {
-    //     console.log(res, "success");
-    //   },
-    //   fail: res => {
-    //     console.log(res, "fail");
-    //   }
-    // })
+    tt.request({
+      "url": `${getApp().url}/topic`,
+      "method": "GET",
+      "header": { authentication: getApp().token },
+      "data": { "page": this.data.page },
+      success: res => {
+        this.setData({ topic_list: res.data.topics, page: this.data.page + 1 });
+        if (res.data.topics.length < getApp().page_size) {
+          this.setData({ finished: true });
+        }
+      },
+      fail: _ => {
+        tt.showModal({
+          title: "获取话题列表失败",
+          confirmText: "确认",
+          showCancel: false,
+        });
+      },
+    });
   },
   handleEmoji: function () {
     this.setData({ showEmojiArea: !this.data.showEmojiArea });
-    console.log(123);
   },
   handleScrollUpdate: function () {
-    console.log("scrolled");
+    if (finished) {
+      return;
+    }
+    tt.request({
+      "url": `${getApp().url}/topic`,
+      "method": "GET",
+      "header": { authentication: getApp().token },
+      "data": { "page": this.data.page },
+      success: res => {
+        this.setData({ topic_list: this.data.topic_list.concat(res.data.topics), page: this.data.page + 1 });
+        if (res.data.topics.length < getApp().page_size) {
+          this.setData({ finished: true });
+        }
+      },
+      fail: _ => {
+        tt.showModal({
+          title: "获取话题列表失败",
+          confirmText: "确认",
+          showCancel: false,
+        });
+      },
+    });
   }
 })

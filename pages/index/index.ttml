@@ -1,11 +1,11 @@
 <view class="container">
   <scroll-view bindscrolltolower="handleScrollUpdate">
-    <poster></poster>
-    <poster></poster>
-    <poster></poster>
-    <poster></poster>
-    <poster></poster>
-    <poster></poster>
+    <block tt-for="{{ topic_list }}" tt-key="{{ pid }}">
+      <poster title="{{ title }}" content="{{ content }}" username="{{ is_anon? 'anonymous': name }}"
+        timestamp="{{ time }}" likeCount="{{ likes }}" avatar="{{ is_anon? '/assets/images/anon.png': avatar }}"
+        isLiked="{{ liked }}" images="{{ images }}" data-key="{{ pid }}">
+      </poster>
+    </block>
     <view style="height: 100rpx;">
   </scroll-view>
 </view>

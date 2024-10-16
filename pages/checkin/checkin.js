@@ -11,19 +11,24 @@ Page({
     navItem1: true,
     isProcessing: false,
     ranks: [],
+    ranks_timestamp: 0,
   },
 
-  sendHello: function () {
-    const url = getApp().url;
+  sendMessage: function (url) {
     return new Promise((resolve, reject) => {
-      let req = () => {
+      var request = function (cnt) {
         tt.request({
-          url: `${url}/checkin/hello`,
-          header: { authentication: getApp().token },
-          method: "GET",
+          "url": url,
+          "header": { authentication: getApp().token },
+          "method": "GET",
           success: res => {
             if (res.data.status === 0) {
               resolve();
+            }
+            else if (res.data.status === 1 && cnt === 0) {
+              getApp().login()
+                .then(() => request(cnt + 1))
+                .catch(() => reject());
             }
             else {
               reject();
@@ -34,69 +39,23 @@ Page({
           },
         });
       };
-      tt.request({
-        url: `${url}/checkin/hello`,
-        header: { authentication: getApp().token },
-        method: "GET",
-        success: res => {
-          if (res.data.status === 1) {
-            getApp().login().then(() => {
-              req();
-            }).catch(() => { reject(); });
-          }
-          else if (res.data.status === 0) {
-            resolve();
-          }
-          else {
-            reject();
-          }
-        },
-        fail: _ => {
-          reject();
-        },
-      });
+      request(0);
     });
+  },
+
+  sendHello: function () {
+    return this.sendMessage(`${getApp().url}/checkin/hello`);
   },
 
   keepAlive: function () {
     var that = this;
-    var resolveDisconnected = () => {
+    this.sendMessage(`${getApp().url}/checkin/keepalive`).catch(() => {
       tt.showModal({
         title: "已断开与服务器的连接",
         confirmText: "确认",
         showCancel: false,
       });
       that.stopTimer();
-    };
-    const url = getApp().url;
-    tt.request({
-      url: `${url}/checkin/keepalive`,
-      method: "GET",
-      header: { authentication: getApp().token },
-      success: async res => {
-        if (res.data.status === 1) {
-          await getApp().login();
-          tt.request({
-            url: `${url}/checkin/keepalive`,
-            method: "GET",
-            header: { authentication: getApp().token },
-            success: res => {
-              if (res.data.status !== 0) {
-                resolveDisconnected();
-              }
-            },
-            fail: _ => {
-              resolveDisconnected();
-            },
-          });
-        }
-        else if (res.data.status !== 0) {
-          resolveDisconnected();
-        }
-      },
-      fail: res => {
-        resolveDisconnected();
-      },
     });
   },
 
@@ -165,7 +124,7 @@ Page({
         displayText: this.formatTime(h, m, s),
       });
 
-    }, 1000);
+    }, 100);
 
     this.setData({
       intervalId,
@@ -210,9 +169,16 @@ Page({
     });
   },
   showSidebar: function () {
+    if (this.data.ranks_timestamp + 5 * 60 * 1000 > Date.now() && this.data.ranks.length > 0) {
+      this.setData({
+        isSidebarOpen: true,
+      });
+      return;
+    }
     this.getRanks().then((ranks) => {
       this.setData({
         isSidebarOpen: true,
+        ranks_timestamp: Date.now(),
       });
       this.setData({ ranks: ranks });
     }).catch(() => {
