@@ -1,36 +1,50 @@
 App({
   username: "Anonymous",
   avatar: "/assets/images/anon.png",
-  url: "http://127.0.0.1:8000",
+  url: "http://192.168.1.100:8000",
   token: "",
   page_size: 16,
-  login: function () {
+  login_promise: null,
+  login_once: function () {
     var that = this;
-    return new Promise((resolve, reject) => {
-      tt.login({
-        success: function (res) {
-          tt.request({
-            url: `${that.url}/login`,
-            header: { "content-type": "application/json" },
-            method: "POST",
-            data: {
-              "code": res.code
-            },
-            success: function (res) {
-              if (res.data.status !== 0) {
-                console.log(res.data.status);
-                reject(); return;
-              }
+    return new Promise((res, rej) => {
+      var factory = (func) => {
+        return () => {
+          that.login_promise = null;
+          func();
+        };
+      };
+      var resolve = factory(res);
+      var reject = factory(rej);
+      var request = (code) => {
+        tt.request({
+          url: `${that.url}/login`,
+          header: { "content-type": "application/json" },
+          method: "POST",
+          data: {
+            "code": code
+          },
+          success: function (res) {
+            if (res.data.status === 0) {
               that.avatar = res.data.avatar;
               that.username = res.data.name;
               that.token = res.header.authorization;
               resolve();
-            },
-            fail: function (res) {
+            }
+            else {
               console.log("request backend login failed: ", res);
               reject();
             }
-          });
+          },
+          fail: function (res) {
+            console.log("request backend login failed: ", res);
+            reject();
+          }
+        })
+      };
+      tt.login({
+        success: function (res) {
+          request(res.code);
         },
         fail: function (res) {
           console.log("login failed: ", res);
@@ -39,17 +53,16 @@ App({
       });
     });
   },
+  login: function () {
+    let prev_promise = this.login_promise;
+    if (prev_promise !== null) {
+      return prev_promise;
+    }
+    let login_promise = this.login_promise = this.login_once();
+    return login_promise;
+  },
+  processContent: function (content) { },
   onLaunch: async function () {
-    let that = this;
-    tt.hideTabBar({
-      animation: false,
-      success(res) {
-        // console.log(JSON.stringify(res));
-      },
-      fail(res) {
-        console.log("hideTabBar fail");
-      }
-    });
     var getStorage = function (key) {
       return new Promise((resolve, reject) => {
         tt.getStorage({
@@ -68,17 +81,18 @@ App({
         });
       })
     }
-    Promise.all([getStorage("Lucifer"), getStorage("Seraph"), getStorage("Daemon")])
+    this.login_promise = Promise.all([getStorage("Lucifer"), getStorage("Seraph"), getStorage("Daemon")])
       .then(([token, username, avatar]) => {
         console.log("get info from local storage");
-        that.token = token;
-        that.username = username;
-        that.avatar = avatar;
+        this.token = token;
+        this.username = username;
+        this.avatar = avatar;
+        this.login_promise = null;
       })
-      .catch(errs => {
-        console.log(errs);
+      .catch(err => {
+        console.log(err);
         console.log("get info from server");
-        this.login().catch(() => {
+        this.login_promise = this.login_once().catch(() => {
           tt.showModal({
             title: "连接服务器失败",
             confirmText: "确认",
@@ -86,6 +100,15 @@ App({
           });
         });
       });
+    tt.hideTabBar({
+      animation: false,
+      success(res) {
+        // console.log(JSON.stringify(res));
+      },
+      fail(res) {
+        console.log("hideTabBar fail");
+      }
+    });
   },
   storageInfo: function () {
     let that = this;

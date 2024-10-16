@@ -20,7 +20,7 @@ Page({
         tt.request({
           "url": url,
           "header": { authentication: getApp().token },
-          "method": "GET",
+          "method": "POST",
           success: res => {
             if (res.data.status === 0) {
               resolve();

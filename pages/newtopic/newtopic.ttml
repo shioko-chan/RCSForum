@@ -1,7 +1,12 @@
 <view class="container">
   <view class="input-section">
-    <input class="title-input" placeholder="请输入标题" />
-    <textarea class="content-input" placeholder="请输入内容"></textarea>
+    <input class="title-input" placeholder="请输入标题" maxlength="100" bindinput="handleTitleInput" />
+    <textarea class="content-input" placeholder="请输入内容" maxlength="2000" bindinput="handleContentInput"></textarea>
+  </view>
+  <view class="anonymous-check-box" bindtap="handleAnonymous">
+    <text class="anonymous-check-box-icon {{ is_anonymous? 'checked' : 'unchecked' }}">{{ is_anonymous? "✅" :
+      ""}}</text>
+    <text class="anonymous-check-box-text">启用匿名发布</text>
   </view>
   <view class="image-preview-section">
     <view class="upload-btn" bindtap="chooseImage">
@@ -17,6 +22,7 @@
     </block>
   </view>
   <view style="height: 100rpx;"></view>
+  <view class="publish-button" bindtap="handlePublish">发送</view>
 </view>
 
 <navbar centerItem="{{ centerItem }}"></navbar>

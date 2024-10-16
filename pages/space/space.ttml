@@ -6,4 +6,5 @@
     <view class="username">{{ username }}</view>
   </view>
 </view>
+<view class="user-publish">我的发布</view>
 <navbar navItem2="{{ navItem2 }}"></navbar>

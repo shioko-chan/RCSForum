@@ -2,6 +2,26 @@
     width: 750rpx;
 }
 
+.refresh-box {
+    position: fixed;
+    right: 60rpx;
+    bottom: 160rpx;
+    height: 80rpx;
+    width: 80rpx;
+    background-color: #eeeeee;
+    border-radius: 25%;
+    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+}
+
+.refresh-button {
+    height: 75rpx;
+    width: 75rpx;
+}
+
 .bottom-container {
     position: fixed;
     bottom: 0;

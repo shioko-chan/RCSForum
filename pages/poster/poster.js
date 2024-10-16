@@ -31,7 +31,13 @@ Component({
     }
   },
   data: {
-    defaultStates: {}
+    defaultStates: {},
+  },
+  attached: function () {
+    console.log(this.data.images);
+    const url = getApp().url;
+    this.setData({ "images": this.data.images.map(image_name => `${url}/image/${image_name}`) });
+    console.log(this.data.images);
   },
   methods: {
     tapName: function (event) {

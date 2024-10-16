@@ -3,6 +3,54 @@
     padding: 16rpx;
 }
 
+.anonymous-check-box {
+    display: flex;
+    align-items: center;
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
+    justify-content: end;
+}
+
+.anonymous-check-box-icon {
+    box-sizing: border-box;
+    width: 30rpx;
+    height: 30rpx;
+    font-size: 30rpx;
+    font-weight: bold;
+    text-align: center;
+}
+
+.anonymous-check-box-icon.checked {
+    border: none;
+}
+
+.anonymous-check-box-icon.unchecked {
+    border: #111 solid 2rpx;
+    border-radius: 1rpx;
+}
+
+.anonymous-check-box-text {
+    margin-left: 10rpx;
+    font-size: 30rpx;
+    font-weight: bold;
+}
+
+.publish-button {
+    position: fixed;
+    z-index: 10001;
+    width: 100rpx;
+    height: 80rpx;
+    right: 40rpx;
+    bottom: 240rpx;
+    font-size: 30rpx;
+    font-weight: bold;
+    text-align: center;
+    line-height: 80rpx;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 15%;
+}
+
 .input-section {
     width: 718rpx;
     margin-bottom: 45rpx;
