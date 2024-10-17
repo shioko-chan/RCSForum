@@ -22,6 +22,14 @@ Page({
   handleEmoji: function () {
     this.setData({ showEmojiArea: !this.data.showEmojiArea });
   },
+  clearAll: function () {
+    this.setData({
+      "is_anonymous": false,
+      "title": "",
+      "content": "",
+      "images": [],
+    });
+  },
   allSettled: function (promises) {
     return Promise.all(
       promises.map(
@@ -86,7 +94,8 @@ Page({
       },
       fail: (result) => {
         tt.showModal({
-          "title": "选择图片出错，请检查权限",
+          "title": "选择图片出错",
+          "content": "请检查读取图片权限",
           "confirmText": "确认",
           "showCancel": false,
           fail(res) {
@@ -132,31 +141,16 @@ Page({
     const url = getApp().url;
     tt.showLoading({
       title: '发布中',
-      // mask: true,
+      mask: true,
     });
-    var successToast = () => {
-      tt.hideLoading();
-      tt.showToast({
-        title: "发布成功✅",
-        icon: "success",
-        duration: 2000,
-      });
-    };
-    var failToast = () => {
-      tt.hideLoading();
-      tt.showToast({
-        title: "发布失败😴",
-        icon: "error",
-        duration: 2000,
-      });
-    };
     var imageUploadFailModal = (cnt, info) => {
       tt.hideLoading();
       tt.showModal({
-        title: `第${cnt}个图片上传失败,${info}`,
-        icon: "none",
-        duration: 2000,
-        showCancel: false,
+        "title": `第${cnt}个图片上传失败`,
+        "content": info,
+        "icon": "none",
+        "duration": 2000,
+        "showCancel": false,
       });
     };
     var uploadImage = (image, retry) => {
@@ -219,7 +213,24 @@ Page({
         }
       }
     }
-    var request = (cnt) => {
+    var successCall = () => {
+      tt.hideLoading();
+      tt.showToast({
+        "title": "发布成功✅",
+        "icon": "success",
+        "duration": 2000,
+      });
+      this.clearAll();
+    };
+    var failCall = () => {
+      tt.hideLoading();
+      tt.showToast({
+        "title": "发布失败😴",
+        "icon": "error",
+        "duration": 2000,
+      });
+    };
+    var request = cnt => {
       tt.request({
         url: `${url}/create/topic`,
         header: { authentication: getApp().token },
@@ -232,21 +243,27 @@ Page({
         },
         success: res => {
           if (res.data.status === 0) {
-            successToast();
-          }
-          else if (res.data.status === 1 && cnt <= 0) {
+            successCall();
+          } else if (res.data.status === 1 && cnt <= 0) {
             getApp().login()
               .then(() => request(cnt + 1))
               .catch(() => {
-                failToast();
+                failCall();
               });
-          }
-          else {
-            failToast();
+          } else {
+            failCall();
           }
         },
-        fail: _ => {
-          failToast();
+        fail: res => {
+          if (res.data.status === 1 && cnt <= 0) {
+            getApp().login()
+              .then(() => request(cnt + 1))
+              .catch(() => {
+                failCall();
+              });
+          } else {
+            failCall();
+          }
         },
       });
     };

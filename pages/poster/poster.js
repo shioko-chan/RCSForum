@@ -65,7 +65,7 @@ Component({
       tt.previewImage({
         urls: imageList,
         current: currentImage,
-        shouldShowSaveOption: false,
+        shouldShowSaveOption: true,
       })
     }
   }

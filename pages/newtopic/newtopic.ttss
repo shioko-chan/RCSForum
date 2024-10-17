@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     margin-top: 10rpx;
-    margin-bottom: 10rpx;
+    margin-bottom: 20rpx;
     justify-content: end;
 }
 

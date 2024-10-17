@@ -8,6 +8,7 @@
       ""}}</text>
     <text class="anonymous-check-box-text">启用匿名发布</text>
   </view>
+  <emoji></emoji>
   <view class="image-preview-section">
     <view class="upload-btn" bindtap="chooseImage">
       <text class="plus-sign">+</text>
@@ -21,8 +22,7 @@
       </view>
     </block>
   </view>
-  <view style="height: 100rpx;"></view>
+  <view style="height: 200rpx;"></view>
   <view class="publish-button" bindtap="handlePublish">发送</view>
 </view>
-
 <navbar centerItem="{{ centerItem }}"></navbar>

@@ -1,7 +1,7 @@
 {
     "usingComponents": {
         "comment": "../comment/comment",
-        "bottom-bar": "../bottom_bar/bottom_bar",
-        "navbar": "../navigator_bar/navigator_bar"
+        "navbar": "../navigator_bar/navigator_bar",
+        "emoji": "../emoji/emoji"
     }
 }

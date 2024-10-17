@@ -64,7 +64,7 @@ App({
     return login_promise;
   },
   processContent: function (content) { },
-  onLaunch: async function () {
+  onLaunch: function () {
     var getStorage = function (key) {
       return new Promise((resolve, reject) => {
         tt.getStorage({
@@ -97,9 +97,9 @@ App({
         console.info("get info from server");
         this.login_promise = this.login_once().catch(() => {
           tt.showModal({
-            title: "连接服务器失败",
-            confirmText: "确认",
-            showCancel: false,
+            "title": "连接服务器失败",
+            "confirmText": "确认",
+            "showCancel": false,
           });
         });
       });
