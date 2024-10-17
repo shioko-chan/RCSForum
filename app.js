@@ -20,7 +20,9 @@ App({
       var request = (code) => {
         tt.request({
           url: `${that.url}/login`,
-          header: { "content-type": "application/json" },
+          header: {
+            "Content-Type": "application/json; charset=utf-8"
+          },
           method: "POST",
           data: {
             "code": code

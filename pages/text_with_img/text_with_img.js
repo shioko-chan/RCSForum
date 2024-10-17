@@ -1,9 +1,13 @@
 Component({
   properties: {
-
+    content: {
+      type: String,
+      value: "",
+    },
   },
   data: {
     defaultStates: {},
+    itemList: [],
     emojis: [
       {
         "name": "I_AM_TRASH",
@@ -167,10 +171,52 @@ Component({
       },
     ]
   },
+  attached: function () {
+    const matchEmoji = (emoji_name) => {
+      return this.data.emojis.find(e => e.name === emoji_name)?.url || null;
+    };
+
+    const raw_str = this.data.content;
+    let start = 0;
+    this.setData({ "itemList": [] });
+
+    for (let i = 0; i < raw_str.length; i++) {
+      if (raw_str[i] !== "[") continue;
+      const endIdx = raw_str.indexOf("]", i);
+      if (endIdx === -1) break;
+
+      const emoji_name = raw_str.slice(i + 1, endIdx);
+      const emoji_url = matchEmoji(emoji_name);
+
+      if (emoji_url === null) continue;
+
+      this.data.itemList.push({
+        is_text: false,
+        src: emoji_url,
+      });
+      if (start < i) {
+        this.data.itemList.push({
+          is_text: true,
+          text: raw_str.slice(start, i),
+        });
+      }
+
+      start = endIdx + 1;
+      i = endIdx;
+    }
+
+    if (start < raw_str.length) {
+      this.data.itemList.push({
+        is_text: true,
+        content: raw_str.slice(start),
+      });
+    }
+    this.setData({ "itemList": this.data.itemList });
+    console.log(this.data.itemList);
+  },
   methods: {
     previewEmoji: function (event) {
-      const index = event.currentTarget.dataset.index;
-      const currentImage = this.data.emojis[index].url;
+      const currentImage = event.currentTarget.dataset.src;
       tt.previewImage({
         urls: [currentImage],
         current: currentImage,

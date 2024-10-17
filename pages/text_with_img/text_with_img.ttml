@@ -1,0 +1,7 @@
+<view class="rich-text-view">
+  <block tt:for="{{ itemList }}">
+    <text tt:if="{{ item.is_text }}" class="text">{{ item.text }}</text>
+    <image tt:else src="{{ item.src }}" class="image" bindlongpress="previewEmoji" mode="aspectFit"
+      data-src="{{ item.src }}" />
+  </block>
+</view>

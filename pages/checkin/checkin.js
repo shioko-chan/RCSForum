@@ -19,7 +19,10 @@ Page({
       var request = function (cnt) {
         tt.request({
           "url": url,
-          "header": { authentication: getApp().token },
+          "header": {
+            "Content-Type": "application/json; charset=utf-8",
+            "authentication": `${getApp().token}`
+          },
           "method": "POST",
           success: res => {
             if (res.data.status === 0) {
@@ -152,7 +155,10 @@ Page({
     return new Promise((resolve, reject) => {
       tt.request({
         url: `${url}/checkin/rank`,
-        header: { authentication: getApp().token },
+        header: {
+          "Content-Type": "application/json; charset=utf-8",
+          "authentication": `${getApp().token}`
+        },
         method: "GET",
         success: res => {
           if (res.data.status === 0) {

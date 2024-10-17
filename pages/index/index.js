@@ -25,7 +25,10 @@ Page({
         tt.request({
           "url": `${getApp().url}/topic`,
           "method": "GET",
-          "header": { authentication: getApp().token },
+          "header": {
+            "Content-Type": "application/json; charset=utf-8",
+            "authentication": `${getApp().token}`
+          },
           "data": { "page": page },
           success: res => {
             if (res.data.status === 0) {

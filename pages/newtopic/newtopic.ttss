@@ -73,6 +73,7 @@
 }
 
 .image-preview-section {
+    margin-top: 40rpx;
     width: 718rpx;
     display: grid;
     grid-template-columns: repeat(4, 1fr);

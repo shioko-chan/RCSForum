@@ -1,26 +1,30 @@
 Page({
   data: {
-    showEmojiArea: false,
     centerItem: true,
     is_anonymous: false,
     title: "",
     content: "",
     images: [],
-  },
-  onLoad: function () {
-
+    cursor: 0,
   },
   handleAnonymous: function () {
     this.setData({ "is_anonymous": !this.data.is_anonymous });
   },
-  handleTitleInput: function (e) {
-    this.setData({ "title": e.detail.value });
+  handleEmojiInput: function (event) {
+    let { cursor, content } = this.data;
+    this.setData({
+      "content": content.slice(0, cursor) + event.detail.emoji + content.slice(cursor),
+      "cursor": cursor + event.detail.emoji.length
+    });
   },
-  handleContentInput: function (e) {
-    this.setData({ "content": e.detail.value });
+  handleTitleInput: function (event) {
+    this.setData({ "title": event.detail.value });
   },
-  handleEmoji: function () {
-    this.setData({ showEmojiArea: !this.data.showEmojiArea });
+  handleContentInput: function (event) {
+    this.setData({ "content": event.detail.value });
+  },
+  handleContentBlur: function (event) {
+    this.setData({ "cursor": event.detail.cursor });
   },
   clearAll: function () {
     this.setData({
@@ -43,7 +47,7 @@ Page({
     const showToast = () => {
       tt.showToast({
         "title": "上传图片上限9张",
-        "duration": 2000,
+        "duration": 2500,
         "icon": "none",
         "mask": true,
         fail(res) {
@@ -76,19 +80,10 @@ Page({
           })
         );
         that.allSettled(compressPromises).then(values => {
-          let shouldShowToast = false;
           values.forEach(({ status, value }) => {
             if (status !== 'fulfilled') { return; }
-            if (that.data.images.length < 9) {
-              that.data.images.push(value);
-            }
-            else {
-              shouldShowToast = true;
-            }
+            that.data.images.push(value);
           });
-          if (shouldShowToast) {
-            showToast();
-          }
           that.setData({ "images": that.data.images });
         });
       },
@@ -124,17 +119,17 @@ Page({
   handlePublish: async function (event) {
     if (this.data.title.length === 0) {
       tt.showToast({
-        title: "多少写个标题呗",
-        icon: "none",
-        duration: 2000,
+        "title": "多少写个标题呗",
+        "icon": "none",
+        "duration": 2500,
       });
       return;
     }
     if (this.data.content.length === 0) {
       tt.showToast({
-        title: "多少写点内容呗",
-        icon: "none",
-        duration: 2000,
+        "title": "多少写点内容呗",
+        "icon": "none",
+        "duration": 2500,
       });
       return;
     }
@@ -149,7 +144,6 @@ Page({
         "title": `第${cnt}个图片上传失败`,
         "content": info,
         "icon": "none",
-        "duration": 2000,
         "showCancel": false,
       });
     };
@@ -159,7 +153,10 @@ Page({
           "url": `${url}/image/upload`,
           "filePath": image,
           "name": "image",
-          "header": { "authentication": getApp().token },
+          "header": {
+            "Content-Type": "multipart/form-data",
+            "authentication": `${getApp().token}`
+          },
           success(res) {
             if (res.statusCode === 200) {
               resolve(JSON.parse(res.data));
@@ -215,25 +212,26 @@ Page({
     }
     var successCall = () => {
       tt.hideLoading();
-      tt.showToast({
+      tt.showModal({
         "title": "发布成功✅",
-        "icon": "success",
-        "duration": 2000,
+        "showCancel": false,
       });
       this.clearAll();
     };
     var failCall = () => {
       tt.hideLoading();
-      tt.showToast({
+      tt.showModal({
         "title": "发布失败😴",
-        "icon": "error",
-        "duration": 2000,
+        "showCancel": false,
       });
     };
     var request = cnt => {
       tt.request({
         url: `${url}/create/topic`,
-        header: { authentication: getApp().token },
+        header: {
+          "Content-Type": "application/json; charset=utf-8",
+          "authentication": `${getApp().token}`
+        },
         method: "POST",
         data: {
           title: this.data.title,

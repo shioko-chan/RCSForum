@@ -1,0 +1,30 @@
+.rich-text-view {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    line-height: 1.6;
+    gap: 8rpx;
+    padding: 10rpx;
+}
+
+.text {
+    display: inline;
+    font-size: 32rpx;
+    color: #333;
+    word-break: break-word;
+}
+
+.image {
+    display: inline-block;
+    width: 160rpx;
+    height: 160rpx;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-left: 4rpx;
+}
+
+.image:active,
+.image:hover {
+    transform: scale(1.5);
+    box-shadow: 0 8rpx 22rpx rgba(0, 0, 0, 0.3);
+}

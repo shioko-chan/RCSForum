@@ -6,7 +6,7 @@
     </view>
   </view>
   <text class="title">{{ title }}</text>
-  <text class="content">{{ content }}</text>
+  <text-with-img class="content" content="{{ content }}"></text-with-img>
   <view class="image-display-container">
     <block tt:for="{{ imageList }}">
       <image class="image" src="{{ item }}" mode="aspectFill" bindtap="previewImage" data-index="{{ index }}" />
