@@ -8,8 +8,9 @@
   <text class="title">{{ title }}</text>
   <text class="content">{{ content }}</text>
   <view class="image-display-container">
-    <block tt:for="{{ images }}">
-      <image class="image" src="{{ item }}" mode="aspectFill" bindtap="previewImage" data-index="{{ index }}" />
+    <block tt:for="{{ imageList }}">
+      <image class="image" src="{{ item }}" mode="aspectFill" bindtap="previewImage" data-index="{{ index }}"
+        binderror="onImageError" bindload="onImageLoad" />
     </block>
   </view>
   <view class="action-bar">

@@ -11,44 +11,33 @@ Component({
     methods: {
         handleCheckIn: function () {
             tt.switchTab({
-                "url": "../checkin/checkin", success(res) {
-                    // console.log(JSON.stringify(res));
-                },
+                "url": "../checkin/checkin",
                 fail(res) {
-                    console.log(`navigateTo fail: ${JSON.stringify(res)}`);
+                    console.error(`navigateTo fail: ${JSON.stringify(res)}`);
                 }
             });
         },
         handleProfile: function () {
             tt.switchTab({
                 "url": "../space/space",
-                success(res) {
-                    // console.log(JSON.stringify(res));
-                },
                 fail(res) {
-                    console.log(`navigateTo fail: ${JSON.stringify(res)}`);
+                    console.error(`navigateTo fail: ${JSON.stringify(res)}`);
                 }
             });
         },
         handleMainPage: function () {
             tt.switchTab({
                 "url": "../index/index",
-                success(res) {
-                    // console.log(JSON.stringify(res));
-                },
                 fail(res) {
-                    console.log(`navigateTo fail: ${JSON.stringify(res)}`);
+                    console.error(`navigateTo fail: ${JSON.stringify(res)}`);
                 }
             });
         },
         handleNewTopic: function () {
             tt.switchTab({
                 "url": "../newtopic/newtopic",
-                success(res) {
-                    // console.log(JSON.stringify(res));
-                },
                 fail(res) {
-                    console.log(`navigateTo fail: ${JSON.stringify(res)}`);
+                    console.error(`navigateTo fail: ${JSON.stringify(res)}`);
                 }
             })
         }

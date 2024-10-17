@@ -55,7 +55,6 @@ Page({
   },
   setTopicList: function (topics) {
     this.setData({ topic_list: topics, page: this.data.page + 1 });
-    console.log(this.data.topic_list);
     if (topics.length < getApp().page_size) {
       this.setData({ finished: true });
       this.showModalAllFinished();

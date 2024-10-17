@@ -11,7 +11,6 @@ Component({
   methods: {
     handleEmoji: function () {
       this.setData({ showEmojiArea: !this.data.showEmojiArea });
-      console.log(123);
     }
   }
 })

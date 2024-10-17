@@ -2,6 +2,7 @@ App({
   username: "Anonymous",
   avatar: "/assets/images/anon.png",
   url: "http://192.168.1.100:8000",
+  is_admin: false,
   token: "",
   page_size: 16,
   login_promise: null,
@@ -29,15 +30,16 @@ App({
               that.avatar = res.data.avatar;
               that.username = res.data.name;
               that.token = res.header.authorization;
+              that.is_admin = res.data.is_admin;
               resolve();
             }
             else {
-              console.log("request backend login failed: ", res);
+              console.error("request backend login failed: ", res);
               reject();
             }
           },
           fail: function (res) {
-            console.log("request backend login failed: ", res);
+            console.error("request backend login failed: ", res);
             reject();
           }
         })
@@ -47,7 +49,7 @@ App({
           request(res.code);
         },
         fail: function (res) {
-          console.log("login failed: ", res);
+          console.error("login failed: ", res);
           reject();
         }
       });
@@ -81,17 +83,18 @@ App({
         });
       })
     }
-    this.login_promise = Promise.all([getStorage("Lucifer"), getStorage("Seraph"), getStorage("Daemon")])
-      .then(([token, username, avatar]) => {
-        console.log("get info from local storage");
+    this.login_promise = Promise.all([getStorage("Azazel"), getStorage("Ariel"), getStorage("Asbeel"), getStorage("Samyaza")])
+      .then(([token, username, avatar, is_admin]) => {
+        console.info("get info from local storage");
         this.token = token;
         this.username = username;
         this.avatar = avatar;
+        this.is_admin = is_admin;
         this.login_promise = null;
       })
       .catch(err => {
-        console.log(err);
-        console.log("get info from server");
+        console.warn("load data from local storage failed, ", err);
+        console.info("get info from server");
         this.login_promise = this.login_once().catch(() => {
           tt.showModal({
             title: "连接服务器失败",
@@ -102,11 +105,8 @@ App({
       });
     tt.hideTabBar({
       animation: false,
-      success(res) {
-        // console.log(JSON.stringify(res));
-      },
       fail(res) {
-        console.log("hideTabBar fail");
+        console.error("hideTabBar fail");
       }
     });
   },
@@ -126,7 +126,7 @@ App({
         });
       });
     };
-    return Promise.all([setStorage("Lucifer", that.token), setStorage("Seraph", that.username), setStorage("Daemon", that.avatar)]);
+    return Promise.all([setStorage("Azazel", that.token), setStorage("Ariel", that.username), setStorage("Asbeel", that.avatar), setStorage("Samyaza", that.is_admin)]);
   },
   onHide: async function () {
     await this.storageInfo();

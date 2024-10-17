@@ -32,14 +32,19 @@ Component({
   },
   data: {
     defaultStates: {},
+    imageList: [],
   },
   attached: function () {
-    console.log(this.data.images);
     const url = getApp().url;
-    this.setData({ "images": this.data.images.map(image_name => `${url}/image/${image_name}`) });
-    console.log(this.data.images);
+    this.setData({ "imageList": this.data.images.map(image_name => `${url}/image/${image_name}`) });
   },
   methods: {
+    onImageError(e) {
+      console.error('图片加载失败', e.detail.errMsg);
+    },
+    onImageLoad(e) {
+      console.log('图片加载成功', e.detail);
+    },
     tapName: function (event) {
       console.log(event)
     },

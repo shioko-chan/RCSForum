@@ -21,7 +21,6 @@ Page({
   },
   handleEmoji: function () {
     this.setData({ showEmojiArea: !this.data.showEmojiArea });
-    console.log(123);
   },
   allSettled: function (promises) {
     return Promise.all(
@@ -38,12 +37,9 @@ Page({
         "title": "上传图片上限9张",
         "duration": 2000,
         "icon": "none",
-        "mask": false,
-        success(res) {
-          // console.log(JSON.stringify(res));
-        },
+        "mask": true,
         fail(res) {
-          console.log(`showToast fail: ${JSON.stringify(res)}`);
+          console.error(`showToast fail: ${JSON.stringify(res)}`);
         }
       });
     };
@@ -89,7 +85,15 @@ Page({
         });
       },
       fail: (result) => {
-        console.log("select image failed", result);
+        tt.showModal({
+          "title": "选择图片出错，请检查权限",
+          "confirmText": "确认",
+          "showCancel": false,
+          fail(res) {
+            console.error(`showToast fail: ${JSON.stringify(res)}`);
+          }
+        });
+        console.error("select image failed", result);
       }
     });
   },
@@ -128,7 +132,7 @@ Page({
     const url = getApp().url;
     tt.showLoading({
       title: '发布中',
-      mask: true,
+      // mask: true,
     });
     var successToast = () => {
       tt.hideLoading();
@@ -163,8 +167,15 @@ Page({
           "name": "image",
           "header": { "authentication": getApp().token },
           success(res) {
-            if (res.statusCode !== 200) { reject(); }
-            else { resolve(JSON.parse(res.data)); }
+            if (res.statusCode === 200) {
+              resolve(JSON.parse(res.data));
+            } else if (res.statusCode === 401 && retry <= 0) {
+              getApp().login()
+                .then(() => uploadImage(image, retry + 1))
+                .catch(() => reject(null));
+            } else {
+              reject({ image, res });
+            }
           },
           fail(res) {
             if (res.statusCode === 401 && retry <= 0) {
@@ -181,10 +192,12 @@ Page({
     let imageList = [];
     for (let i = 0; i < this.data.images.length; i += 5) {
       for (let { status, value } of
-        await this.allSettled(this.data.images.slice(i, i + 5).map((image) => uploadImage(image, 0)))) {
+        await this.allSettled(this.data.images.slice(i, i + 5).map(image => uploadImage(image, 0)))) {
         if (status !== 'fulfilled') {
           if (value === null) {
-            continue;
+            console.error("reject because of authenticate error");
+            imageUploadFailModal(-1, "认证出错");
+            return;
           }
           let { image, res } = value;
           console.error("an image upload failed", res);
@@ -193,7 +206,7 @@ Page({
             detail = "格式不支持";
           }
           else if (res.statusCode === 406) {
-            detail = "图片过大";
+            detail = "图片大于5MB";
           }
           else if (res.statusCode === 500) {
             detail = "服务器错误";

@@ -1,6 +1,6 @@
 <view class="container">
   <scroll-view bindscrolltolower="handleScrollUpdate">
-    <block tt-for="{{ topic_list }}" tt-key="{{ pid }}">
+    <block tt-for="{{ topic_list }}" tt-key="pid">
       <poster title="{{ item.title }}" content="{{ item.content }}"
         username="{{ item.is_anonymous? 'anonymous': item.name }}" timestamp="{{ item.time }}"
         likeCount="{{ item.likes }}" avatar="{{ item.is_anonymous? '/assets/images/anon.png': item.avatar }}"
