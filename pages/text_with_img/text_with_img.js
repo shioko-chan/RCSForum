@@ -172,7 +172,7 @@ Component({
     ]
   },
   attached: function () {
-    const matchEmoji = (emoji_name) => {
+    const matchEmoji = emoji_name => {
       return this.data.emojis.find(e => e.name === emoji_name)?.url || null;
     };
 
@@ -190,16 +190,17 @@ Component({
 
       if (emoji_url === null) continue;
 
-      this.data.itemList.push({
-        is_text: false,
-        src: emoji_url,
-      });
       if (start < i) {
         this.data.itemList.push({
           is_text: true,
           text: raw_str.slice(start, i),
         });
       }
+
+      this.data.itemList.push({
+        is_text: false,
+        src: emoji_url,
+      });
 
       start = endIdx + 1;
       i = endIdx;
@@ -208,11 +209,10 @@ Component({
     if (start < raw_str.length) {
       this.data.itemList.push({
         is_text: true,
-        content: raw_str.slice(start),
+        text: raw_str.slice(start),
       });
     }
     this.setData({ "itemList": this.data.itemList });
-    console.log(this.data.itemList);
   },
   methods: {
     previewEmoji: function (event) {

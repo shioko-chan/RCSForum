@@ -1,5 +1,5 @@
 <view class="poster">
-  <view class="userprofile">
+  <view class="userprofile" bindtap="handleTapUserInfo">
     <image class="avatar" src="{{ avatar }}"></image>
     <view class="userinfo">
       <text class="username">{{ username }}</text>

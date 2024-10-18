@@ -45,8 +45,8 @@ Component({
     onImageLoad(e) {
       console.log('图片加载成功', e.detail);
     },
-    tapName: function (event) {
-      console.log(event)
+    handleTapUserInfo: function (event) {
+      console.log(event);
     },
     handleLike: function () {
       if (this.data.isLiked) {
