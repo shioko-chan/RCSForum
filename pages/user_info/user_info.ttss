@@ -1,0 +1,37 @@
+.user-publish {
+    width: 750rpx;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    padding: 20rpx;
+    background-color: #f9f9f9;
+    border-radius: 15rpx;
+    box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+    margin: auto;
+    font-family: Arial, sans-serif;
+}
+
+.avatar-container {
+    margin-right: 15rpx;
+}
+
+.avatar {
+    width: 140rpx;
+    height: 140rpx;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4rpx solid #007bff;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-size: 40rpx;
+    font-weight: bold;
+    color: #333;
+}

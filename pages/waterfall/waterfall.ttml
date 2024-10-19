@@ -1,0 +1,6 @@
+<block tt:for="{{ topic_list }}" tt:key="pid">
+  <poster title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
+    likeCount="{{ item.likes }}" avatar="{{ item.avatar }}" isLiked="{{ item.liked }}" images="{{ item.images }}"
+    pid="{{ item.pid }}" uid="{{ item.uid }}" bind:posterdetail="navToDetail" bind:userinfo="navToUser">
+  </poster>
+</block>

@@ -1,0 +1,13 @@
+<view class="user-info">
+  <view class="avatar-container">
+    <image class="avatar" src="{{ avatar }}" mode="aspect-fill" />
+  </view>
+  <view class="user-details">
+    <view class="username">{{ name }}</view>
+  </view>
+</view>
+<view class="user-publish">
+  <view class="user-publish-title">{{ is_me? "我的发布" : "ta的发布" }}</view>
+  <waterfall topic_list="{{ list }}"></waterfall>
+  <view style="height: 100rpx;"></view>
+</view>

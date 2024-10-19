@@ -1,10 +1,3 @@
-<view class="user-info">
-  <view class="avatar-container">
-    <image class="avatar" src="{{ avatar }}" mode="aspect-fill" />
-  </view>
-  <view class="user-details">
-    <view class="username">{{ username }}</view>
-  </view>
-</view>
-<view class="user-publish">我的发布</view>
+<user-info tt:if="{{ topic_list.length>0 }}" name="{{ name }}" avatar="{{ avatar }}" topic_list="{{ topic_list }}"
+  is_me></user-info>
 <navbar navItem2="{{ navItem2 }}"></navbar>

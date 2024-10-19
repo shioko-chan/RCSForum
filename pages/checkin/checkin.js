@@ -12,6 +12,7 @@ Page({
     isProcessing: false,
     ranks: [],
     ranks_timestamp: 0,
+    url: "http://192.168.3.2"
   },
 
   sendMessage: function (url) {
@@ -47,12 +48,12 @@ Page({
   },
 
   sendHello: function () {
-    return this.sendMessage(`${getApp().url}/checkin/hello`);
+    return this.sendMessage(`${this.data.url}/checkin/hello`);
   },
 
   keepAlive: function () {
     var that = this;
-    this.sendMessage(`${getApp().url}/checkin/keepalive`).catch(() => {
+    this.sendMessage(`${this.data.url}/checkin/keepalive`).catch(() => {
       tt.showModal({
         title: "已断开与服务器的连接",
         confirmText: "确认",
@@ -127,7 +128,7 @@ Page({
         displayText: this.formatTime(h, m, s),
       });
 
-    }, 100);
+    }, 1000);
 
     this.setData({
       intervalId,
@@ -151,7 +152,7 @@ Page({
     });
   },
   getRanks: function () {
-    const url = getApp().url;
+    const url = this.data.url;
     return new Promise((resolve, reject) => {
       tt.request({
         url: `${url}/checkin/rank`,

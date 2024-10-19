@@ -5,17 +5,7 @@ Page({
     page: 0,
     finished: false,
   },
-  navToDetail: function (event) {
-    const pid = event.detail.pid;
-    const item = this.data.topic_list.find(e => e.pid === pid);
-    getApp().setOnceStorage(item);
-    tt.navigateTo({
-      "url": `../topic/topic?pid=${this.data.pid}`,
-      fail: function () {
-        console.error("failed to navigate to topic");
-      }
-    });
-  },
+
   showModalFailToGetTopics: function () {
     tt.showModal({
       title: "获取话题列表失败",

@@ -1,7 +1,7 @@
 App({
   username: "Anonymous",
   avatar: "/assets/images/anon.png",
-  url: "http://192.168.3.2",
+  url: "http://10.26.4.71",
   is_admin: false,
   token: "",
   page_size: 16,
@@ -37,6 +37,7 @@ App({
               that.username = res.data.name;
               that.token = res.header.authorization;
               that.is_admin = res.data.is_admin;
+              that.open_id = res.data.open_id;
               resolve();
             }
             else {
@@ -89,12 +90,13 @@ App({
       })
     }
     this.login_promise = Promise.all([getStorage("Azazel"), getStorage("Ariel"), getStorage("Asbeel"), getStorage("Samyaza")])
-      .then(([token, username, avatar, is_admin]) => {
+      .then(([token, username, avatar, is_admin, open_id]) => {
         console.info("get info from local storage");
         this.token = token;
         this.username = username;
         this.avatar = avatar;
         this.is_admin = is_admin;
+        this.open_id = open_id;
         this.login_promise = null;
       })
       .catch(err => {
@@ -131,7 +133,7 @@ App({
         });
       });
     };
-    return Promise.all([setStorage("Azazel", that.token), setStorage("Ariel", that.username), setStorage("Asbeel", that.avatar), setStorage("Samyaza", that.is_admin)]);
+    return Promise.all([setStorage("Azazel", that.token), setStorage("Ariel", that.username), setStorage("Asbeel", that.avatar), setStorage("Samyaza", that.is_admin), setStorage("Samael", that.open_id)]);
   },
   onHide: async function () {
     await this.storageInfo();
