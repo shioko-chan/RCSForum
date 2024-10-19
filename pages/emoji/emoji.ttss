@@ -6,7 +6,7 @@
     background-color: #f9f9f9;
     border-radius: 12rpx;
     box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
-    height: 250rpx;
+    height: 200rpx;
     overflow: scroll;
     width: 100%;
 }

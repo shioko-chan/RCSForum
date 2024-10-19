@@ -1,6 +1,5 @@
 .container {
     width: 750rpx;
-    padding: 16rpx;
 }
 
 .bottom-container {

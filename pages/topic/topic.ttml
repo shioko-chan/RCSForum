@@ -1,13 +1,8 @@
 <view class="container">
-  <scroll-view bindscrolltolower="handleScrollUpdate">
-    <poster></poster>
-    <poster></poster>
-    <poster></poster>
-    <poster></poster>
-    <poster></poster>
-    <poster></poster>
-    <view style="height: 100rpx;">
-  </scroll-view>
+  <poster tt:if="{{ poster }}" title="{{ poster.title }}" content="{{ poster.content }}" username="{{ poster.name }}"
+    timestamp="{{ poster.time }}" likeCount="{{ poster.likes }}" avatar="{{ poster.avatar }}"
+    isLiked="{{ poster.liked }}" images="{{ poster.images }}" uid="{{ poster.uid }}" showall>
+  </poster>
+  <view style="height: 100rpx;"></view>
 </view>
-<!-- <bottom-bar></bottom-bar> -->
-<navbar></navbar>
+<bottom-bar></bottom-bar>

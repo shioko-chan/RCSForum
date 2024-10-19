@@ -1,12 +1,16 @@
 App({
   username: "Anonymous",
   avatar: "/assets/images/anon.png",
-  url: "http://192.168.1.100:8000",
+  url: "http://192.168.3.2",
   is_admin: false,
   token: "",
   page_size: 16,
   login_promise: null,
-  login_once: function () {
+  once_storage: null,
+  setOnceStorage: function (data) {
+    this.once_storage = data;
+  },
+  loginOnce: function () {
     var that = this;
     return new Promise((res, rej) => {
       var factory = (func) => {
@@ -62,10 +66,9 @@ App({
     if (prev_promise !== null) {
       return prev_promise;
     }
-    let login_promise = this.login_promise = this.login_once();
+    let login_promise = this.login_promise = this.loginOnce();
     return login_promise;
   },
-  processContent: function (content) { },
   onLaunch: function () {
     var getStorage = function (key) {
       return new Promise((resolve, reject) => {
@@ -97,7 +100,7 @@ App({
       .catch(err => {
         console.warn("load data from local storage failed, ", err);
         console.info("get info from server");
-        this.login_promise = this.login_once().catch(() => {
+        this.login_promise = this.loginOnce().catch(() => {
           tt.showModal({
             "title": "连接服务器失败",
             "confirmText": "确认",

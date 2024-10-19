@@ -9,6 +9,11 @@
     align-items: stretch;
 }
 
+.limit-height {
+    max-height: 200rpx;
+    overflow: hidden;
+}
+
 .userprofile {
     display: flex;
     align-items: start;
@@ -38,23 +43,34 @@
     margin-bottom: 20rpx;
 }
 
-.content {
-    display: block;
-    font-size: 28rpx;
-    line-height: 40rpx;
-    margin-bottom: 20rpx;
-}
-
 .image-display-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 10rpx;
+    grid-template-columns: repeat(auto-fill, minmax(110rpx, 1fr));
 }
 
 .image {
-    width: 225rpx;
-    height: 200rpx;
     border-radius: 10rpx;
+    max-height: 750rpx;
+    width: 100%;
+}
+
+.image.once {
+    grid-column: span 6;
+    height: auto;
+    aspect-ratio: 1;
+}
+
+.image.double {
+    grid-column: span 3;
+    height: auto;
+    aspect-ratio: 1;
+}
+
+.image.triple {
+    grid-column: span 2;
+    height: auto;
+    aspect-ratio: 1;
 }
 
 .action-bar {

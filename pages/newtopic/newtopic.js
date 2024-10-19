@@ -64,8 +64,15 @@ Page({
       count: 9,
       sourceType: ['album', 'camera'],
       success: (result) => {
-        let compressPromises = result.tempFilePaths.map(
-          tempFilePath => new Promise((resolve, reject) => {
+        let compressPromises = result.tempFiles.map(
+          (tempFile, index) => new Promise((resolve, reject) => {
+            const tempFilePath = tempFile.path;
+            const fileSize = tempFile.size;
+            console.log(`图片大小为 ${fileSize} 字节`);
+            if (fileSize > 5 * 1024 * 1024) {
+              reject(index);
+            }
+
             tt.compressImage({
               src: tempFilePath,
               quality: 30,
@@ -74,15 +81,24 @@ Page({
               },
               fail: (res) => {
                 console.error('compressImage failed', res, tempFilePath)
-                reject(res);
+                reject(index);
               }
             });
           })
         );
         that.allSettled(compressPromises).then(values => {
           values.forEach(({ status, value }) => {
-            if (status !== 'fulfilled') { return; }
-            that.data.images.push(value);
+            if (status !== 'fulfilled') {
+              tt.showModal({
+                "title": `第${value + 1}个图片上传失败`,
+                "content": "图片大小上限5MB",
+                "icon": "none",
+                "showCancel": false,
+              });
+            }
+            else {
+              that.data.images.push(value);
+            }
           });
           that.setData({ "images": that.data.images });
         });
@@ -183,7 +199,7 @@ Page({
     let imageList = [];
     for (let i = 0; i < this.data.images.length; i += 5) {
       for (let { status, value } of
-        await this.allSettled(this.data.images.slice(i, i + 5).map(image => uploadImage(image, 0)))) {
+        (await this.allSettled(this.data.images.slice(i, i + 5).map(image => uploadImage(image, 0))))) {
         if (status !== 'fulfilled') {
           if (value === null) {
             console.error("reject because of authenticate error");
@@ -193,14 +209,19 @@ Page({
           let { image, res } = value;
           console.error("an image upload failed", res);
           let detail = "";
-          if (res.statusCode === 415) {
+          if (res.statusCode === 413) {
+            detail = "图片大小上限5MB";
+          } else if (res.statusCode === 415) {
             detail = "格式不支持";
           }
           else if (res.statusCode === 406) {
-            detail = "图片大于5MB";
+            detail = "图片大小上限5MB";
           }
           else if (res.statusCode === 500) {
             detail = "服务器错误";
+          }
+          else {
+            detail = res.statusCode;
           }
           imageUploadFailModal(this.data.images.indexOf(image) + 1, detail);
           return;

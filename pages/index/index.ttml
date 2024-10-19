@@ -1,16 +1,16 @@
 <view class="container">
   <scroll-view bindscrolltolower="handleScrollUpdate">
     <block tt-for="{{ topic_list }}" tt-key="pid">
-      <poster title="{{ item.title }}" content="{{ item.content }}"
-        username="{{ item.is_anonymous? 'anonymous': item.name }}" timestamp="{{ item.time }}"
-        likeCount="{{ item.likes }}" avatar="{{ item.is_anonymous? '/assets/images/anon.png': item.avatar }}"
-        isLiked="{{ item.liked }}" images="{{ item.images }}" data-key="{{ item.pid }}">
+      <poster title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}"
+        timestamp="{{ item.time }}" likeCount="{{ item.likes }}" avatar="{{ item.avatar }}" isLiked="{{ item.liked }}"
+        images="{{ item.images }}" pid="{{ item.pid }}" uid="{{ item.uid }}" bind:posterdetail="navToDetail"
+        bind:userinfo="navToUser">
       </poster>
     </block>
     <view class="refresh-box" bindtap="handleRefresh">
       <image class="refresh-button" src="/assets/images/refresh.png" />
     </view>
-    <view style="height: 100rpx;">
+    <view style="height: 100rpx;"></view>
   </scroll-view>
 </view>
 <navbar></navbar>

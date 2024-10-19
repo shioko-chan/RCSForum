@@ -5,6 +5,17 @@ Page({
     page: 0,
     finished: false,
   },
+  navToDetail: function (event) {
+    const pid = event.detail.pid;
+    const item = this.data.topic_list.find(e => e.pid === pid);
+    getApp().setOnceStorage(item);
+    tt.navigateTo({
+      "url": `../topic/topic?pid=${this.data.pid}`,
+      fail: function () {
+        console.error("failed to navigate to topic");
+      }
+    });
+  },
   showModalFailToGetTopics: function () {
     tt.showModal({
       title: "获取话题列表失败",
@@ -57,6 +68,16 @@ Page({
     });
   },
   setTopicList: function (topics) {
+    const is_admin = getApp().is_admin;
+    topics.forEach(topic => {
+      if (topic.is_anonymous) {
+        topic.avatar = '/assets/images/anon.png';
+        topic.name = 'anonymous';
+        if (!is_admin) {
+          topic.uid = '';
+        }
+      }
+    });
     this.setData({ topic_list: topics, page: this.data.page + 1 });
     if (topics.length < getApp().page_size) {
       this.setData({ finished: true });

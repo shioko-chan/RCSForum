@@ -1,6 +1,21 @@
 Component({
   properties: {
-    title: { type: String, value: "此条帖子标题为空" },
+    showall: {
+      type: Boolean,
+      value: false,
+    },
+    title: {
+      type: String,
+      value: "此条帖子标题为空"
+    },
+    pid: {
+      type: String,
+      value: "",
+    },
+    uid: {
+      type: String,
+      value: "",
+    },
     content: {
       type: String,
       value: "此条帖子内容为空",
@@ -36,17 +51,20 @@ Component({
   },
   attached: function () {
     const url = getApp().url;
-    this.setData({ "imageList": this.data.images.map(image_name => `${url}/image/${image_name}`) });
+    this.setData({
+      "imageList": this.data.images.map(
+        image_name => `${url}/image/${image_name}`
+      )
+    });
   },
   methods: {
-    onImageError(e) {
-      console.error('图片加载失败', e.detail.errMsg);
+    handleNavToDetail: function () {
+      if (this.data.pid === "") return;
+      this.triggerEvent("posterdetail", { "pid": this.data.pid });
     },
-    onImageLoad(e) {
-      console.log('图片加载成功', e.detail);
-    },
-    handleTapUserInfo: function (event) {
-      console.log(event);
+    handleTapUserInfo: function () {
+      if (this.data.uid === "") return;
+      this.triggerEvent("userinfo", { "uid": this.data.uid });
     },
     handleLike: function () {
       if (this.data.isLiked) {

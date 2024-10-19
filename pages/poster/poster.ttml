@@ -1,24 +1,27 @@
-<view class="poster">
-  <view class="userprofile" bindtap="handleTapUserInfo">
+<view class="poster" bindtap="handleNavToDetail">
+  <view class="userprofile" catchtap="handleTapUserInfo">
     <image class="avatar" src="{{ avatar }}"></image>
     <view class="userinfo">
       <text class="username">{{ username }}</text>
     </view>
   </view>
   <text class="title">{{ title }}</text>
-  <text-with-img class="content" content="{{ content }}"></text-with-img>
+  <text-with-img class="{{ showall? '' : 'limit-height' }}" content="{{ content }}"
+    showall="{{ showall }}"></text-with-img>
   <view class="image-display-container">
     <block tt:for="{{ imageList }}">
-      <image class="image" src="{{ item }}" mode="aspectFill" bindtap="previewImage" data-index="{{ index }}" />
+      <image-web
+        class="image {{ showall?'once':(imageList.length>=3?'triple':(imageList.length==1?'once':(imageList.length==2?'double':''))) }}"
+        src="{{ item }}" mode="aspectFill" catchtap="previewImage" data-index="{{ index }}"></image-web>
     </block>
   </view>
   <view class="action-bar">
     <view class="like-reply-section">
-      <view class="like-section" bindtap="handleLike">
+      <view class="like-section" catchtap="handleLike">
         <image class="like-icon" src="{{ isLiked==1? '/assets/images/liked.png' : '/assets/images/like.png' }}" />
         <text class="like-count">{{ likeCount }}</text>
       </view>
-      <text class="reply-button" bindtap="handleReply">回复</text>
+      <text class="reply-button" catchtap="handleReply">回复</text>
     </view>
     <view class="timestamp">{{ timestamp }}</view>
   </view>

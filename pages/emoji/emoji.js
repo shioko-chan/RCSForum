@@ -31,7 +31,7 @@ Component({
       },
       {
         "name": "NO_PROBLEM",
-        "url": "/assets/emoji/noproblem.png",
+        "url": "/assets/emoji/noproblem.jpg",
       },
       {
         "name": "BLANK_BRAIN",
@@ -139,7 +139,7 @@ Component({
       },
       {
         "name": "TANG",
-        "url": "/assets/emoji/tang.png",
+        "url": "/assets/emoji/tang.jpg",
       },
       {
         "name": "NERD",
