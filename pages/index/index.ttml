@@ -1,6 +1,11 @@
 <view class="container">
   <scroll-view bindscrolltolower="handleScrollUpdate">
-    <waterfall topic_list="{{ topic_list }}"></waterfall>
+    <block tt:for="{{ topic_list }}" tt:key="pid">
+      <poster title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}"
+        timestamp="{{ item.time }}" likeCount="{{ item.likes }}" avatar="{{ item.avatar }}" isLiked="{{ item.liked }}"
+        images="{{ item.images }}" pid="{{ item.pid }}" uid="{{ item.uid }}">
+      </poster>
+    </block>
     <view style="height: 100rpx;"></view>
   </scroll-view>
   <view class="refresh-box" bindtap="handleRefresh">

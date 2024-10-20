@@ -1,6 +1,5 @@
 Page({
   data: {
-    showEmojiArea: false,
     poster: null,
   },
   onLoad: function () {

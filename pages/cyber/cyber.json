@@ -1,0 +1,6 @@
+{
+    "usingComponents": {
+        "navbar": "../../components/navigator_bar/navigator_bar",
+        "user-info": "../../components/user_info/user_info"
+    }
+}

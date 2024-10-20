@@ -18,13 +18,13 @@ Page({
     });
   },
   handleTitleInput: function (event) {
-    this.setData({ "title": event.detail.value });
+    this.data.title = event.detail.value;
   },
   handleContentInput: function (event) {
-    this.setData({ "content": event.detail.value });
+    this.data.content = event.detail.value;
   },
   handleContentBlur: function (event) {
-    this.setData({ "cursor": event.detail.cursor });
+    this.data.cursor = event.detail.cursor;
   },
   clearAll: function () {
     this.setData({

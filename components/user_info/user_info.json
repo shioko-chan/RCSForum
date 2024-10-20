@@ -1,7 +1,6 @@
 {
     "component": true,
     "usingComponents": {
-        "poster": "../poster/poster",
-        "waterfall": "../waterfall/waterfall"
+        "poster": "../poster/poster"
     }
 }

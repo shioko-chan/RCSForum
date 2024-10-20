@@ -1,8 +1,14 @@
 <view class="container">
-  <poster tt:if="{{ poster }}" title="{{ poster.title }}" content="{{ poster.content }}" username="{{ poster.name }}"
+  <poster title="{{ poster.title }}" content="{{ poster.content }}" username="{{ poster.name }}"
     timestamp="{{ poster.time }}" likeCount="{{ poster.likes }}" avatar="{{ poster.avatar }}"
     isLiked="{{ poster.liked }}" images="{{ poster.images }}" uid="{{ poster.uid }}" showall>
   </poster>
+  <block tt:for="{{ topic_list }}" tt:key="pid">
+    <comment title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}"
+      timestamp="{{ item.time }}" likeCount="{{ item.likes }}" avatar="{{ item.avatar }}" isLiked="{{ item.liked }}"
+      images="{{ item.images }}" pid="{{ item.pid }}" uid="{{ item.uid }}">
+    </comment>
+  </block>
   <view style="height: 100rpx;"></view>
 </view>
 <bottom-bar></bottom-bar>

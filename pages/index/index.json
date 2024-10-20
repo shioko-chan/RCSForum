@@ -1,7 +1,6 @@
 {
     "usingComponents": {
         "poster": "../../components/poster/poster",
-        "navbar": "../../components/navigator_bar/navigator_bar",
-        "waterfall": "../../components/waterfall/waterfall"
+        "navbar": "../../components/navigator_bar/navigator_bar"
     }
 }
