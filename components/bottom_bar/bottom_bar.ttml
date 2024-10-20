@@ -1,6 +1,5 @@
 <view class="bottom-container">
   <view class="image-container">
-
   </view>
   <view class="emoji-container" hidden="{{showEmojiArea}}">
     <text class="emoji" bindtap="addEmoji">😀</text>

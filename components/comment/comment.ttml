@@ -1,19 +1,24 @@
-<view class="comment">
-  <view class="userprofile">
+<view class="comment" bindtap="navToDetail">
+  <view class="userprofile" catchtap="navToUser">
     <image class="avatar" src="{{ avatar }}"></image>
     <view class="userinfo">
       <text class="username">{{ username }}</text>
     </view>
   </view>
-  <text class="content">{{ content }}</text>
-
+  <text-with-img content="{{ content }}"></text-with-img>
+  <view class="image-display-container">
+    <block tt:for="{{ imageList }}">
+      <image-web class="image" src="{{ item }}" mode="aspectFill" catchtap="previewImage" data-index="{{ index }}"
+        bind:imageLoaded="imageLoaded"></image-web>
+    </block>
+  </view>
   <view class="action-bar">
     <view class="like-reply-section">
-      <view class="like-section" bindtap="handleLike">
-        <image class="like-icon" src="{{ isLiked==1? '/assets/images/liked.png' : './like.png' }}" />
+      <view class="like-section" catchtap="handleLike">
+        <image class="like-icon" src="{{ isLiked? '/assets/images/liked.png' : '/assets/images/like.png' }}" />
         <text class="like-count">{{ likeCount }}</text>
       </view>
-      <text class="reply-button" bindtap="handleReply">回复</text>
+      <text class="reply-button" catchtap="handleReply">回复</text>
     </view>
     <view class="timestamp">{{ timestamp }}</view>
   </view>

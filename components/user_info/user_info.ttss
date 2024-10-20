@@ -1,5 +1,17 @@
+@font-face {
+    font-family: "RaglanStd";
+    src: url("http://10.26.4.71/font/FOT-RaglanStd-UB.otf") format("opentype");
+}
+
 .user-publish {
     width: 750rpx;
+}
+
+.user-publish-title {
+    text-align: center;
+    font-size: 80rpx;
+    font-family: "RaglanStd";
+    color: red;
 }
 
 .user-info {
@@ -10,7 +22,6 @@
     border-radius: 15rpx;
     box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
     margin: auto;
-    font-family: Arial, sans-serif;
 }
 
 .avatar-container {

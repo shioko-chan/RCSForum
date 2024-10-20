@@ -68,9 +68,10 @@ Page({
         }
       }
     });
-    this.setData({ topic_list: topics, page: this.data.page + 1 });
+    this.data.page += 1;
+    this.setData({ topic_list: topics });
     if (topics.length < getApp().page_size) {
-      this.setData({ finished: true });
+      this.data.finished = true;
       this.showModalAllFinished();
     }
   },
@@ -89,12 +90,10 @@ Page({
     }).catch(() => { this.showModalFailToGetTopics(); });
   },
   handleRefresh: function () {
-    this.setData({ page: 0, finished: false });
+    this.data.page = 0;
+    this.data.finished = false;
     this.getTopics(this.data.page)
       .then(topics => { this.setTopicList(topics); })
       .catch(() => { this.showModalFailToGetTopics(); });
-  },
-  handleEmoji: function () {
-    this.setData({ showEmojiArea: !this.data.showEmojiArea });
   },
 })

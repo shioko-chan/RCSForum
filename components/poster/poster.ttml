@@ -1,5 +1,5 @@
-<view class="poster" bindtap="handleNavToDetail">
-  <view class="userprofile" catchtap="handleTapUserInfo">
+<view class="poster" bindtap="navToDetail">
+  <view class="userprofile" catchtap="navToUser">
     <image class="avatar" src="{{ avatar }}"></image>
     <view class="userinfo">
       <text class="username">{{ username }}</text>
@@ -12,13 +12,14 @@
     <block tt:for="{{ imageList }}">
       <image-web
         class="image {{ showall?'once':(imageList.length>=3?'triple':(imageList.length==1?'once':(imageList.length==2?'double':''))) }}"
-        src="{{ item }}" mode="aspectFill" catchtap="previewImage" data-index="{{ index }}"></image-web>
+        src="{{ item }}" mode="aspectFill" catchtap="previewImage" data-index="{{ index }}"
+        bind:imageLoaded="imageLoaded"></image-web>
     </block>
   </view>
   <view class="action-bar">
     <view class="like-reply-section">
       <view class="like-section" catchtap="handleLike">
-        <image class="like-icon" src="{{ isLiked==1? '/assets/images/liked.png' : '/assets/images/like.png' }}" />
+        <image class="like-icon" src="{{ isLiked? '/assets/images/liked.png' : '/assets/images/like.png' }}" />
         <text class="like-count">{{ likeCount }}</text>
       </view>
       <text class="reply-button" catchtap="handleReply">回复</text>
