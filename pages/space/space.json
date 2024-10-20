@@ -1,6 +1,6 @@
 {
     "usingComponents": {
-        "navbar": "../navigator_bar/navigator_bar",
-        "user-info": "../user_info/user_info"
+        "navbar": "../../components/navigator_bar/navigator_bar",
+        "user-info": "../../components/user_info/user_info"
     }
 }

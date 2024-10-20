@@ -1,8 +1,8 @@
 {
     "usingComponents": {
-        "poster": "../poster/poster",
-        "comment": "../comment/comment",
-        "bottom-bar": "../bottom_bar/bottom_bar",
-        "navbar": "../navigator_bar/navigator_bar"
+        "poster": "../../components/poster/poster",
+        "comment": "../../components/comment/comment",
+        "bottom-bar": "../../components/bottom_bar/bottom_bar",
+        "navbar": "../../components/navigator_bar/navigator_bar"
     }
 }

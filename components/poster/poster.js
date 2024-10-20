@@ -43,19 +43,19 @@ Component({
     images: {
       type: Array,
       value: [],
+      observer: function (newVal, _) {
+        const url = getApp().url;
+        this.setData({
+          "imageList": newVal.map(
+            image_name => `${url}/image/${image_name}`
+          )
+        });
+      },
     }
   },
   data: {
     defaultStates: {},
     imageList: [],
-  },
-  attached: function () {
-    const url = getApp().url;
-    this.setData({
-      "imageList": this.data.images.map(
-        image_name => `${url}/image/${image_name}`
-      )
-    });
   },
   methods: {
     handleNavToDetail: function () {

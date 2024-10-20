@@ -14,7 +14,7 @@ Component({
       const item = this.data.topic_list.find(e => e.pid === pid);
       getApp().setOnceStorage(item);
       tt.navigateTo({
-        "url": `../topic/topic?pid=${this.data.pid}`,
+        "url": `../../pages/topic/topic?pid=${this.data.pid}`,
         fail: function () {
           console.error("failed to navigate to topic");
         }
@@ -23,7 +23,7 @@ Component({
     navToUser: function (event) {
       const uid = event.detail.uid;
       tt.navigateTo({
-        "url": `../user/user?uid=${uid}`,
+        "url": `../../pages/user/user?uid=${uid}`,
         fail: function () {
           console.error("failed to navigate to user");
         }
