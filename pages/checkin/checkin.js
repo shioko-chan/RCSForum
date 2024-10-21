@@ -26,10 +26,10 @@ Page({
           },
           "method": "POST",
           success: res => {
-            if (res.data.status === 0) {
+            if (res.statusCode === 200) {
               resolve();
             }
-            else if (res.data.status === 1 && cnt === 0) {
+            else if (res.statusCode === 401 && cnt === 0) {
               getApp().login()
                 .then(() => request(cnt + 1))
                 .catch(() => reject());
@@ -162,7 +162,7 @@ Page({
         },
         method: "GET",
         success: res => {
-          if (res.data.status === 0) {
+          if (res.statusCode === 200) {
             resolve(res.data.rank);
           }
           else {

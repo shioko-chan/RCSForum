@@ -24,9 +24,9 @@ Page({
           "authentication": getApp().token
         },
         success: res => {
-          if (res.data.status === 0) {
+          if (res.statusCode === 200) {
             this.setData({ "comment_list": res.data.comments });
-          } else if (res.data.status === 1 && cnt <= 0) {
+          } else if (res.statusCode === 401 && cnt <= 0) {
             getApp().login()
               .then(() => req(cnt + 1))
               .catch(() => showModalFailToGetComments());

@@ -123,6 +123,19 @@ Component({
       }
       const req = cnt => {
         return new Promise((resolve, reject) => {
+          const process_failure = res => {
+            if (res.statusCode === 401 && cnt <= 0) {
+              getApp().login()
+                .then(() => req(cnt + 1))
+                .catch(() => {
+                  console.error("评论发布失败", res);
+                  reject(res.statusCode);
+                });
+            } else {
+              console.error("评论发布失败", res);
+              reject(res.statusCode);
+            }
+          };
           tt.request({
             "url": url,
             "method": "POST",
@@ -134,21 +147,12 @@ Component({
             success: res => {
               if (res.statusCode === 200) {
                 resolve();
-              } else if (res.statusCode === 401 && cnt <= 0) {
-                getApp().login()
-                  .then(() => req(cnt + 1))
-                  .catch(() => {
-                    console.error("评论发布失败", res);
-                    reject(res.statusCode);
-                  });
               } else {
-                console.error("评论发布失败", res);
-                reject(res.statusCode);
+                process_failure(res);
               }
             },
             fail: res => {
-              console.error("评论发布失败", res);
-              reject(res);
+              process_failure(res);
             }
           });
         })

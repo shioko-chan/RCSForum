@@ -4,7 +4,7 @@
     liked="{{ poster.liked }}" images="{{ poster.images }}" uid="{{ poster.uid }}" pid="{{ poster.pid }}"
     bind:reply="handleReply" already_detail>
   </poster>
-  <block tt:for="{{ comment_list }}" tt:key="pid">
+  <block tt:for="{{ comment_list }}">
     <comment content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
       likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
       pid="{{ item.pid }}" uid="{{ item.uid }}">

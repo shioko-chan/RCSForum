@@ -51,18 +51,18 @@
 
 .image {
     border-radius: 10rpx;
-    max-height: 750rpx;
+    max-height: 710rpx;
     width: 100%;
 }
 
 .image.once {
-    grid-column: span 6;
+    grid-column: span 3;
     height: auto;
     aspect-ratio: 1;
 }
 
 .image.double {
-    grid-column: span 3;
+    grid-column: span 2;
     height: auto;
     aspect-ratio: 1;
 }

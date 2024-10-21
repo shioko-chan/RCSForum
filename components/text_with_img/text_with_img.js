@@ -7,12 +7,12 @@ Component({
     content: {
       type: String,
       value: "",
-      observer: function (newVal, _) {
+      observer: function (new_val, _) {
         const matchEmoji = emoji_name => {
           return this.data.emojis.find(e => e.name === emoji_name)?.url || null;
         };
 
-        const raw_str = newVal;
+        const raw_str = new_val;
         let start = 0;
         this.setData({ "itemList": [] });
 
@@ -49,6 +49,7 @@ Component({
           });
         }
         this.setData({ "itemList": this.data.itemList });
+        console.log(this.data.itemList);
       }
     },
   },

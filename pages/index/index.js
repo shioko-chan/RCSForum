@@ -31,17 +31,19 @@ Page({
           },
           "data": { "page": page },
           success: res => {
-            if (res.data.status === 0) {
+            console.log(res);
+            if (res.statusCode === 200) {
               resolve(res.data.topics);
-            } else if (res.data.status === 1 && cnt <= 0) {
+            } else if (res.statusCode === 401 && cnt <= 0) {
               getApp().login()
                 .then(() => request(cnt + 1))
                 .catch(() => reject("failed to login"));
             } else {
-              reject("failed to get topics, status code: " + res.data.status);
+              reject("failed to get topics, status code: " + res.statusCode);
             }
           },
           fail: _ => {
+            console.log(123);
             reject("failed to get topics due to network error");
           },
         });

@@ -93,20 +93,21 @@ Page({
           images: image_list,
         },
         success: res => {
-          if (res.data.status === 0) {
+          if (res.statusCode === 200) {
             successCall();
-          } else if (res.data.status === 1 && cnt <= 0) {
+          } else if (res.statusCode === 401 && cnt <= 0) {
             getApp().login()
               .then(() => request(cnt + 1))
               .catch(() => {
                 failCall();
               });
           } else {
+            console.log(getApp().token, res, image_list);
             failCall();
           }
         },
         fail: res => {
-          if (res.data.status === 1 && cnt <= 0) {
+          if (res.statusCode === 401 && cnt <= 0) {
             getApp().login()
               .then(() => request(cnt + 1))
               .catch(() => {
@@ -126,12 +127,6 @@ Page({
           mask: true,
         });
         request(0);
-      })
-      .catch(() => {
-        tt.showModal({
-          "title": "图片上传失败",
-          "showCancel": false,
-        });
       });
   }
 })

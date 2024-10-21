@@ -142,55 +142,44 @@ Component({
       this.setData({ "images": this.data.images });
     },
     uploadImage: function () {
-      var imageUploadFailModal = (cnt, info) => {
-        tt.hideLoading();
-        tt.showModal({
-          "title": `第${cnt}个图片上传失败`,
-          "content": info,
-          "icon": "none",
-          "showCancel": false,
-        });
-      };
       let progress = 0;
       const progress_total = this.data.images.length;
       const url = getApp().url;
-      var uploadImage = (image, retry) => {
-        return new Promise((resolve, reject) => {
-          tt.uploadFile({
-            "url": `${url}/image/upload`,
-            "filePath": image,
-            "name": "image",
-            "header": {
-              "Content-Type": "multipart/form-data",
-              "authentication": getApp().token
-            },
-            success(res) {
-              if (res.statusCode === 200) {
-                progress += 1;
-                tt.showLoading({
-                  "title": `上传中..${progress}/${progress_total}`,
-                  "mask": true,
-                });
-                resolve(JSON.parse(res.data));
-              } else if (res.statusCode === 401 && retry <= 0) {
-                getApp().login()
-                  .then(() => uploadImage(image, retry + 1))
-                  .catch(() => reject({ image, "res": "authenticate error" }));
-              } else {
-                reject({ image, res });
-              }
-            },
-            fail(res) {
-              if (res.statusCode === 401 && retry <= 0) {
-                getApp().login()
-                  .then(() => uploadImage(image, retry + 1))
-                  .catch(() => reject({ image, "res": "authenticate error" }));
-              } else {
-                reject({ image, res });
-              }
-            }
+      var uploadImage = async (image, retry) => {
+        try {
+          const res = await new Promise((resolve, reject) => {
+            tt.uploadFile({
+              "url": `${url}/image/upload`,
+              "filePath": image,
+              "name": "image",
+              "header": {
+                "Content-Type": "multipart/form-data",
+                "authentication": getApp().token
+              },
+              success: resolve,
+              fail: reject,
+            });
           });
-        });
+          if (res.statusCode === 200) {
+            progress += 1;
+            tt.showLoading({
+              "title": `上传中..${progress}/${progress_total}`,
+              "mask": true,
+            });
+            return JSON.parse(res.data);
+          }
+          else {
+            throw res;
+          }
+        } catch (res) {
+          if (res.statusCode === 401 && retry <= 0) {
+            return getApp().login()
+              .then(() => uploadImage(image, retry + 1))
+              .catch(() => { throw { image, "res": "authenticate error" }; });
+          } else {
+            throw { image, res };
+          }
+        }
       };
       tt.showLoading({
         "title": `上传中..${progress}/${progress_total}`,
@@ -214,8 +203,12 @@ Component({
         else {
           detail = res.statusCode;
         }
-        imageUploadFailModal(this.data.images.indexOf(image) + 1, detail);
-        return Promise.reject("image upload failed");
+        tt.showModal({
+          "title": `第${this.data.images.indexOf(image) + 1}个图片上传失败`,
+          "content": detail,
+          "icon": "none",
+          "showCancel": false,
+        });
       }).finally(() => { tt.hideLoading(); });
     },
     clearImage: function () {

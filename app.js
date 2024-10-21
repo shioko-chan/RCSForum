@@ -25,7 +25,7 @@ App({
             "code": code
           },
           success: function (res) {
-            if (res.data.status === 0) {
+            if (res.statusCode === 200) {
               that.avatar = res.data.avatar;
               that.username = res.data.name;
               that.token = res.header.authorization;
