@@ -2,8 +2,8 @@
   <scroll-view bindscrolltolower="handleScrollUpdate">
     <block tt:for="{{ topic_list }}" tt:key="pid">
       <poster title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}"
-        timestamp="{{ item.time }}" likeCount="{{ item.likes }}" avatar="{{ item.avatar }}" isLiked="{{ item.liked }}"
-        images="{{ item.images }}" pid="{{ item.pid }}" uid="{{ item.uid }}">
+        timestamp="{{ item.time }}" likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}"
+        images="{{ item.images }}" pid="{{ item.pid }}" uid="{{ item.uid }}" is_digest>
       </poster>
     </block>
   </scroll-view>

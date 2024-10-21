@@ -10,8 +10,8 @@
   <view class="user-publish-title">{{ is_me? "我的帖子" : "TA的帖子" }}</view>
   <block tt:for="{{ list }}" tt:key="pid">
     <poster title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
-      likeCount="{{ item.likes }}" avatar="{{ item.avatar }}" isLiked="{{ item.liked }}" images="{{ item.images }}"
-      pid="{{ item.pid }}" uid="{{ item.uid }}">
+      likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
+      pid="{{ item.pid }}" uid="{{ item.uid }}" is_digest>
     </poster>
   </block>
   <view style="height: 100rpx;"></view>

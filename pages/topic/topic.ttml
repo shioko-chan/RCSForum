@@ -1,14 +1,15 @@
 <view class="container">
   <poster title="{{ poster.title }}" content="{{ poster.content }}" username="{{ poster.username }}"
-    timestamp="{{ poster.timestamp }}" likeCount="{{ poster.likeCount }}" avatar="{{ poster.avatar }}"
-    isLiked="{{ poster.isLiked }}" images="{{ poster.images }}" uid="{{ poster.uid }}" showall>
+    timestamp="{{ poster.timestamp }}" likes="{{ poster.likes }}" avatar="{{ poster.avatar }}"
+    liked="{{ poster.liked }}" images="{{ poster.images }}" uid="{{ poster.uid }}" pid="{{ poster.pid }}"
+    bind:reply="handleReply">
   </poster>
   <block tt:for="{{ comment_list }}" tt:key="pid">
     <comment content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
-      likeCount="{{ item.likes }}" avatar="{{ item.avatar }}" isLiked="{{ item.liked }}" images="{{ item.images }}"
+      likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
       pid="{{ item.pid }}" uid="{{ item.uid }}">
     </comment>
   </block>
   <view style="height: 100rpx;"></view>
 </view>
-<bottom-bar pid="{{ poster.pid }}"></bottom-bar>
+<bottom-bar pid="{{ poster.pid }}" id="bottom-bar"></bottom-bar>

@@ -2,6 +2,8 @@ Page({
   data: {
     poster: null,
     comment_list: [],
+    index_1: -1,
+    toward: "",
   },
   onLoad: function () {
     const data = getApp().once_storage;
@@ -44,6 +46,9 @@ Page({
       })
     };
     req(0);
+  },
+  handleReply: function (event) {
+    this.selectComponent("#bottom-bar").focusReply(event.detail.toward, event.detail.index_1);
   },
   handleEmoji: function () {
     this.setData({ "showEmojiArea": !this.data.showEmojiArea });

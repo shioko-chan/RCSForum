@@ -15,8 +15,8 @@
   <view class="action-bar">
     <view class="like-reply-section">
       <view class="like-section" catchtap="handleLike">
-        <image class="like-icon" src="{{ isLiked? '/assets/images/liked.png' : '/assets/images/like.png' }}" />
-        <text class="like-count">{{ likeCount }}</text>
+        <image class="like-icon" src="{{ liked? '/assets/images/liked.png' : '/assets/images/like.png' }}" />
+        <text class="like-count">{{ likes }}</text>
       </view>
       <text class="reply-button" catchtap="handleReply">回复</text>
     </view>

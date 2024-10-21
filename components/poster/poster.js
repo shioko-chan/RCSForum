@@ -1,6 +1,6 @@
 Component({
   properties: {
-    showall: {
+    is_digest: {
       type: Boolean,
       value: false,
     },
@@ -28,7 +28,7 @@ Component({
       type: String,
       value: "2024-10-5 18:00:00",
     },
-    likeCount: {
+    likes: {
       type: Number,
       value: 0,
     },
@@ -36,7 +36,7 @@ Component({
       type: String,
       value: "/assets/images/anon.png",
     },
-    isLiked: {
+    liked: {
       type: Boolean,
       value: false,
     },
@@ -61,7 +61,7 @@ Component({
   },
   methods: {
     handleReply: function () {
-      this.triggerEvent("reply", { "pid": this.data.pid, });
+      this.triggerEvent("reply", {});
     },
     imageLoaded: function (event) {
       const index = event.currentTarget.dataset.index;
@@ -89,15 +89,16 @@ Component({
       });
     },
     handleNavToDetail: function () {
+      if (!is_digest) { return; }
       this.triggerEvent("posterdetail", { "pid": this.data.pid });
     },
     handleTapUserInfo: function () {
       this.triggerEvent("userinfo", { "uid": this.data.uid });
     },
     handleLike: function () {
-      if (this.data.isLiked) {
-        this.setData({ isLiked: false });
-        this.setData({ likeCount: this.data.likeCount - 1 });
+      if (this.data.liked) {
+        this.setData({ liked: false });
+        this.setData({ likes: this.data.likes - 1 });
         tt.request({
           "url": `${getApp().url}/unlike/topic`,
           "method": "POST",
@@ -115,8 +116,8 @@ Component({
         });
       }
       else {
-        this.setData({ isLiked: true });
-        this.setData({ likeCount: this.data.likeCount + 1 });
+        this.setData({ liked: true });
+        this.setData({ likes: this.data.likes + 1 });
         tt.request({
           "url": getApp().url + "/like/topic",
           "method": "POST",

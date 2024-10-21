@@ -12,10 +12,6 @@ Component({
       type: Number,
       value: 0,
     },
-    title: {
-      type: String,
-      value: "此条帖子标题为空"
-    },
     pid: {
       type: String,
       value: "",
@@ -36,7 +32,7 @@ Component({
       type: String,
       value: "2024-10-5 18:00:00",
     },
-    likeCount: {
+    likes: {
       type: Number,
       value: 0,
     },
@@ -44,7 +40,7 @@ Component({
       type: String,
       value: "/assets/images/anon.png",
     },
-    isLiked: {
+    liked: {
       type: Boolean,
       value: false,
     },
@@ -109,9 +105,9 @@ Component({
       this.triggerEvent("userinfo", { "uid": this.data.uid });
     },
     handleLike: function () {
-      if (this.data.isLiked) {
-        this.setData({ isLiked: false });
-        this.setData({ likeCount: this.data.likeCount - 1 });
+      if (this.data.liked) {
+        this.setData({ liked: false });
+        this.setData({ likes: this.data.likes - 1 });
         tt.request({
           "url": getApp().url + "/unlike/comment",
           "method": "POST",
@@ -129,8 +125,8 @@ Component({
         });
       }
       else {
-        this.setData({ isLiked: true });
-        this.setData({ likeCount: this.data.likeCount + 1 });
+        this.setData({ liked: true });
+        this.setData({ likes: this.data.likes + 1 });
         tt.request({
           "url": getApp().url + "/like/comment",
           "method": "POST",

@@ -1,37 +1,13 @@
 Component({
   properties: {
-    index_1: {
-      type: Number,
-      value: -1,
-    },
     pid: {
       type: String,
       value: "",
     },
-    toward: {
-      type: String,
-      value: "",
-      observer: function (new_val, old_val) {
-        const prefix = `回复 ${old_val}: `;
-        const new_prefix = `回复 ${new_val}: `;
-        const skip = Math.max(this.data.skip - prefix.length + new_prefix.length, 0);
-        const reply = (() => {
-          if (this.data.reply.startsWith(prefix)) {
-            return this.data.reply.slice(prefix.length);
-          }
-          else {
-            return this.data.reply;
-          }
-        })();
-        this.setData({
-          "reply": `${new_prefix}${reply}`,
-          "skip": skip
-        });
-      }
-    },
   },
   data: {
     defaultStates: {},
+    no_image: false,
     skip: 0,
     focus: false,
     reply: "",
@@ -44,8 +20,35 @@ Component({
       "☀️", "🌧️", "🌈", "🌍", "🌙", "🌊", "⛄", "🌸", "🍂", "🍀", "🚗", "🚕", "🚙", "🚀", "🚲", "✈️", "🚤", "🚊", "🚉", "🚁",
       "🎂", "🎉", "🎊", "🕯️", "🎁", "🎄", "🎃", "🧧", "🕎", "🕊️", "📱", "💻", "🖥️", "🖨️", "⌚", "📷", "🎥", "🎧", "📚", "🖊️"
     ],
+    toward: "",
   },
   methods: {
+    focusReply: function (toward, index_1) {
+      this.setData({ "focus": true });
+      if (index_1 != null) {
+        this.setData({ "no_image": true })
+      }
+      else {
+        this.setData({ "no_image": false })
+      }
+      if (toward == null) { return; }
+      if (toward === this.data.toward || toward === "") { return; }
+      const prefix = `回复 ${this.data.toward}: `;
+      const new_prefix = `回复 ${toward}: `;
+      const skip = Math.max(this.data.skip - prefix.length + new_prefix.length, 0);
+      const reply = (() => {
+        if (this.data.reply.startsWith(prefix)) {
+          return this.data.reply.slice(prefix.length);
+        }
+        else {
+          return this.data.reply;
+        }
+      })();
+      this.setData({
+        "reply": `${new_prefix}${reply}`,
+        "skip": skip
+      });
+    },
     handleShowEmojiArea: function () {
       if (this.data.display_index !== 1) {
         this.setData({ display_index: 1 });

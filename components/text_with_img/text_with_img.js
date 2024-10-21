@@ -1,6 +1,6 @@
 Component({
   properties: {
-    showall: {
+    is_digest: {
       type: Boolean,
       value: false,
     },
