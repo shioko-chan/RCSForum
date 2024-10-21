@@ -10,19 +10,7 @@
     <text class="anonymous-check-box-text">启用匿名发布</text>
   </view>
   <emoji bind:selected="handleEmojiInput"></emoji>
-  <view class="image-preview-section">
-    <view class="upload-btn" bindtap="chooseImage">
-      <text class="plus-sign">+</text>
-    </view>
-    <block tt:for="{{ images }}" tt:key="*this">
-      <view class="image-view">
-        <image class="remove-btn" src="/assets/images/cancel.png" mode="aspectFill" bindtap="removeImage"
-          data-index="{{ index }}" />
-        <image class="preview-image" src="{{ item }}" mode="aspectFill" bindtap="previewImage"
-          data-index="{{ index }}" />
-      </view>
-    </block>
-  </view>
+  <image-selector id="image-selector"></image-selector>
   <view style="height: 200rpx;"></view>
   <view class="publish-button" bindtap="handlePublish">发送</view>
 </view>

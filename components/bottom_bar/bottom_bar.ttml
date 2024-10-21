@@ -1,16 +1,16 @@
 <view class="bottom-container">
   <view class="emoji-container" hidden="{{ display_index !== 1 }}">
-    <text tt:for="{{ emoji }}" bindtap="addEmoji">{{ item }}</text>
+    <text tt:for="{{ emoji }}" bindtap="handleEmojiInput" data-index="{{ index }}">{{ item }}</text>
   </view>
   <view hidden="{{ display_index !== 2 }}">
-    <emoji></emoji>
+    <emoji bind:selected="handleLargeEmojiInput"></emoji>
   </view>
   <view class="image-container" hidden="{{ display_index !== 3 || no_image }}">
+    <image-selector id="image-selector"></image-selector>
   </view>
-
   <view class="reply-container">
     <textarea class="reply-box" type="text" maxlength="1000" cursor-spacing="70" auto-height value="{{ reply }}"
-      focus="{{ focus }}" cursor="{{ skip }}" selection-start="{{ skip }}" bindinput="handleInput"></textarea>
+      focus="{{ focus }}" cursor="{{ skip }}" bindinput="handleInput" bindblur="handleInputBlur"></textarea>
     <button class="send-button" bindtap="handleSend">发送</button>
   </view>
   <view class="icon-bar">

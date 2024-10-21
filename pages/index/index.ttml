@@ -6,8 +6,8 @@
         images="{{ item.images }}" pid="{{ item.pid }}" uid="{{ item.uid }}">
       </poster>
     </block>
-    <view style="height: 100rpx;"></view>
   </scroll-view>
+  <view style="height: 200rpx;"></view>
   <view class="refresh-box" bindtap="handleRefresh">
     <image class="refresh-button" src="/assets/images/refresh.png" />
   </view>

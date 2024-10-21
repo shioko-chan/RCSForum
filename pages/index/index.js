@@ -5,7 +5,6 @@ Page({
     page: 0,
     finished: false,
   },
-
   showModalFailToGetTopics: function () {
     tt.showModal({
       title: "获取话题列表失败",
@@ -81,6 +80,7 @@ Page({
       .catch(() => { this.showModalFailToGetTopics(); });
   },
   handleScrollUpdate: function () {
+    console.log("scrolled")
     if (finished) {
       this.showModalAllFinished();
       return;

@@ -1,0 +1,12 @@
+<view class="image-preview-section">
+  <view class="upload-btn" bindtap="chooseImage">
+    <text class="plus-sign">+</text>
+  </view>
+  <block tt:for="{{ images }}" tt:key="*this">
+    <view class="image-view">
+      <image class="remove-btn" src="/assets/images/cancel.png" mode="aspectFill" bindtap="removeImage"
+        data-index="{{ index }}" />
+      <image class="preview-image" src="{{ item }}" mode="aspectFill" bindtap="previewImage" data-index="{{ index }}" />
+    </view>
+  </block>
+</view>

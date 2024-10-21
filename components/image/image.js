@@ -25,6 +25,7 @@ Component({
             tt.downloadFile({
               url: src,
               filePath: targetFilePath,
+              header: { "Content-Type": "application/json; charset=utf-8" },
               success: res => {
                 setSrcLocal(res.tempFilePath);
               },

@@ -1,11 +1,49 @@
 Page({
   data: {
     poster: null,
+    comment_list: [],
   },
   onLoad: function () {
-    // console.log(getApp().once_storage);
-    this.setData({ "poster": getApp().once_storage });
-    // console.log(this.data);
+    const data = getApp().once_storage;
+    this.setData({ "poster": data });
+    const showModalFailToGetComments = () => {
+      tt.showToast({
+        "title": "获取评论失败",
+        "icon": "error",
+        "duration": 2500,
+      })
+    }
+    const req = cnt => {
+      tt.request({
+        "url": `${getApp().url}/comment/${data.pid}`,
+        "method": "GET",
+        "header": {
+          "Content-Type": "application/json; charset=utf-8",
+          "authentication": `${getApp().token}`
+        },
+        success: res => {
+          if (res.data.status === 0) {
+            this.setData({ "comment_list": res.data.comments });
+          } else if (res.data.status === 1 && cnt <= 0) {
+            getApp().login()
+              .then(() => req(cnt + 1))
+              .catch(() => showModalFailToGetComments());
+          } else {
+            showModalFailToGetComments();
+          }
+        },
+        fail: res => {
+          if (res.statusCode === 401 && cnt <= 0) {
+            getApp().login()
+              .then(() => req(cnt + 1))
+              .catch(() => showModalFailToGetComments());
+          } else {
+            showModalFailToGetComments();
+          }
+        },
+      })
+    };
+    req(0);
   },
   handleEmoji: function () {
     this.setData({ "showEmojiArea": !this.data.showEmojiArea });

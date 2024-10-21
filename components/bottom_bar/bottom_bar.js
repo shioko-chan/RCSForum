@@ -14,11 +14,19 @@ Component({
       observer: function (new_val, old_val) {
         const prefix = `回复 ${old_val}: `;
         const new_prefix = `回复 ${new_val}: `;
-        if (this.data.reply.startsWith(prefix)) {
-          this.setData({ "reply": `${new_prefix}${this.data.reply.slice(prefix.length)}`, "skip": new_prefix.length });
-          return;
-        }
-        this.setData({ "reply": `${new_prefix}${this.data.reply}`, "skip": new_prefix.length });
+        const skip = Math.max(this.data.skip - prefix.length + new_prefix.length, 0);
+        const reply = (() => {
+          if (this.data.reply.startsWith(prefix)) {
+            return this.data.reply.slice(prefix.length);
+          }
+          else {
+            return this.data.reply;
+          }
+        })();
+        this.setData({
+          "reply": `${new_prefix}${reply}`,
+          "skip": skip
+        });
       }
     },
   },
@@ -26,7 +34,6 @@ Component({
     defaultStates: {},
     skip: 0,
     focus: false,
-    value: false,
     reply: "",
     is_anonymous: false,
     display_index: 0,
@@ -62,8 +69,16 @@ Component({
         this.setData({ display_index: 0 });
       }
     },
-    handleSend: function () {
-      console.log(this.data.index_1);
+    clearAll: function () {
+      this.setData({
+        "is_anonymous": false,
+        "reply": "",
+        "skip": 0,
+        "focus": false,
+      });
+      this.selectComponent("#image-selector").clearImage();
+    },
+    handleSend: async function () {
       if (this.data.reply.length === 0) {
         tt.showToast({
           "title": "多少写点内容呗",
@@ -75,17 +90,27 @@ Component({
       if (this.data.pid === "") {
         return;
       }
+      const image_list = await this.selectComponent("#image-selector").uploadImage().catch(() => {
+        tt.showToast({
+          "title": "图片上传失败",
+          "icon": "error",
+          "duration": 2500,
+        });
+        return null;
+      });
+      if (image_list === null) {
+        return;
+      }
       const url = `${getApp().url}/create/comment`;
       let data = {
         "content": this.data.reply,
         "is_anonymous": this.data.is_anonymous,
-        "pid": this.data.toward.pid,
-        "images": this.data.images,
+        "pid": this.data.pid,
+        "images": image_list,
       }
-      if (this.data.index_1 !== null) {
+      if (this.data.index_1 !== -1) {
         data.index_1 = this.data.index_1;
       }
-
       const req = cnt => {
         return new Promise((resolve, reject) => {
           tt.request({
@@ -103,42 +128,64 @@ Component({
                 getApp().login()
                   .then(() => req(cnt + 1))
                   .catch(() => {
+                    console.error("评论发布失败", res);
                     reject(res.statusCode);
                   });
               } else {
+                console.error("评论发布失败", res);
                 reject(res.statusCode);
               }
             },
             fail: res => {
+              console.error("评论发布失败", res);
               reject(res);
             }
           });
         })
       };
+      tt.showLoading({
+        title: '发布中',
+        mask: true,
+      });
       req(0).then(() => {
-        this.setData({ "reply": "", "images": [] });
+        this.clearAll();
+        tt.hideLoading();
         tt.showToast({
-          "title": "评论成功",
+          "title": "评论成功✅",
           "icon": "success",
           "duration": 2500,
         });
       }).catch(() => {
+        tt.hideLoading();
         tt.showToast({
-          "title": "评论失败",
-          "icon": "none",
+          "title": "评论发布失败",
+          "icon": "error",
           "duration": 2500,
         });
       });
+
     },
     handleEmojiInput: function (event) {
-      let { cursor, content } = this.data;
+      let { skip, reply } = this.data;
+      const emoji = this.data.emoji[event.currentTarget.dataset.index];
       this.setData({
-        "content": content.slice(0, cursor) + event.detail.emoji + content.slice(cursor),
-        "cursor": cursor + event.detail.emoji.length
+        "reply": reply.slice(0, skip) + emoji + reply.slice(skip),
+        "skip": skip + emoji.length
+      });
+    },
+    handleLargeEmojiInput: function (event) {
+      let { skip, reply } = this.data;
+      this.setData({
+        "reply": reply.slice(0, skip) + event.detail.emoji + reply.slice(skip),
+        "skip": skip + event.detail.emoji.length
       });
     },
     handleInput: function (event) {
-      this.data.content = event.detail.value;
+      this.data.reply = event.detail.value;
+      this.data.skip = event.detail.cursor;
+    },
+    handleInputBlur: function (event) {
+      this.data.skip = event.detail.cursor;
     },
   }
 })

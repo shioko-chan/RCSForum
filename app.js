@@ -7,6 +7,7 @@ App({
   page_size: 16,
   login_promise: null,
   once_storage: null,
+  max_image_size: 10,
   setOnceStorage: function (data) {
     this.once_storage = data;
   },

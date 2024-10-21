@@ -1,0 +1,45 @@
+.image-view {
+    width: 175rpx;
+    height: 175rpx;
+    position: relative;
+}
+
+.remove-btn {
+    position: absolute;
+    background-color: #f0f0f0;
+    top: 10rpx;
+    right: 10rpx;
+    height: 25rpx;
+    width: 25rpx;
+    border-radius: 5rpx;
+}
+
+.preview-image {
+    width: 175rpx;
+    height: 175rpx;
+    border-radius: 10rpx;
+}
+
+.image-preview-section {
+    margin-top: 40rpx;
+    width: 718rpx;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10rpx;
+}
+
+.upload-btn {
+    width: 175rpx;
+    height: 175rpx;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10rpx;
+}
+
+.plus-sign {
+    line-height: 60rpx;
+    font-size: 60rpx;
+    color: #999;
+}
