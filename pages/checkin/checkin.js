@@ -22,7 +22,7 @@ Page({
           "url": url,
           "header": {
             "Content-Type": "application/json; charset=utf-8",
-            "authentication": `${getApp().token}`
+            "authentication": getApp().token
           },
           "method": "POST",
           success: res => {
@@ -158,7 +158,7 @@ Page({
         url: `${url}/checkin/rank`,
         header: {
           "Content-Type": "application/json; charset=utf-8",
-          "authentication": `${getApp().token}`
+          "authentication": getApp().token
         },
         method: "GET",
         success: res => {

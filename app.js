@@ -13,15 +13,7 @@ App({
   },
   loginOnce: function () {
     var that = this;
-    return new Promise((res, rej) => {
-      var factory = (func) => {
-        return () => {
-          that.login_promise = null;
-          func();
-        };
-      };
-      var resolve = factory(res);
-      var reject = factory(rej);
+    return new Promise((resolve, reject) => {
       var request = (code) => {
         tt.request({
           url: `${that.url}/login`,
@@ -68,7 +60,7 @@ App({
     if (prev_promise !== null) {
       return prev_promise;
     }
-    let login_promise = this.login_promise = this.loginOnce();
+    let login_promise = this.login_promise = this.loginOnce().finally(() => { this.login_promise = null; });
     return login_promise;
   },
   onLaunch: function () {
@@ -90,7 +82,7 @@ App({
         });
       })
     }
-    this.login_promise = Promise.all([getStorage("Azazel"), getStorage("Ariel"), getStorage("Asbeel"), getStorage("Samyaza")])
+    this.login_promise = Promise.all([getStorage("Azazel"), getStorage("Ariel"), getStorage("Asbeel"), getStorage("Samyaza"), getStorage("Samael")])
       .then(([token, username, avatar, is_admin, open_id]) => {
         console.info("get info from local storage");
         this.token = token;
@@ -98,24 +90,35 @@ App({
         this.avatar = avatar;
         this.is_admin = is_admin;
         this.open_id = open_id;
-        this.login_promise = null;
       })
       .catch(err => {
         console.warn("load data from local storage failed, ", err);
         console.info("get info from server");
-        this.login_promise = this.loginOnce().catch(() => {
+        return this.loginOnce().catch(() => {
           tt.showModal({
             "title": "连接服务器失败",
             "confirmText": "确认",
             "showCancel": false,
           });
         });
-      });
+      })
+      .finally(() => { this.login_promise = null; });
     tt.hideTabBar({
       animation: false,
       fail(res) {
-        console.error("hideTabBar fail");
+        console.error("hideTabBar fail", res);
       }
+    });
+    tt.getUpdateManager().onUpdateReady(function () {
+      tt.showModal({
+        title: '更新提示',
+        content: '新版本已经准备好，是否重启应用？\n\n若发现bug，可点击左上角反馈',
+        success(res) {
+          if (res.confirm) {
+            updateManager.applyUpdate();
+          }
+        }
+      });
     });
   },
   storageInfo: function () {

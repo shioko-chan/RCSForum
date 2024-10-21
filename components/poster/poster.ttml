@@ -22,8 +22,8 @@
         <image class="like-icon" src="{{ liked? '/assets/images/liked.png' : '/assets/images/like.png' }}" />
         <text class="like-count">{{ likes }}</text>
       </view>
-      <text tt:if="{{ is_digest }}" class="reply-button">回复</text>
-      <text tt:else class="reply-button" catchtap="handleReply">回复</text>
+      <text tt:if="{{ already_detail }}" class="reply-button" catchtap="handleReply">回复</text>
+      <text tt:else class="reply-button">回复</text>
     </view>
     <view class="timestamp">{{ timestamp }}</view>
   </view>

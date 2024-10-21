@@ -1,5 +1,13 @@
 Component({
   properties: {
+    already_user: {
+      type: Boolean,
+      value: false,
+    },
+    already_detail: {
+      type: Boolean,
+      value: false,
+    },
     is_digest: {
       type: Boolean,
       value: false,
@@ -69,7 +77,7 @@ Component({
       this.setData({ previewImageList: this.data.previewImageList });
     },
     navToDetail: function () {
-      if (this.data.pid === "") return;
+      if (this.data.already_detail) return;
       getApp().setOnceStorage(this.data);
       tt.navigateTo({
         "url": `../../pages/topic/topic?pid=${this.data.pid}`,
@@ -79,7 +87,7 @@ Component({
       });
     },
     navToUser: function () {
-      if (this.data.uid === "") return;
+      if (this.data.already_user) return;
       getApp().setOnceStorage(this.data);
       tt.navigateTo({
         "url": `../../pages/user/user?uid=${this.data.uid}`,
@@ -87,13 +95,6 @@ Component({
           console.error("failed to navigate to user");
         },
       });
-    },
-    handleNavToDetail: function () {
-      if (!is_digest) { return; }
-      this.triggerEvent("posterdetail", { "pid": this.data.pid });
-    },
-    handleTapUserInfo: function () {
-      this.triggerEvent("userinfo", { "uid": this.data.uid });
     },
     handleLike: function () {
       if (this.data.liked) {

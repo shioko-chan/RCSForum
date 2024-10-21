@@ -2,7 +2,7 @@
   <poster title="{{ poster.title }}" content="{{ poster.content }}" username="{{ poster.username }}"
     timestamp="{{ poster.timestamp }}" likes="{{ poster.likes }}" avatar="{{ poster.avatar }}"
     liked="{{ poster.liked }}" images="{{ poster.images }}" uid="{{ poster.uid }}" pid="{{ poster.pid }}"
-    bind:reply="handleReply">
+    bind:reply="handleReply" already_detail>
   </poster>
   <block tt:for="{{ comment_list }}" tt:key="pid">
     <comment content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"

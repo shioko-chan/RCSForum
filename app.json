@@ -5,7 +5,7 @@
     "pages/checkin/checkin",
     "pages/newtopic/newtopic",
     "pages/topic/topic",
-    "pages/cyber/cyber"
+    "pages/user/user"
   ],
   "tabBar": {
     "list": [

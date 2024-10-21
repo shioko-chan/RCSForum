@@ -83,7 +83,7 @@ Page({
         url: `${url}/create/topic`,
         header: {
           "Content-Type": "application/json; charset=utf-8",
-          "authentication": `${getApp().token}`
+          "authentication": getApp().token
         },
         method: "POST",
         data: {

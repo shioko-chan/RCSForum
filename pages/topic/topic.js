@@ -14,14 +14,14 @@ Page({
         "icon": "error",
         "duration": 2500,
       })
-    }
+    };
     const req = cnt => {
       tt.request({
         "url": `${getApp().url}/comment/${data.pid}`,
         "method": "GET",
         "header": {
           "Content-Type": "application/json; charset=utf-8",
-          "authentication": `${getApp().token}`
+          "authentication": getApp().token
         },
         success: res => {
           if (res.data.status === 0) {

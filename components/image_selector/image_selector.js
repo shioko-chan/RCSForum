@@ -162,7 +162,7 @@ Component({
             "name": "image",
             "header": {
               "Content-Type": "multipart/form-data",
-              "authentication": `${getApp().token}`
+              "authentication": getApp().token
             },
             success(res) {
               if (res.statusCode === 200) {

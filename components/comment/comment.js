@@ -98,12 +98,6 @@ Component({
         },
       });
     },
-    handleNavToDetail: function () {
-      this.triggerEvent("posterdetail", { "pid": this.data.pid });
-    },
-    handleTapUserInfo: function () {
-      this.triggerEvent("userinfo", { "uid": this.data.uid });
-    },
     handleLike: function () {
       if (this.data.liked) {
         this.setData({ liked: false });

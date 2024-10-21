@@ -27,7 +27,7 @@ Page({
           "method": "GET",
           "header": {
             "Content-Type": "application/json; charset=utf-8",
-            "authentication": `${getApp().token}`
+            "authentication": getApp().token
           },
           "data": { "page": page },
           success: res => {
