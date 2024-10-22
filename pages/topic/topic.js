@@ -24,12 +24,9 @@ Page({
     });
   },
   handleReply: function (event) {
-    this.selectComponent("#bottom-bar").focusReply(event.detail.toward, event.detail.index_1);
+    this.selectComponent("#bottom-bar").focusReply(event.detail);
   },
   handleEmoji: function () {
     this.setData({ "showEmojiArea": !this.data.showEmojiArea });
-  },
-  handleScrollUpdate: function () {
-    console.log("scrolled");
   }
 })

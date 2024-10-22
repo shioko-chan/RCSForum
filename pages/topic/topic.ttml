@@ -7,7 +7,7 @@
   <block tt:for="{{ comment_list }}">
     <comment content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
       likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
-      pid="{{ item.pid }}" uid="{{ item.uid }}">
+      pid="{{ item.pid }}" uid="{{ item.uid }}" bind:reply="handleReply">
     </comment>
   </block>
   <view style="height: 100rpx;"></view>

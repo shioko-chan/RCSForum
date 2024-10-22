@@ -71,7 +71,7 @@ Component({
       return { "index1": this.data.index1 };
     },
     handleReply: function () {
-      this.triggerEvent("reply", { "pid": this.data.pid, ...this.getIndex(), });
+      this.triggerEvent("reply", { toward: this.data.username, ...this.getIndex() });
     },
     imageLoaded: function (event) {
       const index = event.currentTarget.dataset.index;

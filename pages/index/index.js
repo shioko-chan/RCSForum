@@ -7,13 +7,6 @@ Page({
     top: 0,
     scroll_top: 0,
   },
-  showModalFailToGetTopics: function () {
-    tt.showModal({
-      title: "获取话题列表失败",
-      confirmText: "确认",
-      showCancel: false,
-    });
-  },
   showModalAllFinished: function () {
     tt.showModal({
       title: "已加载全部内容",
@@ -66,30 +59,42 @@ Page({
       mask: true
     });
     return this.requestTopics(this.data.page)
-      .catch(res => { console.error(res); this.showModalFailToGetTopics(); Promise.reject(); })
+      .catch(res => {
+        console.error(res);
+        tt.showModal({
+          title: "获取话题列表失败",
+          content: "请检查网络连接，需要连接校园网或实验室网络",
+          confirmText: "确认",
+          showCancel: false,
+        });
+        return Promise.reject("network error");
+      })
       .finally(() => { tt.hideLoading(); });
   },
   onLoad: function () {
-    this.getTopics().then(topics => { this.setTopicList(topics); });
+    this.getTopics().then(topics => { this.setTopicList(topics); }).catch(() => null);
   },
   handleScrollUpdate: function () {
     if (this.data.finished) {
       this.showModalAllFinished();
       return;
     }
-    this.getTopics().then(topics => { this.pushTopicList(topics); });
+    this.getTopics().then(topics => { this.pushTopicList(topics); }).catch(() => null);
   },
   handleScroll: function (event) {
     this.setData({ top: event.detail.scrollTop });
   },
-  handleRefresh: function () {
+  refresh: function () {
     this.data.page = 0;
     this.data.finished = false;
     this.setData({ scroll_top: this.data.top });
     this.setData({ scroll_top: 0 });
-    this.getTopics().then(topics => { this.setTopicList(topics); });
+    return this.getTopics().then(topics => { this.setTopicList(topics); }).catch(() => null);
+  },
+  handleRefresh: function () {
+    this.refresh();
   },
   onPullDownRefresh: function () {
-    this.handleRefresh();
+    this.refresh().finally(() => { tt.stopPullDownRefresh(); });
   }
 })

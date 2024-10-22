@@ -28,63 +28,46 @@ Component({
       "🖥️", "🖨️", "⌚", "📷", "🎥", "🎧", "📚", "🖊️",
     ],
     toward: "",
+    index_1: null,
   },
   methods: {
-    focusReply: function (toward, index_1) {
-      this.setData({ "focus": true });
-      if (index_1 != null) {
-        this.setData({ "no_image": true })
-      }
-      else {
-        this.setData({ "no_image": false })
-      }
-      if (toward == null) { return; }
-      if (toward === this.data.toward || toward === "") { return; }
-      const prefix = `回复 ${this.data.toward}: `;
+    focusReply: function ({ toward = null, index_1 = null, index_2 = null }) {
+      this.setData({ "focus": true, "no_image": index_1 !== null });
+      if (index_2 === null || toward === null || toward === this.data.toward || toward === "") { return; }
+      const old_prefix = `回复 ${this.data.toward}: `;
       const new_prefix = `回复 ${toward}: `;
-      const skip = Math.max(this.data.skip - prefix.length + new_prefix.length, 0);
+      const skip = Math.max(this.data.skip - old_prefix.length + new_prefix.length, 0);
       const reply = (() => {
-        if (this.data.reply.startsWith(prefix)) {
-          return this.data.reply.slice(prefix.length);
-        }
-        else {
+        if (this.data.reply.startsWith(old_prefix)) {
+          return this.data.reply.slice(old_prefix.length);
+        } else {
           return this.data.reply;
         }
       })();
       this.setData({
-        "reply": `${new_prefix}${reply}`,
+        "reply": new_prefix + reply,
         "skip": skip
       });
+      this.data.toward = toward;
+      this.data.index_1 = index_1;
     },
     handleShowEmojiArea: function () {
-      if (this.data.display_index !== 1) {
-        this.setData({ display_index: 1 });
-      }
-      else {
-        this.setData({ display_index: 0 });
-      }
+      this.setData({ display_index: this.data.display_index !== 1 ? 1 : 0 });
     },
     handleShowLargeEmojiArea: function () {
-      if (this.data.display_index !== 2) {
-        this.setData({ display_index: 2 });
-      }
-      else {
-        this.setData({ display_index: 0 });
-      }
+      this.setData({ display_index: this.data.display_index !== 2 ? 2 : 0 });
     },
     handleShowImageArea: function () {
-      if (this.data.display_index !== 3) {
-        this.setData({ display_index: 3 });
-      } else {
-        this.setData({ display_index: 0 });
-      }
+      this.setData({ display_index: this.data.display_index !== 3 ? 3 : 0 });
     },
     clearAll: function () {
       this.setData({
-        "is_anonymous": false,
-        "reply": "",
-        "skip": 0,
-        "focus": false,
+        is_anonymous: false,
+        reply: "",
+        skip: 0,
+        focus: false,
+        toward: "",
+        index_1: null,
       });
       this.selectComponent("#image-selector").clearImage();
     },
@@ -100,25 +83,25 @@ Component({
       if (this.data.pid === "") {
         return;
       }
-      const image_list = await this.selectComponent("#image-selector").uploadImage().catch(() => {
-        tt.showToast({
-          "title": "图片上传失败",
-          "icon": "error",
-          "duration": 2500,
-        });
-        return null;
-      });
-      if (image_list === null) {
-        return;
+      let image_list = [];
+      if (!this.data.no_image) {
+        image_list = await this.selectComponent("#image-selector").uploadImage().catch(() => null);
+        if (image_list === null) {
+          tt.showToast({
+            "title": "图片上传失败",
+            "icon": "error",
+            "duration": 2500,
+          });
+          return;
+        }
       }
-      const url = `${getApp().url}/create/comment`;
       let data = {
         "content": this.data.reply,
         "is_anonymous": this.data.is_anonymous,
         "pid": this.data.pid,
         "images": image_list,
       }
-      if (this.data.index_1 !== -1) {
+      if (this.data.index_1 !== null) {
         data.index_1 = this.data.index_1;
       }
       tt.showLoading({

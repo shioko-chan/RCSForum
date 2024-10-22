@@ -85,7 +85,6 @@ Page({
           });
           this.clearAll();
         }).catch(res => {
-          console.log(images);
           console.error("request failed with error", res);
           tt.showModal({
             "title": "发布失败😴",
