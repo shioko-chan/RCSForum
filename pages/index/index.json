@@ -2,5 +2,6 @@
     "usingComponents": {
         "poster": "../../components/poster/poster",
         "navbar": "../../components/navigator_bar/navigator_bar"
-    }
+    },
+    "enablePullDownRefresh": true
 }

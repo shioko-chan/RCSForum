@@ -1,14 +1,15 @@
 <view class="container">
-  <scroll-view bindscrolltolower="handleScrollUpdate">
+  <scroll-view style="height: 100vh;" bindscrolltolower="handleScrollUpdate" scroll-y scroll-top="{{ scroll_top }}"
+    scroll-with-animation bindscroll="handleScroll">
     <block tt:for="{{ topic_list }}" tt:key="pid">
-      <poster title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}"
+      <poster id="item_{{ index }}" title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}"
         timestamp="{{ item.time }}" likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}"
         images="{{ item.images }}" pid="{{ item.pid }}" uid="{{ item.uid }}" is_digest>
       </poster>
     </block>
   </scroll-view>
-  <view style="height: 200rpx;"></view>
-  <view class="refresh-box" bindtap="handleRefresh">
+  <view style="height: 100rpx;"></view>
+  <view class="refresh-box" bindtap="handleRefresh" hidden="{{ top<=500 }}">
     <image class="refresh-button" src="/assets/images/refresh.png" />
   </view>
 </view>

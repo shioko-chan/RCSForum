@@ -4,6 +4,8 @@ Page({
     topic_list: [],
     page: 0,
     finished: false,
+    top: 0,
+    scroll_top: 0,
   },
   showModalFailToGetTopics: function () {
     tt.showModal({
@@ -19,46 +21,20 @@ Page({
       showCancel: false,
     });
   },
-  getTopics: function (page) {
-    return new Promise((resolve, reject) => {
-      var request = (cnt) => {
-        tt.request({
-          "url": `${getApp().url}/topic`,
-          "method": "GET",
-          "header": {
-            "Content-Type": "application/json; charset=utf-8",
-            "authentication": getApp().token
-          },
-          "data": { "page": page },
-          success: res => {
-            console.log(res);
-            if (res.statusCode === 200) {
-              resolve(res.data.topics);
-            } else if (res.statusCode === 401 && cnt <= 0) {
-              getApp().login()
-                .then(() => request(cnt + 1))
-                .catch(() => reject("failed to login"));
-            } else {
-              reject("failed to get topics, status code: " + res.statusCode);
-            }
-          },
-          fail: _ => {
-            console.log(123);
-            reject("failed to get topics due to network error");
-          },
-        });
-      };
-      if (getApp().token === "") {
-        getApp().login()
-          .then(() => request(0))
-          .catch(() => reject("failed to login"));
-      }
-      else {
-        request(0);
-      }
-    });
+  requestTopics: async function (page) {
+    try {
+      const data = await getApp().request_with_authentication({
+        url: `${getApp().url}/topic`,
+        method: "GET",
+        header: { "Content-Type": "application/json; charset=utf-8" },
+        data: { page: page }
+      });
+      return data.topics;
+    } catch (exception) {
+      throw exception;
+    }
   },
-  setTopicList: function (topics) {
+  handleTopicList: function (topics) {
     const is_admin = getApp().is_admin;
     topics.forEach(topic => {
       if (topic.is_anonymous) {
@@ -70,32 +46,50 @@ Page({
       }
     });
     this.data.page += 1;
-    this.setData({ topic_list: topics });
-    if (topics.length < getApp().page_size) {
+    if (topics.length === 0) {
       this.data.finished = true;
       this.showModalAllFinished();
     }
+    return topics;
+  },
+  setTopicList: function (topics) {
+    topics = this.handleTopicList(topics);
+    this.setData({ topic_list: topics });
+  },
+  pushTopicList: function (topics) {
+    topics = this.handleTopicList(topics);
+    this.setData({ topic_list: this.data.topic_list.concat(topics) });
+  },
+  getTopics: function () {
+    tt.showLoading({
+      title: '加载中',
+      mask: true
+    });
+    return this.requestTopics(this.data.page)
+      .catch(res => { console.error(res); this.showModalFailToGetTopics(); Promise.reject(); })
+      .finally(() => { tt.hideLoading(); });
   },
   onLoad: function () {
-    this.getTopics(this.data.page)
-      .then(topics => { this.setTopicList(topics); })
-      .catch(() => { this.showModalFailToGetTopics(); });
+    this.getTopics().then(topics => { this.setTopicList(topics); });
   },
   handleScrollUpdate: function () {
-    console.log("scrolled")
-    if (finished) {
+    if (this.data.finished) {
       this.showModalAllFinished();
       return;
     }
-    this.getTopics(this.data.page).then(() => {
-      this.setTopicList(this.data.topic_list.concat(res.data.topics));
-    }).catch(() => { this.showModalFailToGetTopics(); });
+    this.getTopics().then(topics => { this.pushTopicList(topics); });
+  },
+  handleScroll: function (event) {
+    this.setData({ top: event.detail.scrollTop });
   },
   handleRefresh: function () {
     this.data.page = 0;
     this.data.finished = false;
-    this.getTopics(this.data.page)
-      .then(topics => { this.setTopicList(topics); })
-      .catch(() => { this.showModalFailToGetTopics(); });
+    this.setData({ scroll_top: this.data.top });
+    this.setData({ scroll_top: 0 });
+    this.getTopics().then(topics => { this.setTopicList(topics); });
   },
+  onPullDownRefresh: function () {
+    this.handleRefresh();
+  }
 })

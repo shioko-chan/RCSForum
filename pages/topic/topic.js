@@ -8,44 +8,20 @@ Page({
   onLoad: function () {
     const data = getApp().once_storage;
     this.setData({ "poster": data });
-    const showModalFailToGetComments = () => {
+    getApp().request_with_authentication({
+      url: `${getApp().url}/comment/${data.pid}`,
+      method: "GET",
+      header: { "Content-Type": "application/json; charset=utf-8" },
+    }).then(data => {
+      this.setData({ "comment_list": data.comments });
+    }).catch(({ mes, res }) => {
+      console.error(mes, res);
       tt.showToast({
         "title": "获取评论失败",
         "icon": "error",
         "duration": 2500,
       })
-    };
-    const req = cnt => {
-      tt.request({
-        "url": `${getApp().url}/comment/${data.pid}`,
-        "method": "GET",
-        "header": {
-          "Content-Type": "application/json; charset=utf-8",
-          "authentication": getApp().token
-        },
-        success: res => {
-          if (res.statusCode === 200) {
-            this.setData({ "comment_list": res.data.comments });
-          } else if (res.statusCode === 401 && cnt <= 0) {
-            getApp().login()
-              .then(() => req(cnt + 1))
-              .catch(() => showModalFailToGetComments());
-          } else {
-            showModalFailToGetComments();
-          }
-        },
-        fail: res => {
-          if (res.statusCode === 401 && cnt <= 0) {
-            getApp().login()
-              .then(() => req(cnt + 1))
-              .catch(() => showModalFailToGetComments());
-          } else {
-            showModalFailToGetComments();
-          }
-        },
-      })
-    };
-    req(0);
+    });
   },
   handleReply: function (event) {
     this.selectComponent("#bottom-bar").focusReply(event.detail.toward, event.detail.index_1);

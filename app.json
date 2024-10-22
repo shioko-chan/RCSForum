@@ -30,11 +30,13 @@
     "navigationBarTextStyle": "black",
     "pageOrientation": "portrait"
   },
-  "newFramework": {
-    "enabled": false,
-    "minimumSupportedVersion": "5.12"
-  },
   "networkTimeout": {
-    "request": 3000
+    "request": 3000,
+    "uploadFile": 8000,
+    "downloadFile": 8000
+  },
+  "newFramework": {
+    "enabled": true,
+    "minimumSupportedVersion": "5.12"
   }
 }

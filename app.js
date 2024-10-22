@@ -8,62 +8,150 @@ App({
   login_promise: null,
   once_storage: null,
   max_image_size: 10,
-  setOnceStorage: function (data) {
+  setOnceStorage(data) {
     this.once_storage = data;
   },
-  loginOnce: function () {
-    var that = this;
+  _request({ url, method, header, data }) {
     return new Promise((resolve, reject) => {
-      var request = (code) => {
-        tt.request({
-          url: `${that.url}/login`,
-          header: {
-            "Content-Type": "application/json; charset=utf-8"
-          },
-          method: "POST",
-          data: {
-            "code": code
-          },
-          success: function (res) {
-            if (res.statusCode === 200) {
-              that.avatar = res.data.avatar;
-              that.username = res.data.name;
-              that.token = res.header.authorization;
-              that.is_admin = res.data.is_admin;
-              that.open_id = res.data.open_id;
-              resolve();
-            }
-            else {
-              console.error("request backend login failed: ", res);
-              reject();
-            }
-          },
-          fail: function (res) {
-            console.error("request backend login failed: ", res);
-            reject();
+      tt.request({
+        url,
+        method,
+        header,
+        data,
+        success: resolve,
+        fail: res => {
+          if (res.statusCode !== undefined) {
+            resolve(res);
+          } else {
+            reject({ mes: "tt.request api error", res });
           }
-        })
-      };
+        },
+      });
+    });
+  },
+  _upload(obj) {
+    let { url, header, file_path } = obj;
+    if (header === undefined) {
+      header = {};
+    }
+    header["Content-Type"] = "multipart/form-data";
+    return new Promise((resolve, reject) => {
+      tt.uploadFile({
+        url,
+        filePath: file_path,
+        name: "image",
+        header,
+        success: resolve,
+        fail: res => {
+          if (res.statusCode !== undefined) {
+            resolve(res);
+          } else {
+            reject({ mes: "tt.uploadFile api failed", res });
+          }
+        },
+      });
+    });
+  },
+  _login_once() {
+    return new Promise((resolve, reject) => {
       tt.login({
-        success: function (res) {
-          request(res.code);
+        success: async res => {
+          try {
+            const res1 = await this._request({
+              url: `${this.url}/login`,
+              method: "POST",
+              header: { "Content-Type": "application/json; charset=utf-8" },
+              data: { code: res.code }
+            });
+            if (res1.statusCode === 200) {
+              this.token = res1.header.authorization;
+              this.username = res1.data.name;
+              this.avatar = res1.data.avatar;
+              this.is_admin = res1.data.is_admin;
+              this.open_id = res1.data.open_id;
+            }
+            resolve(res1);
+          } catch (exception) {
+            reject(exception);
+          }
         },
         fail: function (res) {
-          console.error("login failed: ", res);
-          reject();
+          reject({ mes: "tt.login api error", res });
         }
       });
     });
   },
-  login: function () {
+  _login() {
     let prev_promise = this.login_promise;
     if (prev_promise !== null) {
       return prev_promise;
     }
-    let login_promise = this.login_promise = this.loginOnce().finally(() => { this.login_promise = null; });
+    let login_promise = this.login_promise = this._login_once().finally(() => { this.login_promise = null; });
     return login_promise;
   },
-  onLaunch: function () {
+  _no_authentication(fun) {
+    return async (obj) => {
+      try {
+        let res = await fun(obj);
+        if (res.statusCode === 200) {
+          return res.data;
+        }
+        throw { mes: "http error", res };
+      } catch (exception) {
+        throw exception;
+      }
+    }
+  },
+  _with_authentication(fun) {
+    return async (obj) => {
+      try {
+        let res = null;
+        if (this.token === "") {
+          res = await this._login();
+          if (res.statusCode !== 200) {
+            throw { mes: "failed to login", res };
+          }
+        }
+        if (obj.header === undefined) {
+          obj.header = {};
+        }
+        obj.header.authentication = this.token;
+        res = await fun(obj);
+        if (res.statusCode === 200) {
+          return res.data;
+        }
+        if (res.statusCode !== 401) {
+          throw { mes: "http error", res };
+        }
+        // authentication expired
+        res = await this._login();
+        if (res.statusCode !== 200) {
+          throw { mes: "failed to login", res };
+        }
+        obj.header.authentication = this.token;
+        res = await fun(obj);
+        if (res.statusCode === 200) {
+          return res.data;
+        }
+        throw { mes: "http error", res };
+      } catch (exception) {
+        throw exception;
+      }
+    }
+  },
+  request({ url, method, header, data }) {
+    return this._no_authentication(this._request)({ url, method, header, data });
+  },
+  upload({ url, file_path }) {
+    return this._no_authentication(this._upload)({ url, file_path });
+  },
+  request_with_authentication({ url, method, header, data }) {
+    return this._with_authentication(this._request)({ url, method, header, data });
+  },
+  upload_with_authentication({ url, file_path }) {
+    return this._with_authentication(this._upload)({ url, file_path });
+  },
+  onLaunch() {
     var getStorage = function (key) {
       return new Promise((resolve, reject) => {
         tt.getStorage({
@@ -82,7 +170,7 @@ App({
         });
       })
     }
-    this.login_promise = Promise.all([getStorage("Azazel"), getStorage("Ariel"), getStorage("Asbeel"), getStorage("Samyaza"), getStorage("Samael")])
+    Promise.all([getStorage("Azazel"), getStorage("Ariel"), getStorage("Asbeel"), getStorage("Samyaza"), getStorage("Samael")])
       .then(([token, username, avatar, is_admin, open_id]) => {
         console.info("get info from local storage");
         this.token = token;
@@ -94,15 +182,14 @@ App({
       .catch(err => {
         console.warn("load data from local storage failed, ", err);
         console.info("get info from server");
-        return this.loginOnce().catch(() => {
-          tt.showModal({
-            "title": "连接服务器失败",
-            "confirmText": "确认",
-            "showCancel": false,
-          });
+        this._login().then(res => {
+          if (res.statusCode !== 200) {
+            throw { mes: "failed to login", res };
+          }
+        }).catch(() => {
+          console.error("failed to login");
         });
-      })
-      .finally(() => { this.login_promise = null; });
+      });
     tt.hideTabBar({
       animation: false,
       fail(res) {
@@ -121,8 +208,7 @@ App({
       });
     });
   },
-  storageInfo: function () {
-    let that = this;
+  async storageInfo() {
     var setStorage = function (key, data) {
       return new Promise((resolve, reject) => {
         tt.setStorage({
@@ -137,15 +223,19 @@ App({
         });
       });
     };
-    return Promise.all([setStorage("Azazel", that.token), setStorage("Ariel", that.username), setStorage("Asbeel", that.avatar), setStorage("Samyaza", that.is_admin), setStorage("Samael", that.open_id)]);
+    try {
+      await Promise.all([setStorage("Azazel", this.token), setStorage("Ariel", this.username), setStorage("Asbeel", this.avatar), setStorage("Samyaza", this.is_admin), setStorage("Samael", this.open_id)]);
+    } catch (res) {
+      console.error("failed to storage user data", res);
+    }
   },
-  onHide: async function () {
+  async onHide() {
     await this.storageInfo();
   },
-  onUnload: async function () {
+  async onUnload() {
     await this.storageInfo();
   },
-  onPageNotFound: function (res) {
+  onPageNotFound() {
     tt.redirectTo({
       url: 'pages/index/index'
     })

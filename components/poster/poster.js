@@ -97,65 +97,29 @@ Component({
       });
     },
     handleLike: function () {
-      let request = null;
-      const process_failure = res => {
-        if (res.statusCode === 401 && cnt <= 0) {
-          getApp().login().then(() => { request(cnt + 1); }).catch(() => { console.error("login failed") });
-        } else {
-          console.error("like request failed", res);
-        }
-      };
+      let url = null;
       if (this.data.liked) {
         this.setData({ liked: false });
         this.setData({ likes: this.data.likes - 1 });
-        request = cnt => {
-          tt.request({
-            "url": `${getApp().url}/unlike/topic`,
-            "method": "POST",
-            "header": {
-              "Content-Type": "application/json; charset=utf-8",
-              "authentication": getApp().token,
-            },
-            "data": { "pid": this.data.pid, },
-            success: res => {
-              if (res.statusCode === 200) {
-                console.info("like request success", res);
-              } else {
-                process_failure(res);
-              }
-            },
-            fail: res => {
-              process_failure(res);
-            },
-          });
-        };
+        url = `${getApp().url}/unlike/topic`;
       }
       else {
         this.setData({ liked: true });
         this.setData({ likes: this.data.likes + 1 });
-        request = cnt => {
-          tt.request({
-            "url": getApp().url + "/like/topic",
-            "method": "POST",
-            "header": {
-              "Content-Type": "application/json; charset=utf-8",
-              "authentication": getApp().token,
-            },
-            "data": { "pid": this.data.pid, },
-            success: res => {
-              if (res.statusCode === 200) {
-                console.info("like request success", res);
-              } else {
-                process_failure(res);
-              }
-            },
-            fail: res => {
-              process_failure(res);
-            },
-          });
-        };
+        url = `${getApp().url}/like/topic`
       }
-      request(0);
+      getApp().request_with_authentication({
+        url,
+        method: "POST",
+        header: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        data: { "pid": this.data.pid },
+      }).then(() => {
+        console.info("like request success");
+      }).catch(res => {
+        console.error("like request failed", res);
+      });
     },
     previewImage: function (event) {
       const index = event.currentTarget.dataset.index;

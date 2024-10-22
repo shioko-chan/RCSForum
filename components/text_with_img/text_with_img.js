@@ -49,7 +49,6 @@ Component({
           });
         }
         this.setData({ "itemList": this.data.itemList });
-        console.log(this.data.itemList);
       }
     },
   },

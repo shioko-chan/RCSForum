@@ -61,72 +61,37 @@ Page({
       });
       return;
     }
-    const url = getApp().url;
-    var successCall = () => {
-      tt.hideLoading();
-      tt.showModal({
-        "title": "发布成功✅",
-        "showCancel": false,
-      });
-      this.clearAll();
-    };
-    var failCall = () => {
-      tt.hideLoading();
-      tt.showModal({
-        "title": "发布失败😴",
-        "showCancel": false,
-      });
-    };
-    let image_list = [];
-    var request = (cnt) => {
-      tt.request({
-        url: `${url}/create/topic`,
-        header: {
-          "Content-Type": "application/json; charset=utf-8",
-          "authentication": getApp().token
-        },
-        method: "POST",
-        data: {
-          title: this.data.title,
-          content: this.data.content,
-          is_anonymous: this.data.is_anonymous,
-          images: image_list,
-        },
-        success: res => {
-          if (res.statusCode === 200) {
-            successCall();
-          } else if (res.statusCode === 401 && cnt <= 0) {
-            getApp().login()
-              .then(() => request(cnt + 1))
-              .catch(() => {
-                failCall();
-              });
-          } else {
-            console.log(getApp().token, res, image_list);
-            failCall();
-          }
-        },
-        fail: res => {
-          if (res.statusCode === 401 && cnt <= 0) {
-            getApp().login()
-              .then(() => request(cnt + 1))
-              .catch(() => {
-                failCall();
-              });
-          } else {
-            failCall();
-          }
-        },
-      });
-    };
-    this.selectComponent("#image-selector").uploadImage()
-      .then(image_list_res => {
-        image_list = image_list_res;
+    this.selectComponent("#image-selector")
+      .uploadImage()
+      .then(images => {
         tt.showLoading({
           title: '发布中',
           mask: true,
         });
-        request(0);
+        getApp().request_with_authentication({
+          url: `${getApp().url}/create/topic`,
+          header: { "Content-Type": "application/json; charset=utf-8", },
+          method: "POST",
+          data: {
+            title: this.data.title,
+            content: this.data.content,
+            is_anonymous: this.data.is_anonymous,
+            images,
+          }
+        }).then(() => {
+          tt.showModal({
+            "title": "发布成功✅",
+            "showCancel": false,
+          });
+          this.clearAll();
+        }).catch(res => {
+          console.log(images);
+          console.error("request failed with error", res);
+          tt.showModal({
+            "title": "发布失败😴",
+            "showCancel": false,
+          });
+        }).finally(() => { tt.hideLoading(); });
       });
   }
 })

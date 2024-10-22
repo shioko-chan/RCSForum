@@ -14,62 +14,32 @@ Page({
     ranks_timestamp: 0,
     url: "http://192.168.3.2"
   },
-
   sendMessage: function (url) {
-    return new Promise((resolve, reject) => {
-      var request = function (cnt) {
-        tt.request({
-          "url": url,
-          "header": {
-            "Content-Type": "application/json; charset=utf-8",
-            "authentication": getApp().token
-          },
-          "method": "POST",
-          success: res => {
-            if (res.statusCode === 200) {
-              resolve();
-            }
-            else if (res.statusCode === 401 && cnt === 0) {
-              getApp().login()
-                .then(() => request(cnt + 1))
-                .catch(() => reject());
-            }
-            else {
-              reject();
-            }
-          },
-          fail: _ => {
-            reject();
-          },
-        });
-      };
-      request(0);
+    return getApp().request_with_authentication({
+      url,
+      method: "POST",
+      header: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
     });
   },
-
-  sendHello: function () {
-    return this.sendMessage(`${this.data.url}/checkin/hello`);
-  },
-
   keepAlive: function () {
-    var that = this;
     this.sendMessage(`${this.data.url}/checkin/keepalive`).catch(() => {
       tt.showModal({
         title: "已断开与服务器的连接",
         confirmText: "确认",
         showCancel: false,
       });
-      that.stopTimer();
+      this.stopTimer();
     });
   },
-
   handleCheckIn: function () {
     if (this.data.isProcessing) {
       return;
     }
     if (!this.data.isActive) {
       this.setData({ isProcessing: true });
-      this.sendHello()
+      this.sendMessage(`${this.data.url}/checkin/hello`)
         .then(() => {
           this.startTimer();
         })
@@ -88,14 +58,12 @@ Page({
       this.stopTimer();
     }
   },
-
   stopTimer: function () {
     this.setData({
       isActive: false,
     });
     clearInterval(this.data.intervalId);
   },
-
   startTimer: function () {
     let { h, m, s } = this.data;
     this.setData({
@@ -129,12 +97,10 @@ Page({
       });
 
     }, 1000);
-
     this.setData({
       intervalId,
     });
   },
-
   formatTime: function (h, m, s) {
     let hours = 0;
     if (h >= 100) {
@@ -145,7 +111,6 @@ Page({
     }
     return `${hours}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   },
-
   hideSidebar: function () {
     this.setData({
       isSidebarOpen: false,

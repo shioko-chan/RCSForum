@@ -121,47 +121,18 @@ Component({
       if (this.data.index_1 !== -1) {
         data.index_1 = this.data.index_1;
       }
-      const req = cnt => {
-        return new Promise((resolve, reject) => {
-          const process_failure = res => {
-            if (res.statusCode === 401 && cnt <= 0) {
-              getApp().login()
-                .then(() => req(cnt + 1))
-                .catch(() => {
-                  console.error("评论发布失败", res);
-                  reject(res.statusCode);
-                });
-            } else {
-              console.error("评论发布失败", res);
-              reject(res.statusCode);
-            }
-          };
-          tt.request({
-            "url": url,
-            "method": "POST",
-            "header": {
-              "Content-Type": "application/json; charset=utf-8",
-              "authentication": getApp().token,
-            },
-            "data": data,
-            success: res => {
-              if (res.statusCode === 200) {
-                resolve();
-              } else {
-                process_failure(res);
-              }
-            },
-            fail: res => {
-              process_failure(res);
-            }
-          });
-        })
-      };
       tt.showLoading({
         title: '发布中',
         mask: true,
       });
-      req(0).then(() => {
+      getApp().request_with_authentication({
+        url: `${getApp().url}/create/comment`,
+        method: "POST",
+        header: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        data
+      }).then(() => {
         this.clearAll();
         tt.hideLoading();
         tt.showToast({
@@ -177,22 +148,22 @@ Component({
           "duration": 2500,
         });
       });
-
     },
-    handleEmojiInput: function (event) {
+    handleToggleAnonymous: function () {
+      this.setData({ "is_anonymous": !this.data.is_anonymous });
+    },
+    setEmojiInput: function (emoji) {
       let { skip, reply } = this.data;
-      const emoji = this.data.emoji[event.currentTarget.dataset.index];
       this.setData({
         "reply": reply.slice(0, skip) + emoji + reply.slice(skip),
         "skip": skip + emoji.length
       });
     },
+    handleEmojiInput: function (event) {
+      this.setEmojiInput(this.data.emoji[event.currentTarget.dataset.index]);
+    },
     handleLargeEmojiInput: function (event) {
-      let { skip, reply } = this.data;
-      this.setData({
-        "reply": reply.slice(0, skip) + event.detail.emoji + reply.slice(skip),
-        "skip": skip + event.detail.emoji.length
-      });
+      this.setEmojiInput(event.detail.emoji);
     },
     handleInput: function (event) {
       this.data.reply = event.detail.value;
