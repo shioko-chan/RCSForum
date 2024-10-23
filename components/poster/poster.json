@@ -2,6 +2,6 @@
     "component": true,
     "usingComponents": {
         "text-with-img": "../text_with_img/text_with_img",
-        "image-web": "../image/image"
+        "image-web": "../image_web/image_web"
     }
 }

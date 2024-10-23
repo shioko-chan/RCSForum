@@ -1,9 +1,11 @@
 param (
+    [Parameter(Mandatory = $true)]
     [string]$Path,
+    [Parameter(Mandatory = $true)]
     [string]$newName
 )
 $exts = @("ttss", "ttml", "js", "json")
-Get-ChildItem -Path . -Recurse | Where-Object {
+Get-ChildItem -Path $Path -Recurse | Where-Object {
     $ext = $_.Extension.TrimStart(".")
     $exts -contains $ext
 } | ForEach-Object {
