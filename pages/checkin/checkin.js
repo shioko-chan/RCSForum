@@ -14,7 +14,7 @@ Page({
     ranks_timestamp: 0,
     url: "http://192.168.3.2"
   },
-  sendMessage: function (url) {
+  sendMessage(url) {
     return getApp().request_with_authentication({
       url,
       method: "POST",
@@ -23,17 +23,18 @@ Page({
       },
     });
   },
-  keepAlive: function () {
+  keepAlive() {
     this.sendMessage(`${this.data.url}/checkin/keepalive`).catch(() => {
       tt.showModal({
         title: "已断开与服务器的连接",
+        content: "请连接至实验室网络后重试",
         confirmText: "确认",
         showCancel: false,
       });
       this.stopTimer();
     });
   },
-  handleCheckIn: function () {
+  handleCheckIn() {
     if (this.data.isProcessing) {
       return;
     }
@@ -46,6 +47,7 @@ Page({
         .catch(() => {
           tt.showModal({
             title: "连接服务器失败",
+            content: "请连接至实验室网络后重试",
             confirmText: "确认",
             showCancel: false,
           });
@@ -58,13 +60,13 @@ Page({
       this.stopTimer();
     }
   },
-  stopTimer: function () {
+  stopTimer() {
     this.setData({
       isActive: false,
     });
     clearInterval(this.data.intervalId);
   },
-  startTimer: function () {
+  startTimer() {
     let { h, m, s } = this.data;
     this.setData({
       isActive: true,
@@ -101,7 +103,7 @@ Page({
       intervalId,
     });
   },
-  formatTime: function (h, m, s) {
+  formatTime(h, m, s) {
     let hours = 0;
     if (h >= 100) {
       hours = String(h).padStart(3, '0');
@@ -111,12 +113,12 @@ Page({
     }
     return `${hours}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   },
-  hideSidebar: function () {
+  hideSidebar() {
     this.setData({
       isSidebarOpen: false,
     });
   },
-  getRanks: function () {
+  getRanks() {
     const url = this.data.url;
     return new Promise((resolve, reject) => {
       tt.request({
@@ -140,7 +142,7 @@ Page({
       });
     });
   },
-  showSidebar: function () {
+  showSidebar() {
     if (this.data.ranks_timestamp + 5 * 60 * 1000 > Date.now() && this.data.ranks.length > 0) {
       this.setData({
         isSidebarOpen: true,

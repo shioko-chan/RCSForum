@@ -7,14 +7,14 @@ Page({
     top: 0,
     scroll_top: 0,
   },
-  showModalAllFinished: function () {
+  showModalAllFinished() {
     tt.showModal({
       title: "已加载全部内容",
       confirmText: "确认",
       showCancel: false,
     });
   },
-  requestTopics: async function (page) {
+  async requestTopics(page) {
     try {
       const data = await getApp().request_with_authentication({
         url: `${getApp().url}/topic`,
@@ -27,7 +27,7 @@ Page({
       throw exception;
     }
   },
-  handleTopicList: function (topics) {
+  handleTopicList(topics) {
     const is_admin = getApp().is_admin;
     topics.forEach(topic => {
       if (topic.is_anonymous) {
@@ -45,15 +45,15 @@ Page({
     }
     return topics;
   },
-  setTopicList: function (topics) {
+  setTopicList(topics) {
     topics = this.handleTopicList(topics);
     this.setData({ topic_list: topics });
   },
-  pushTopicList: function (topics) {
+  pushTopicList(topics) {
     topics = this.handleTopicList(topics);
     this.setData({ topic_list: this.data.topic_list.concat(topics) });
   },
-  getTopics: function () {
+  getTopics() {
     tt.showLoading({
       title: '加载中',
       mask: true
@@ -71,30 +71,30 @@ Page({
       })
       .finally(() => { tt.hideLoading(); });
   },
-  onLoad: function () {
+  onLoad() {
     this.getTopics().then(topics => { this.setTopicList(topics); }).catch(() => null);
   },
-  handleScrollUpdate: function () {
+  handleScrollUpdate() {
     if (this.data.finished) {
       this.showModalAllFinished();
       return;
     }
     this.getTopics().then(topics => { this.pushTopicList(topics); }).catch(() => null);
   },
-  handleScroll: function (event) {
+  handleScroll(event) {
     this.setData({ top: event.detail.scrollTop });
   },
-  refresh: function () {
+  refresh() {
     this.data.page = 0;
     this.data.finished = false;
     this.setData({ scroll_top: this.data.top });
     this.setData({ scroll_top: 0 });
     return this.getTopics().then(topics => { this.setTopicList(topics); }).catch(() => null);
   },
-  handleRefresh: function () {
+  handleRefresh() {
     this.refresh();
   },
-  onPullDownRefresh: function () {
+  onPullDownRefresh() {
     this.refresh().finally(() => { tt.stopPullDownRefresh(); });
   }
 })

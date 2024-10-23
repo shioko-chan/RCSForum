@@ -9,6 +9,70 @@
     align-items: stretch;
 }
 
+.comment-scroll-pane {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ffffff;
+    z-index: 1000;
+    /* 确保在其他内容之上 */
+    transition: transform 0.3s ease;
+    transform: translateY(100%);
+    /* 默认隐藏 */
+}
+
+.comment-scroll-pane.show {
+    transform: translateY(0);
+    /* 显示时的状态 */
+}
+
+.pane-top-bar {
+    height: 80rpx;
+    /* 顶部栏高度 */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20rpx;
+    background-color: #f7f7f7;
+    /* 顶部栏背景色 */
+}
+
+.close-pane-button {
+    font-size: 28rpx;
+    color: #007aff;
+    cursor: pointer;
+}
+
+.comment-list {
+    height: calc(100% - 80rpx);
+    padding: 20rpx;
+    overflow-y: scroll;
+}
+
+.comment-digest {
+    background-color: #f1f1f1;
+    padding: 20rpx;
+    border-radius: 8rpx;
+    margin: 20rpx;
+}
+
+.digest {
+    font-size: 24rpx;
+    color: #333333;
+}
+
+.show-sub-button {
+    font-size: 24rpx;
+    color: #007aff;
+    cursor: pointer;
+}
+
+.show-sub-button:hover {
+    text-decoration: underline;
+}
+
 .userprofile {
     display: flex;
     align-items: start;
@@ -102,4 +166,15 @@
     border: none;
     outline: none;
     margin-left: 15rpx;
+}
+
+.show-sub-button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    padding: 5rpx 0;
+    color: #3333ff;
+    background-color: white;
+    font-size: 26rpx;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }

@@ -3,7 +3,7 @@ Component({
     src: {
       type: String,
       value: "",
-      observer: function (newVal, _) {
+      observer(newVal, _) {
         const src = newVal;
         const filename = src.split('/').slice(-1)[0];
         const fileSystemManager = tt.getFileSystemManager();

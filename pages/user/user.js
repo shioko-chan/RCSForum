@@ -5,7 +5,7 @@ Page({
     navItem2: true,
     topic_list: [],
   },
-  onLoad: function () {
+  onLoad() {
     getApp().request_with_authentication({
       url: `${app.url}/user/${app.open_id}`,
       method: "GET",

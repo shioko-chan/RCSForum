@@ -8,6 +8,19 @@ App({
   login_promise: null,
   once_storage: null,
   max_image_size: 10,
+  emojis: [],
+  _read_emoji_list() {
+    tt.getFileSystemManager().readFile({
+      filePath: "/assets/emoji/emoji.json",
+      encoding: "utf-8",
+      success: res => {
+        this.emojis = JSON.parse(res.data);
+      },
+      fail: res => {
+        console.error("failed to read emoji list", res);
+      }
+    });
+  },
   setOnceStorage(data) {
     this.once_storage = data;
   },
@@ -55,7 +68,7 @@ App({
   _login_once() {
     return new Promise((resolve, reject) => {
       tt.login({
-        success: async res => {
+        success: async (res) => {
           try {
             const res1 = await this._request({
               url: `${this.url}/login`,
@@ -75,7 +88,7 @@ App({
             reject(exception);
           }
         },
-        fail: function (res) {
+        fail(res) {
           reject({ mes: "tt.login api error", res });
         }
       });
@@ -152,11 +165,11 @@ App({
     return this._with_authentication(this._upload)({ url, file_path });
   },
   onLaunch() {
-    var getStorage = function (key) {
+    var getStorage = key => {
       return new Promise((resolve, reject) => {
         tt.getStorage({
           "key": key,
-          success(res) {
+          success: res => {
             if (res.data) {
               resolve(res.data);
             }
@@ -190,17 +203,18 @@ App({
           console.error("failed to login");
         });
       });
+    this._read_emoji_list();
     tt.hideTabBar({
       animation: false,
       fail(res) {
         console.error("hideTabBar fail", res);
       }
     });
-    tt.getUpdateManager().onUpdateReady(function () {
+    tt.getUpdateManager().onUpdateReady(() => {
       tt.showModal({
         title: '更新提示',
         content: '新版本已经准备好，是否重启应用？\n\n若发现bug，可点击左上角反馈',
-        success(res) {
+        success: res => {
           if (res.confirm) {
             updateManager.applyUpdate();
           }
@@ -209,12 +223,12 @@ App({
     });
   },
   async storageInfo() {
-    var setStorage = function (key, data) {
+    var setStorage = (key, data) => {
       return new Promise((resolve, reject) => {
         tt.setStorage({
           key: key,
           data: data,
-          success(res) {
+          success: res => {
             resolve();
           },
           fail(res) {

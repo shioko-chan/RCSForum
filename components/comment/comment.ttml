@@ -1,4 +1,4 @@
-<view class="comment" bindtap="navToDetail">
+<template name="comment-detail">
   <view class="userprofile" catchtap="navToUser">
     <image class="avatar" src="{{ avatar }}"></image>
     <view class="userinfo">
@@ -6,12 +6,16 @@
     </view>
   </view>
   <text-with-img content="{{ content }}"></text-with-img>
-  <view class="image-display-container">
-    <block tt:for="{{ imageList }}">
-      <image-web class="image" src="{{ item }}" mode="aspectFill" catchtap="previewImage" data-index="{{ index }}"
-        bind:imageLoaded="imageLoaded"></image-web>
-    </block>
-  </view>
+  <block tt:if="{{ !is_sub }}">
+    <view class="image-display-container">
+      <block tt:for="{{ imageList }}">
+        <image-web class="image" src="{{ item }}" mode="aspectFill" catchtap="previewImage" data-index="{{ index }}"
+          catch:imageLoaded="imageLoaded"></image-web>
+      </block>
+    </view>
+  </block>
+</template>
+<template name="action-bar">
   <view class="action-bar">
     <view class="like-reply-section">
       <view class="like-section" catchtap="handleLike">
@@ -22,4 +26,34 @@
     </view>
     <view class="timestamp">{{ timestamp }}</view>
   </view>
+</template>
+<view class="comment" bindtap="navToDetail">
+  <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
+  <block tt:if="{{ !is_sub && subs.length > 0 }}">
+    <view class="comment-scroll-pane {{ show_sub ? 'show' : '' }}">
+      <view class="pane-top-bar">
+        <view class="close-pane-button" bindtap="closePane">x</view>
+      </view>
+      <scroll-view class="comment-list">
+        <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
+        <template is="action-bar" data="{{ liked, likes, timestamp }}"></template>
+        <block tt:for="{{ subs }}">
+          <comment content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
+            likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
+            pid="{{ item.pid }}" uid="{{ item.uid }}" index_1="{{ index_1 }}" index_2="{{ index }}"
+            subs="{{ item.subs }}" is_sub>
+          </comment>
+        </block>
+      </scroll-view>
+    </view>
+    <view class="comment-digest" hidden="{{ show_sub }}" bindtap="toggleComments">
+      <block tt:for="{{ digests }}">
+        <text class="digest">{{ item.name }}: {{ item.content }}</text>
+      </block>
+      <block tt:if="{{ subs.length > 4 }}">
+        <text class="show-sub-button">显示共{{ subs.length }}条回复</text>
+      </block>
+    </view>
+  </block>
+  <template is="action-bar" data="{{ liked, likes, timestamp }}"></template>
 </view>

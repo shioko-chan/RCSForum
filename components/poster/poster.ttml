@@ -13,7 +13,7 @@
       <image-web
         class="image {{ !is_digest?'once':(imageList.length>=3?'triple':(imageList.length==1?'once':(imageList.length==2?'double':''))) }}"
         src="{{ item }}" mode="aspectFill" catchtap="previewImage" data-index="{{ index }}"
-        bind:imageLoaded="imageLoaded"></image-web>
+        catch:imageLoaded="imageLoaded"></image-web>
     </block>
   </view>
   <view class="action-bar">

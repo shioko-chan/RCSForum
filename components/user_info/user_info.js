@@ -15,7 +15,7 @@ Component({
     topic_list: {
       type: Array,
       value: [],
-      observer: function (newVal, _) {
+      observer(newVal, _) {
         newVal.forEach(topic => {
           if (topic.is_anonymous) {
             topic.avatar = '/assets/images/anon.png';

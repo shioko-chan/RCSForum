@@ -9,7 +9,7 @@ Component({
         height: 0,
     },
     methods: {
-        handleCheckIn: function () {
+        handleCheckIn() {
             tt.switchTab({
                 "url": "../../pages/checkin/checkin",
                 fail(res) {
@@ -17,7 +17,7 @@ Component({
                 }
             });
         },
-        handleProfile: function () {
+        handleProfile() {
             tt.switchTab({
                 "url": "../../pages/space/space",
                 fail(res) {
@@ -25,7 +25,7 @@ Component({
                 }
             });
         },
-        handleMainPage: function () {
+        handleMainPage() {
             tt.switchTab({
                 "url": "../../pages/index/index",
                 fail(res) {
@@ -33,7 +33,7 @@ Component({
                 }
             });
         },
-        handleNewTopic: function () {
+        handleNewTopic() {
             tt.switchTab({
                 "url": "../../pages/newtopic/newtopic",
                 fail(res) {

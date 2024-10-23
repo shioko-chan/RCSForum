@@ -51,7 +51,7 @@ Component({
     images: {
       type: Array,
       value: [],
-      observer: function (newVal, _) {
+      observer(newVal, _) {
         const url = getApp().url;
         this.setData({
           "imageList": newVal.map(
@@ -68,35 +68,35 @@ Component({
     previewImageList: [],
   },
   methods: {
-    handleReply: function () {
+    handleReply() {
       this.triggerEvent("reply", {});
     },
-    imageLoaded: function (event) {
+    imageLoaded(event) {
       const index = event.currentTarget.dataset.index;
       this.data.previewImageList[index] = event.detail.src_local;
       this.setData({ previewImageList: this.data.previewImageList });
     },
-    navToDetail: function () {
+    navToDetail() {
       if (this.data.already_detail) return;
       getApp().setOnceStorage(this.data);
       tt.navigateTo({
         "url": `../../pages/topic/topic?pid=${this.data.pid}`,
-        fail: function () {
+        fail() {
           console.error("failed to navigate to topic");
         },
       });
     },
-    navToUser: function () {
+    navToUser() {
       if (this.data.already_user) return;
       getApp().setOnceStorage(this.data);
       tt.navigateTo({
         "url": `../../pages/user/user?uid=${this.data.uid}`,
-        fail: function () {
+        fail() {
           console.error("failed to navigate to user");
         },
       });
     },
-    handleLike: function () {
+    handleLike() {
       let url = null;
       if (this.data.liked) {
         this.setData({ liked: false });
@@ -121,7 +121,7 @@ Component({
         console.error("like request failed", res);
       });
     },
-    previewImage: function (event) {
+    previewImage(event) {
       const index = event.currentTarget.dataset.index;
       const imageList = this.data.previewImageList;
       const currentImage = imageList[index];

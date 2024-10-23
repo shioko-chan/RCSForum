@@ -9,7 +9,7 @@
       ""}}</text>
     <text class="anonymous-check-box-text">启用匿名发布</text>
   </view>
-  <emoji bind:selected="handleEmojiInput"></emoji>
+  <emoji catch:selected="handleEmojiInput"></emoji>
   <image-selector id="image-selector"></image-selector>
   <view style="height: 200rpx;"></view>
   <view class="publish-button" bindtap="handlePublish">发送</view>

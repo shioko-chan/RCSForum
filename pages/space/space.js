@@ -5,7 +5,7 @@ Page({
     navItem2: true,
     topic_list: [],
   },
-  onLoad: function () {
+  onLoad() {
     var app = getApp();
     this.setData({
       avatar: app.avatar,

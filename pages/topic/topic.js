@@ -5,7 +5,7 @@ Page({
     index_1: -1,
     toward: "",
   },
-  onLoad: function () {
+  onLoad() {
     const data = getApp().once_storage;
     this.setData({ "poster": data });
     getApp().request_with_authentication({
@@ -23,10 +23,11 @@ Page({
       })
     });
   },
-  handleReply: function (event) {
+  handleReply(event) {
+    console.log(event);
     this.selectComponent("#bottom-bar").focusReply(event.detail);
   },
-  handleEmoji: function () {
+  handleEmoji() {
     this.setData({ "showEmojiArea": !this.data.showEmojiArea });
   }
 })

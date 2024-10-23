@@ -31,8 +31,9 @@ Component({
     index_1: null,
   },
   methods: {
-    focusReply: function ({ toward = null, index_1 = null, index_2 = null }) {
+    focusReply({ toward = null, index_1 = null, index_2 = null }) {
       this.setData({ "focus": true, "no_image": index_1 !== null });
+      this.data.index_1 = index_1;
       if (index_2 === null || toward === null || toward === this.data.toward || toward === "") { return; }
       const old_prefix = `回复 ${this.data.toward}: `;
       const new_prefix = `回复 ${toward}: `;
@@ -49,18 +50,17 @@ Component({
         "skip": skip
       });
       this.data.toward = toward;
-      this.data.index_1 = index_1;
     },
-    handleShowEmojiArea: function () {
+    handleShowEmojiArea() {
       this.setData({ display_index: this.data.display_index !== 1 ? 1 : 0 });
     },
-    handleShowLargeEmojiArea: function () {
+    handleShowLargeEmojiArea() {
       this.setData({ display_index: this.data.display_index !== 2 ? 2 : 0 });
     },
-    handleShowImageArea: function () {
+    handleShowImageArea() {
       this.setData({ display_index: this.data.display_index !== 3 ? 3 : 0 });
     },
-    clearAll: function () {
+    clearAll() {
       this.setData({
         is_anonymous: false,
         reply: "",
@@ -71,7 +71,7 @@ Component({
       });
       this.selectComponent("#image-selector").clearImage();
     },
-    handleSend: async function () {
+    async handleSend() {
       if (this.data.reply.length === 0) {
         tt.showToast({
           "title": "多少写点内容呗",
@@ -132,27 +132,27 @@ Component({
         });
       });
     },
-    handleToggleAnonymous: function () {
+    handleToggleAnonymous() {
       this.setData({ "is_anonymous": !this.data.is_anonymous });
     },
-    setEmojiInput: function (emoji) {
+    setEmojiInput(emoji) {
       let { skip, reply } = this.data;
       this.setData({
         "reply": reply.slice(0, skip) + emoji + reply.slice(skip),
         "skip": skip + emoji.length
       });
     },
-    handleEmojiInput: function (event) {
+    handleEmojiInput(event) {
       this.setEmojiInput(this.data.emoji[event.currentTarget.dataset.index]);
     },
-    handleLargeEmojiInput: function (event) {
+    handleLargeEmojiInput(event) {
       this.setEmojiInput(event.detail.emoji);
     },
-    handleInput: function (event) {
+    handleInput(event) {
       this.data.reply = event.detail.value;
       this.data.skip = event.detail.cursor;
     },
-    handleInputBlur: function (event) {
+    handleInputBlur(event) {
       this.data.skip = event.detail.cursor;
     },
   }

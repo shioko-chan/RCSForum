@@ -6,7 +6,7 @@ Component({
     images: [],
   },
   methods: {
-    allSettled: function (promises) {
+    allSettled(promises) {
       return Promise.all(
         promises.map(
           promise => promise
@@ -15,7 +15,7 @@ Component({
         )
       );
     },
-    chooseImage: function () {
+    chooseImage() {
       const showImageTooManyToast = () => {
         tt.showToast({
           "title": "上传图片上限9张",
@@ -126,7 +126,7 @@ Component({
         }
       });
     },
-    previewImage: function (event) {
+    previewImage(event) {
       const index = event.currentTarget.dataset.index;
       const imageList = this.data.images;
       const currentImage = this.data.images[index];
@@ -136,12 +136,12 @@ Component({
         shouldShowSaveOption: false,
       });
     },
-    removeImage: function (event) {
+    removeImage(event) {
       const index = event.currentTarget.dataset.index;
       this.data.images.splice(index, 1);
       this.setData({ "images": this.data.images });
     },
-    uploadImage: function () {
+    uploadImage() {
       let progress = 0;
       const progress_total = this.data.images.length;
       tt.showLoading({
@@ -188,7 +188,7 @@ Component({
         return Promise.reject();
       }).finally(() => { tt.hideLoading(); });
     },
-    clearImage: function () {
+    clearImage() {
       this.setData({ "images": [] });
     }
   }

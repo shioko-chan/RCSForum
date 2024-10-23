@@ -1,7 +1,38 @@
 .bottom-container {
     position: fixed;
     bottom: 0;
-    width: 100%;
+    width: 750rpx;
+}
+
+.anonymous-check-box {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.anonymous-check-box-icon {
+    box-sizing: border-box;
+    width: 30rpx;
+    height: 30rpx;
+    font-size: 30rpx;
+    font-weight: bold;
+    text-align: center;
+}
+
+.anonymous-check-box-icon.checked {
+    border: none;
+}
+
+.anonymous-check-box-icon.unchecked {
+    border: #111 solid 2rpx;
+    border-radius: 1rpx;
+}
+
+.anonymous-check-box-text {
+    margin-left: 10rpx;
+    font-size: 30rpx;
+    font-weight: bold;
 }
 
 .emoji-container {
@@ -29,8 +60,10 @@
 }
 
 .icon-bar {
+    box-sizing: border-box;
     width: 100%;
     display: flex;
+    flex-direction: row;
     justify-content: start;
     padding: 10rpx 20rpx;
     background-color: #f9f9f9;

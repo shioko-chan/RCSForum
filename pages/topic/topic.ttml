@@ -2,12 +2,12 @@
   <poster title="{{ poster.title }}" content="{{ poster.content }}" username="{{ poster.username }}"
     timestamp="{{ poster.timestamp }}" likes="{{ poster.likes }}" avatar="{{ poster.avatar }}"
     liked="{{ poster.liked }}" images="{{ poster.images }}" uid="{{ poster.uid }}" pid="{{ poster.pid }}"
-    bind:reply="handleReply" already_detail>
+    catch:reply="handleReply" already_detail>
   </poster>
   <block tt:for="{{ comment_list }}">
     <comment content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
       likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
-      pid="{{ item.pid }}" uid="{{ item.uid }}" bind:reply="handleReply">
+      pid="{{ item.pid }}" uid="{{ item.uid }}" index_1="{{ index }}" subs="{{ item.subs }}" catch:reply="handleReply">
     </comment>
   </block>
   <view style="height: 100rpx;"></view>

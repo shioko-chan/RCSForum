@@ -6,27 +6,27 @@ Page({
     content: "",
     cursor: 0,
   },
-  handleAnonymous: function () {
+  handleAnonymous() {
     this.setData({ "is_anonymous": !this.data.is_anonymous });
   },
-  handleEmojiInput: function (event) {
+  handleEmojiInput(event) {
     let { cursor, content } = this.data;
     this.setData({
       "content": content.slice(0, cursor) + event.detail.emoji + content.slice(cursor),
       "cursor": cursor + event.detail.emoji.length
     });
   },
-  handleTitleInput: function (event) {
+  handleTitleInput(event) {
     this.data.title = event.detail.value;
   },
-  handleContentInput: function (event) {
+  handleContentInput(event) {
     this.data.content = event.detail.value;
     this.data.cursor = event.detail.cursor;
   },
-  handleContentBlur: function (event) {
+  handleContentBlur(event) {
     this.data.cursor = event.detail.cursor;
   },
-  clearAll: function () {
+  clearAll() {
     this.setData({
       "is_anonymous": false,
       "title": "",
@@ -35,7 +35,7 @@ Page({
     });
     this.selectComponent("#image-selector").clearImage();
   },
-  allSettled: function (promises) {
+  allSettled(promises) {
     return Promise.all(
       promises.map(
         promise => promise
@@ -44,7 +44,7 @@ Page({
       )
     );
   },
-  handlePublish: async function () {
+  async handlePublish() {
     if (this.data.title.length === 0) {
       tt.showToast({
         "title": "多少写个标题呗",
