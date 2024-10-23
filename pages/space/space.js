@@ -2,7 +2,7 @@ Page({
   data: {
     avatar: '',
     name: '',
-    navItem2: true,
+    nav_item2: true,
     topic_list: [],
   },
   onLoad() {

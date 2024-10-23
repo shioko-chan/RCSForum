@@ -1,17 +1,19 @@
 Page({
   data: {
-    displayText: '开工!',
-    isActive: false,
-    isSidebarOpen: false,
+    display_text: '开工!',
+    is_active: false,
+    is_sidebar_open: false,
+    is_accumulate: false,
     h: 0,
     m: 0,
     s: 0,
-    intervalId: null,
-    checkedIn: false,
-    navItem1: true,
-    isProcessing: false,
+    interval_id: null,
+    nav_item1: true,
+    is_processing: false,
     ranks: [],
+    ranks_acc: [],
     ranks_timestamp: 0,
+    ranks_acc_timestamp: 0,
     url: "http://192.168.3.2"
   },
   sendMessage(url) {
@@ -25,35 +27,25 @@ Page({
   },
   keepAlive() {
     this.sendMessage(`${this.data.url}/checkin/keepalive`).catch(() => {
-      tt.showModal({
-        title: "已断开与服务器的连接",
-        content: "请连接至实验室网络后重试",
-        confirmText: "确认",
-        showCancel: false,
-      });
+      getApp().show_network_error_modal("打卡功能需要连接至实验室网络才可使用");
       this.stopTimer();
     });
   },
   handleCheckIn() {
-    if (this.data.isProcessing) {
+    if (this.data.is_processing) {
       return;
     }
-    if (!this.data.isActive) {
-      this.setData({ isProcessing: true });
+    if (!this.data.is_active) {
+      this.setData({ is_processing: true });
       this.sendMessage(`${this.data.url}/checkin/hello`)
         .then(() => {
           this.startTimer();
         })
         .catch(() => {
-          tt.showModal({
-            title: "连接服务器失败",
-            content: "请连接至实验室网络后重试",
-            confirmText: "确认",
-            showCancel: false,
-          });
+          getApp().show_network_error_modal("打卡功能需要连接至实验室网络才可使用");
         })
         .finally(() => {
-          this.setData({ isProcessing: false });
+          this.setData({ is_processing: false });
         });
     }
     else {
@@ -62,17 +54,17 @@ Page({
   },
   stopTimer() {
     this.setData({
-      isActive: false,
+      is_active: false,
     });
-    clearInterval(this.data.intervalId);
+    clearInterval(this.data.interval_id);
   },
   startTimer() {
     let { h, m, s } = this.data;
     this.setData({
-      isActive: true,
-      displayText: this.formatTime(h, m, s),
+      is_active: true,
+      display_text: this.formatTime(h, m, s),
     });
-    const intervalId = setInterval(() => {
+    const interval_id = setInterval(() => {
       let { h, m, s } = this.data;
       if (s + 1 >= 60) {
         s = 0;
@@ -95,12 +87,12 @@ Page({
       }
       this.setData({
         h: h, m: m, s: s,
-        displayText: this.formatTime(h, m, s),
+        display_text: this.formatTime(h, m, s),
       });
 
     }, 1000);
     this.setData({
-      intervalId,
+      interval_id,
     });
   },
   formatTime(h, m, s) {
@@ -115,52 +107,39 @@ Page({
   },
   hideSidebar() {
     this.setData({
-      isSidebarOpen: false,
+      is_sidebar_open: false,
     });
   },
-  getRanks() {
-    const url = this.data.url;
-    return new Promise((resolve, reject) => {
-      tt.request({
-        url: `${url}/checkin/rank`,
-        header: {
-          "Content-Type": "application/json; charset=utf-8",
-          "authentication": getApp().token
-        },
-        method: "GET",
-        success: res => {
-          if (res.statusCode === 200) {
-            resolve(res.data.rank);
-          }
-          else {
-            reject();
-          }
-        },
-        fail: _ => {
-          reject();
-        },
-      });
-    });
+  showAccumulate() {
+    if (this.data.ranks_acc_timestamp + 5 * 60 * 1000 > Date.now() && this.data.ranks.length > 0) {
+      this.setData({ is_accumulate: true, is_sidebar_open: true, });
+      return;
+    }
+    getApp().request({
+      url: `${this.data.url}/checkin/ranksacc`,
+      header: { "Content-Type": "application/json; charset=utf-8" },
+      method: "GET",
+    }).then(data => {
+      this.setData({ ranks_acc: data.rank, is_accumulate: true, is_sidebar_open: true, });
+      this.data.ranks_acc_timestamp = Date.now();
+    }).catch(() =>
+      getApp().show_network_error_modal("请检查网络连接，需要连接至校园网或实验室网络")
+    );
   },
   showSidebar() {
     if (this.data.ranks_timestamp + 5 * 60 * 1000 > Date.now() && this.data.ranks.length > 0) {
-      this.setData({
-        isSidebarOpen: true,
-      });
+      this.setData({ is_sidebar_open: true });
       return;
     }
-    this.getRanks().then((ranks) => {
-      this.setData({
-        isSidebarOpen: true,
-        ranks_timestamp: Date.now(),
-      });
-      this.setData({ ranks: ranks });
-    }).catch(() => {
-      tt.showModal({
-        title: "连接服务器失败",
-        confirmText: "确认",
-        showCancel: false,
-      });
-    });
-  },
+    getApp().request({
+      url: `${this.data.url}/checkin/ranks`,
+      header: { "Content-Type": "application/json; charset=utf-8" },
+      method: "GET",
+    }).then(data => {
+      this.setData({ ranks: data.rank, is_sidebar_open: true, });
+      this.data.ranks_timestamp = Date.now();
+    }).catch(() =>
+      getApp().show_network_error_modal("请检查网络连接，需要连接至校园网或实验室网络")
+    );
+  }
 });

@@ -10,6 +10,6 @@
       pid="{{ item.pid }}" uid="{{ item.uid }}" index_1="{{ index }}" subs="{{ item.subs }}" catch:reply="handleReply">
     </comment>
   </block>
-  <view style="height: 100rpx;"></view>
+  <view style="height: 200rpx;"></view>
 </view>
 <bottom-bar pid="{{ poster.pid }}" id="bottom-bar"></bottom-bar>

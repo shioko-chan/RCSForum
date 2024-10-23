@@ -60,12 +60,7 @@ Page({
     return this.requestTopics(this.data.page)
       .catch(res => {
         console.error(res);
-        tt.showModal({
-          title: "获取话题列表失败",
-          content: "请检查网络连接，需要连接校园网或实验室网络",
-          confirmText: "确认",
-          showCancel: false,
-        });
+        getApp().show_network_error_modal("请检查网络连接，需要连接至校园网或实验室网络");
         return Promise.reject("network error");
       })
       .finally(() => { tt.hideLoading(); });

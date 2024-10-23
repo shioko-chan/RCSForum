@@ -9,8 +9,8 @@
     <image-selector id="image-selector"></image-selector>
   </view>
   <view class="reply-container">
-    <textarea class="reply-box" type="text" maxlength="1000" cursor-spacing="70" auto-height value="{{ reply }}"
-      focus="{{ focus }}" cursor="{{ skip }}" bindinput="handleInput" bindblur="handleInputBlur"></textarea>
+    <textarea class="reply-box" type="text" maxlength="2000" cursor-spacing="70" auto-height value="{{ reply }}"
+      focus="{{ focus }}" cursor="{{ skip }}" bindinput="handleInput" bindblur="handleBlur"></textarea>
     <button class="send-button" bindtap="handleSend">发送</button>
   </view>
   <view class="icon-bar">

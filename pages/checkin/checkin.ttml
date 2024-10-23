@@ -1,4 +1,4 @@
-<view class="sidebar {{ isSidebarOpen ? 'open' : 'closed' }}">
+<view class="sidebar {{ is_sidebar_open ? 'open' : 'closed' }}">
   <view class="sidebar-title">🏆 本周排行榜(每周一04:00更新)</view>
   <view class="sidebar-item" tt:for="{{ ranks }}">
     <view class="image-view">
@@ -9,15 +9,25 @@
       </view>
     </view>
   </view>
+  <view class="sidebar-title" bindtap="showAccumulate">🏆 累计排行榜</view>
+  <view class="sidebar-item" tt:for="{{ ranks_acc }}">
+    <view class="image-view">
+      <image class="avatar" src="{{ item.avatar }}" mode="aspectFill" />
+      <view class="text-group">
+        <text class="name">{{ item.name }}</text>
+        <text class="time">{{ item.time }} min</text>
+      </view>
+    </view>
+  </view>
 </view>
 <image class="sidebar-button" mode="aspectFill" src="/assets/images/menu.png" bindtap="showSidebar" />
-<view class="checkin-page {{ isActive ? 'active' : 'inactive' }}" bindtap="hideSidebar">
+<view class="checkin-page {{ is_active ? 'active' : 'inactive' }}" bindtap="hideSidebar">
   <view class="checkin-button" bindtap="handleCheckIn">
-    {{ displayText }}
+    {{ display_text }}
   </view>
   <view class="ocean">
     <view class="wave"></view>
     <view class="deep-water"></view>
   </view>
 </view>
-<navbar navItem1="{{ navItem1 }}"></navbar>
+<navbar nav_item1="{{ nav_item1 }}"></navbar>

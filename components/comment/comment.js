@@ -78,6 +78,7 @@ Component({
     digests: [],
   },
   methods: {
+    stop() { },
     closePane() {
       this.setData({
         show_sub: false,

@@ -1,7 +1,7 @@
 <view class="container">
   <view class="input-section">
     <input class="title-input" placeholder="请输入标题" maxlength="100" bindinput="handleTitleInput" value="{{ title }}" />
-    <textarea class="content-input" placeholder="请输入内容" maxlength="2000" bindinput="handleContentInput"
+    <textarea class="content-input" placeholder="请输入内容" maxlength="5000" bindinput="handleContentInput"
       bindblur="handleContentBlur" id="content-box" value="{{ content }}" cursor="{{ cursor }}"></textarea>
   </view>
   <view class="anonymous-check-box" bindtap="handleAnonymous">
@@ -14,4 +14,4 @@
   <view style="height: 200rpx;"></view>
   <view class="publish-button" bindtap="handlePublish">发送</view>
 </view>
-<navbar centerItem="{{ centerItem }}"></navbar>
+<navbar center_item="{{ center_item }}"></navbar>

@@ -9,7 +9,14 @@ Component({
       value: "",
       observer(new_val, _) {
         const matchSticker = sticker_name => {
-          return this.data.stickers.find(e => e.name === sticker_name)?.url || null;
+          let array = null;
+          if (this.data.stickers.length === 0) {
+            array = getApp().stickers;
+          }
+          else {
+            array = this.data.stickers;
+          }
+          return array.find(e => e.name === sticker_name)?.url || null;
         };
 
         const raw_str = new_val;
@@ -57,8 +64,10 @@ Component({
     itemList: [],
     stickers: []
   },
+  attached() {
+    this.setData({ stickers: getApp().stickers });
+  },
   methods: {
-    attached() { this.stickers = getApp().stickers; },
     previewSticker(event) {
       const currentImage = event.currentTarget.dataset.src;
       tt.previewImage({

@@ -1,19 +1,21 @@
 <template name="comment-detail">
-  <view class="userprofile" catchtap="navToUser">
-    <image class="avatar" src="{{ avatar }}"></image>
-    <view class="userinfo">
-      <text class="username">{{ username }}</text>
+  <view class="comment">
+    <view class="userprofile" catchtap="navToUser">
+      <image class="avatar" src="{{ avatar }}"></image>
+      <view class="userinfo">
+        <text class="username">{{ username }}</text>
+      </view>
     </view>
+    <text-with-img content="{{ content }}"></text-with-img>
+    <block tt:if="{{ !is_sub }}">
+      <view class="image-display-container">
+        <block tt:for="{{ imageList }}">
+          <image-web class="image" src="{{ item }}" mode="aspectFill" catchtap="previewImage" data-index="{{ index }}"
+            catch:imageLoaded="imageLoaded"></image-web>
+        </block>
+      </view>
+    </block>
   </view>
-  <text-with-img content="{{ content }}"></text-with-img>
-  <block tt:if="{{ !is_sub }}">
-    <view class="image-display-container">
-      <block tt:for="{{ imageList }}">
-        <image-web class="image" src="{{ item }}" mode="aspectFill" catchtap="previewImage" data-index="{{ index }}"
-          catch:imageLoaded="imageLoaded"></image-web>
-      </block>
-    </view>
-  </block>
 </template>
 <template name="action-bar">
   <view class="action-bar">
@@ -27,12 +29,13 @@
     <view class="timestamp">{{ timestamp }}</view>
   </view>
 </template>
+
+<template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
 <view class="comment" bindtap="navToDetail">
-  <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
   <block tt:if="{{ !is_sub && subs.length > 0 }}">
-    <view class="comment-scroll-pane {{ show_sub ? 'show' : '' }}">
+    <view class="comment-scroll-pane {{ show_sub ? 'show' : '' }}" catchtap="stop">
       <view class="pane-top-bar">
-        <view class="close-pane-button" bindtap="closePane">❎</view>
+        <view class="close-pane-button" bindtap="closePane">X</view>
       </view>
       <scroll-view class="comment-list">
         <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>

@@ -1,15 +1,13 @@
 Component({
-  properties: {
-
-  },
+  properties: {},
   data: {
     defaultStates: {},
     stickers: []
   },
+  attached() {
+    this.setData({ stickers: getApp().stickers });
+  },
   methods: {
-    attached() {
-      this.stickers = getApp().stickers;
-    },
     previewSticker(event) {
       const index = event.currentTarget.dataset.index;
       const currentImage = this.data.stickers[index].url;

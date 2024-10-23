@@ -46,8 +46,8 @@ Component({
         }
       })();
       this.setData({
-        "reply": new_prefix + reply,
-        "skip": skip
+        reply: new_prefix + reply,
+        skip: skip
       });
       this.data.toward = toward;
     },
@@ -61,14 +61,16 @@ Component({
       this.setData({ display_index: this.data.display_index !== 3 ? 3 : 0 });
     },
     clearAll() {
+      this.setData({ reply: "foo", skip: 3 });
       this.setData({
         is_anonymous: false,
         reply: "",
         skip: 0,
         focus: false,
-        toward: "",
-        index_1: null,
+        display_index: 0,
       });
+      this.data.toward = "";
+      this.data.index_1 = null;
       this.selectComponent("#image-selector").clearImage();
     },
     async handleSend() {
@@ -152,7 +154,7 @@ Component({
       this.data.reply = event.detail.value;
       this.data.skip = event.detail.cursor;
     },
-    handleInputBlur(event) {
+    handleBlur(event) {
       this.data.skip = event.detail.cursor;
     },
   }

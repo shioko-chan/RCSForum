@@ -1,8 +1,8 @@
 Component({
     properties: {
-        navItem1: { type: Boolean, value: false },
-        navItem2: { type: Boolean, value: false },
-        centerItem: { type: Boolean, value: false },
+        nav_item1: { type: Boolean, value: false },
+        nav_item2: { type: Boolean, value: false },
+        center_item: { type: Boolean, value: false },
     },
     data: {
         defaultStates: {},

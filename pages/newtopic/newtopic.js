@@ -1,19 +1,19 @@
 Page({
   data: {
-    centerItem: true,
+    center_item: true,
     is_anonymous: false,
     title: "",
     content: "",
     cursor: 0,
   },
   handleAnonymous() {
-    this.setData({ "is_anonymous": !this.data.is_anonymous });
+    this.setData({ is_anonymous: !this.data.is_anonymous });
   },
   handleStickerInput(event) {
     let { cursor, content } = this.data;
     this.setData({
-      "content": content.slice(0, cursor) + event.detail.sticker + content.slice(cursor),
-      "cursor": cursor + event.detail.sticker.length
+      content: content.slice(0, cursor) + event.detail.sticker + content.slice(cursor),
+      cursor: cursor + event.detail.sticker.length
     });
   },
   handleTitleInput(event) {
@@ -27,11 +27,12 @@ Page({
     this.data.cursor = event.detail.cursor;
   },
   clearAll() {
+    this.setData({ title: "foo", content: "foo", cursor: 3 });
     this.setData({
-      "is_anonymous": false,
-      "title": "",
-      "content": "",
-      "cursor": 0,
+      is_anonymous: false,
+      title: "",
+      content: "",
+      cursor: 0,
     });
     this.selectComponent("#image-selector").clearImage();
   },
@@ -88,6 +89,7 @@ Page({
           console.error("request failed with error", res);
           tt.showModal({
             "title": "发布失败😴",
+            "content": "请检查网络连接，该功能需要连接至校园网或实验室网络",
             "showCancel": false,
           });
         }).finally(() => { tt.hideLoading(); });

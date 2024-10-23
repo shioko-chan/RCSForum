@@ -8,6 +8,7 @@ App({
   login_promise: null,
   once_storage: null,
   max_image_size: 10,
+  modal_promise: null,
   stickers: [
     {
       "name": "I_AM_TRASH",
@@ -168,6 +169,12 @@ App({
     {
       "name": "ULTRA_SKILL",
       "url": "/assets/sticker/ultraskill.gif"
+    }, {
+      "name": "WONDERING_2",
+      "url": "/assets/sticker/wondering.jpg"
+    }, {
+      "name": "SPEECHLESS_2",
+      "url": "/assets/sticker/speechless2.jpg"
     }
   ],
   set_once_storage(data) {
@@ -307,6 +314,26 @@ App({
   upload_with_authentication({ url, file_path }) {
     return this._with_authentication(this._upload)({ url, file_path });
   },
+  _show_modal({ title, content, confirmText = "确认", showCancel = false }) {
+    const new_promise = () =>
+      new Promise((resolve, reject) =>
+        tt.showModal({
+          title,
+          content,
+          confirmText,
+          showCancel,
+          success: resolve,
+          fail: reject,
+        })
+      );
+    this.modal_promise?.then(() => new_promise());
+    if (this.modal_promise === null) {
+      this.modal_promise = new_promise().finally(() => { this.modal_promise = null });
+    }
+  },
+  show_network_error_modal(mes) {
+    this._show_modal({ title: "已断开与服务器的连接", content: mes, });
+  },
   onLaunch() {
     var getStorage = key => {
       return new Promise((resolve, reject) => {
@@ -315,8 +342,7 @@ App({
           success: res => {
             if (res.data) {
               resolve(res.data);
-            }
-            else {
+            } else {
               reject("no data in storage");
             }
           },
@@ -352,16 +378,9 @@ App({
         console.error("hideTabBar fail", res);
       }
     });
-    tt.getUpdateManager().onUpdateReady(() => {
-      tt.showModal({
-        title: '更新提示',
-        content: '新版本已经准备好，是否重启应用？\n\n若发现bug，可点击左上角反馈',
-        success: res => {
-          if (res.confirm) {
-            updateManager.applyUpdate();
-          }
-        }
-      });
+    this._show_modal({
+      title: '欢迎使用RCS论坛',
+      content: '若发现bug或有功能方面的建议，可点击右上角反馈',
     });
   },
   async storageInfo() {
