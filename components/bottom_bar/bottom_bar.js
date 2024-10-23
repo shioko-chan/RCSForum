@@ -13,7 +13,7 @@ Component({
     reply: "",
     is_anonymous: false,
     display_index: 0,
-    emoji: [
+    emojis: [
       "😀", "😊", "😎", "😇", "🧐", "🤓", "🤡", "🥹", "🫨", "🤭", "👿", "🤔",
       "😢", "🤯", "🥳", "😴", "😡", "🤮", "😱", "😓", "😥", "🤐", "🤤", "🤣",
       "🥵", "😘", "😂", "😅", "😭", "😊", "😒", "🤗",
@@ -54,7 +54,7 @@ Component({
     handleShowEmojiArea() {
       this.setData({ display_index: this.data.display_index !== 1 ? 1 : 0 });
     },
-    handleShowLargeEmojiArea() {
+    handleShowStickerArea() {
       this.setData({ display_index: this.data.display_index !== 2 ? 2 : 0 });
     },
     handleShowImageArea() {
@@ -135,18 +135,18 @@ Component({
     handleToggleAnonymous() {
       this.setData({ "is_anonymous": !this.data.is_anonymous });
     },
-    setEmojiInput(emoji) {
+    setInput(item) {
       let { skip, reply } = this.data;
       this.setData({
-        "reply": reply.slice(0, skip) + emoji + reply.slice(skip),
-        "skip": skip + emoji.length
+        "reply": reply.slice(0, skip) + item + reply.slice(skip),
+        "skip": skip + item.length
       });
     },
     handleEmojiInput(event) {
-      this.setEmojiInput(this.data.emoji[event.currentTarget.dataset.index]);
+      this.setInput(this.data.emojis[event.currentTarget.dataset.index]);
     },
-    handleLargeEmojiInput(event) {
-      this.setEmojiInput(event.detail.emoji);
+    handleStickerInput(event) {
+      this.setInput(event.detail.sticker);
     },
     handleInput(event) {
       this.data.reply = event.detail.value;

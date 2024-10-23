@@ -8,29 +8,175 @@ App({
   login_promise: null,
   once_storage: null,
   max_image_size: 10,
-  emojis: [],
-  _read_emoji_list() {
-    tt.getFileSystemManager().readFile({
-      filePath: "/assets/emoji/emoji.json",
-      encoding: "utf-8",
-      success: res => {
-        this.emojis = JSON.parse(res.data);
-      },
-      fail: res => {
-        console.error("failed to read emoji list", res);
-      }
-    });
-  },
-  setOnceStorage(data) {
+  stickers: [
+    {
+      "name": "I_AM_TRASH",
+      "url": "/assets/sticker/trashbin.png"
+    },
+    {
+      "name": "CAR",
+      "url": "/assets/sticker/car.jpg"
+    },
+    {
+      "name": "SHOW_IT_TO_ME",
+      "url": "/assets/sticker/show.jpg"
+    },
+    {
+      "name": "LYING_FLAT",
+      "url": "/assets/sticker/lyingflat.jpg"
+    },
+    {
+      "name": "I_AM_DEPRESSED",
+      "url": "/assets/sticker/depress.jpg"
+    },
+    {
+      "name": "LUCKY",
+      "url": "/assets/sticker/lucky.gif"
+    },
+    {
+      "name": "NO_PROBLEM",
+      "url": "/assets/sticker/noproblem.jpg"
+    },
+    {
+      "name": "BLANK_BRAIN",
+      "url": "/assets/sticker/brainblank.jpg"
+    },
+    {
+      "name": "SELF_CONSCIOUS",
+      "url": "/assets/sticker/selfconscious.jpg"
+    },
+    {
+      "name": "NOW_WONDERING",
+      "url": "/assets/sticker/nowimaging.jpg"
+    },
+    {
+      "name": "ME_QMARK",
+      "url": "/assets/sticker/itsmeqmark.jpg"
+    },
+    {
+      "name": "S_ATTRIBUTE",
+      "url": "/assets/sticker/sattribute.jpg"
+    },
+    {
+      "name": "CALM_DOWN",
+      "url": "/assets/sticker/calm.jpg"
+    },
+    {
+      "name": "SPEECHLESS",
+      "url": "/assets/sticker/speechless.jpg"
+    },
+    {
+      "name": "LICKING",
+      "url": "/assets/sticker/licking.gif"
+    },
+    {
+      "name": "INNOCENT",
+      "url": "/assets/sticker/innocent.gif"
+    },
+    {
+      "name": "WONDERING",
+      "url": "/assets/sticker/wondering.gif"
+    },
+    {
+      "name": "CRY",
+      "url": "/assets/sticker/cry.png"
+    },
+    {
+      "name": "PLEASANT",
+      "url": "/assets/sticker/pleased.gif"
+    },
+    {
+      "name": "OH_CAPITAL",
+      "url": "/assets/sticker/ohcapital.png"
+    },
+    {
+      "name": "LAUGHING",
+      "url": "/assets/sticker/laughing.gif"
+    },
+    {
+      "name": "SCRATCH_HEAD",
+      "url": "/assets/sticker/scratch.gif"
+    },
+    {
+      "name": "SHOCKED",
+      "url": "/assets/sticker/shocking.gif"
+    },
+    {
+      "name": "QUESTION",
+      "url": "/assets/sticker/question.jpg"
+    },
+    {
+      "name": "WOW",
+      "url": "/assets/sticker/wow.gif"
+    },
+    {
+      "name": "LOVE",
+      "url": "/assets/sticker/love.gif"
+    },
+    {
+      "name": "FORGE_IRON",
+      "url": "/assets/sticker/forgeiron.png"
+    },
+    {
+      "name": "WTF_MEME",
+      "url": "/assets/sticker/wtfmeme.png"
+    },
+    {
+      "name": "ADMIRE",
+      "url": "/assets/sticker/admire.jpg"
+    },
+    {
+      "name": "IS_THAT_PRACTICAL",
+      "url": "/assets/sticker/practical.png"
+    },
+    {
+      "name": "EMBARRASSED",
+      "url": "/assets/sticker/embarrassed.jpg"
+    },
+    {
+      "name": "YOU_ARE_EXTRAORDINARY",
+      "url": "/assets/sticker/extraordinary.jpg"
+    },
+    {
+      "name": "DONT_WANT_WORK",
+      "url": "/assets/sticker/nowork.jpg"
+    },
+    {
+      "name": "TANG",
+      "url": "/assets/sticker/tang.jpg"
+    },
+    {
+      "name": "NERD",
+      "url": "/assets/sticker/nerdy.jpg"
+    },
+    {
+      "name": "HAVE_PARTY",
+      "url": "/assets/sticker/party.jpg"
+    },
+    {
+      "name": "LOYAL",
+      "url": "/assets/sticker/loyal.jpg"
+    },
+    {
+      "name": "TEHEBERINKO",
+      "url": "/assets/sticker/teheberinko.jpg"
+    },
+    {
+      "name": "EXP_INC_3",
+      "url": "/assets/sticker/expinc3.jpg"
+    },
+    {
+      "name": "ULTRA_SKILL",
+      "url": "/assets/sticker/ultraskill.gif"
+    }
+  ],
+  set_once_storage(data) {
     this.once_storage = data;
   },
   _request({ url, method, header, data }) {
     return new Promise((resolve, reject) => {
       tt.request({
-        url,
-        method,
-        header,
-        data,
+        url, method, header, data,
         success: resolve,
         fail: res => {
           if (res.statusCode !== undefined) {
@@ -50,10 +196,7 @@ App({
     header["Content-Type"] = "multipart/form-data";
     return new Promise((resolve, reject) => {
       tt.uploadFile({
-        url,
-        filePath: file_path,
-        name: "image",
-        header,
+        url, filePath: file_path, name: "image", header,
         success: resolve,
         fail: res => {
           if (res.statusCode !== undefined) {
@@ -203,7 +346,6 @@ App({
           console.error("failed to login");
         });
       });
-    this._read_emoji_list();
     tt.hideTabBar({
       animation: false,
       fail(res) {

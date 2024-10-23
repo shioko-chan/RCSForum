@@ -8,8 +8,8 @@ Component({
       type: String,
       value: "",
       observer(new_val, _) {
-        const matchEmoji = emoji_name => {
-          return this.data.emojis.find(e => e.name === emoji_name)?.url || null;
+        const matchSticker = sticker_name => {
+          return this.data.stickers.find(e => e.name === sticker_name)?.url || null;
         };
 
         const raw_str = new_val;
@@ -21,10 +21,10 @@ Component({
           const endIdx = raw_str.indexOf("]", i);
           if (endIdx === -1) break;
 
-          const emoji_name = raw_str.slice(i + 1, endIdx);
-          const emoji_url = matchEmoji(emoji_name);
+          const sticker_name = raw_str.slice(i + 1, endIdx);
+          const sticker_url = matchSticker(sticker_name);
 
-          if (emoji_url === null) continue;
+          if (sticker_url === null) continue;
 
           if (start < i) {
             this.data.itemList.push({
@@ -35,7 +35,7 @@ Component({
 
           this.data.itemList.push({
             is_text: false,
-            src: emoji_url,
+            src: sticker_url,
           });
 
           start = endIdx + 1;
@@ -55,11 +55,11 @@ Component({
   data: {
     defaultStates: {},
     itemList: [],
-    emojis: []
+    stickers: []
   },
   methods: {
-    attached() { this.emojis = getApp().emojis; },
-    previewEmoji(event) {
+    attached() { this.stickers = getApp().stickers; },
+    previewSticker(event) {
       const currentImage = event.currentTarget.dataset.src;
       tt.previewImage({
         urls: [currentImage],
@@ -67,10 +67,10 @@ Component({
         shouldShowSaveOption: true,
       });
     },
-    handleEmoji(event) {
+    handleSticker(event) {
       const index = event.currentTarget.dataset.index;
-      const emoji = `[${this.data.emojis[index].name}]`;
-      this.triggerEvent("selected", { emoji });
+      const sticker = `[${this.data.stickers[index].name}]`;
+      this.triggerEvent("selected", { sticker });
     }
   }
 })

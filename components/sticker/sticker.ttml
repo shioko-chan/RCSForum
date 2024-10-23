@@ -1,0 +1,6 @@
+<view class="sticker-bar">
+  <block tt:for="{{ stickers }}" tt:key="name">
+    <image class="sticker" src="{{ item.url }}" data-index="{{ index }}" bindtap="handleSticker"
+      bindlongpress="previewSticker" mode="aspectFit" />
+  </block>
+</view>

@@ -1,6 +1,0 @@
-<view class="emoji-bar">
-  <block tt:for="{{ emojis }}" tt:key="name">
-    <image class="emoji" src="{{ item.url }}" data-index="{{ index }}" bindtap="handleEmoji"
-      bindlongpress="previewEmoji" mode="aspectFit" />
-  </block>
-</view>

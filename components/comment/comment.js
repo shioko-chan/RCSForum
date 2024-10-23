@@ -105,7 +105,7 @@ Component({
     },
     navToUser() {
       if (this.data.uid === "") return;
-      getApp().setOnceStorage(this.data);
+      getApp().set_once_storage(this.data);
       tt.navigateTo({
         "url": `../../pages/user/user?uid=${this.data.uid}`,
         fail() {

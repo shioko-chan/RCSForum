@@ -4,25 +4,25 @@ Component({
   },
   data: {
     defaultStates: {},
-    emojis: []
+    stickers: []
   },
   methods: {
     attached() {
-      this.emojis = getApp().emojis;
+      this.stickers = getApp().stickers;
     },
-    previewEmoji(event) {
+    previewSticker(event) {
       const index = event.currentTarget.dataset.index;
-      const currentImage = this.data.emojis[index].url;
+      const currentImage = this.data.stickers[index].url;
       tt.previewImage({
         urls: [currentImage],
         current: currentImage,
         shouldShowSaveOption: true,
       });
     },
-    handleEmoji(event) {
+    handleSticker(event) {
       const index = event.currentTarget.dataset.index;
-      const emoji = `[${this.data.emojis[index].name}]`;
-      this.triggerEvent("selected", { emoji });
+      const sticker = `[${this.data.stickers[index].name}]`;
+      this.triggerEvent("selected", { sticker });
     }
   }
 })

@@ -9,11 +9,11 @@ Page({
   handleAnonymous() {
     this.setData({ "is_anonymous": !this.data.is_anonymous });
   },
-  handleEmojiInput(event) {
+  handleStickerInput(event) {
     let { cursor, content } = this.data;
     this.setData({
-      "content": content.slice(0, cursor) + event.detail.emoji + content.slice(cursor),
-      "cursor": cursor + event.detail.emoji.length
+      "content": content.slice(0, cursor) + event.detail.sticker + content.slice(cursor),
+      "cursor": cursor + event.detail.sticker.length
     });
   },
   handleTitleInput(event) {

@@ -1,6 +1,5 @@
 Page({
   data: {
-    showEmojiArea: false,
     topic_list: [],
     page: 0,
     finished: false,

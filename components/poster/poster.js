@@ -78,7 +78,7 @@ Component({
     },
     navToDetail() {
       if (this.data.already_detail) return;
-      getApp().setOnceStorage(this.data);
+      getApp().set_once_storage(this.data);
       tt.navigateTo({
         "url": `../../pages/topic/topic?pid=${this.data.pid}`,
         fail() {
@@ -88,7 +88,7 @@ Component({
     },
     navToUser() {
       if (this.data.already_user) return;
-      getApp().setOnceStorage(this.data);
+      getApp().set_once_storage(this.data);
       tt.navigateTo({
         "url": `../../pages/user/user?uid=${this.data.uid}`,
         fail() {

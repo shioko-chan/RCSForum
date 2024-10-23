@@ -26,8 +26,5 @@ Page({
   handleReply(event) {
     console.log(event);
     this.selectComponent("#bottom-bar").focusReply(event.detail);
-  },
-  handleEmoji() {
-    this.setData({ "showEmojiArea": !this.data.showEmojiArea });
   }
 })

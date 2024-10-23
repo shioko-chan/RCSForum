@@ -1,9 +1,9 @@
 <view class="bottom-container">
   <view class="emoji-container" hidden="{{ display_index !== 1 }}">
-    <text tt:for="{{ emoji }}" bindtap="handleEmojiInput" data-index="{{ index }}">{{ item }}</text>
+    <text tt:for="{{ emojis }}" bindtap="handleEmojiInput" data-index="{{ index }}">{{ item }}</text>
   </view>
   <view hidden="{{ display_index !== 2 }}">
-    <emoji catch:selected="handleLargeEmojiInput"></emoji>
+    <sticker catch:selected="handleStickerInput"></sticker>
   </view>
   <view class="image-container" hidden="{{ display_index !== 3 || no_image }}">
     <image-selector id="image-selector"></image-selector>
@@ -15,7 +15,7 @@
   </view>
   <view class="icon-bar">
     <image class="icon" src="/assets/images/emoji.png" bindtap="handleShowEmojiArea"></image>
-    <image class="icon" src="/assets/images/me.png" bindtap="handleShowLargeEmojiArea"></image>
+    <image class="icon" src="/assets/images/me.png" bindtap="handleShowStickerArea"></image>
     <image class="icon" src="/assets/images/image.png" bindtap="handleShowImageArea" hidden="{{ no_image }}"></image>
     <view class="anonymous-check-box" bindtap="handleToggleAnonymous">
       <text class="anonymous-check-box-icon {{ is_anonymous? 'checked' : 'unchecked' }}">{{ is_anonymous? "✅" :

@@ -1,4 +1,4 @@
-.emoji-bar {
+.sticker-bar {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -10,7 +10,7 @@
     width: 100%;
 }
 
-.emoji {
+.sticker {
     width: 120rpx;
     height: 120rpx;
     margin: 8rpx;
@@ -19,13 +19,13 @@
     cursor: pointer;
 }
 
-.emoji:hover {
+.sticker:hover {
     z-index: 10000;
     transform: scale(1.1);
     box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.2);
 }
 
-.emoji:active {
+.sticker:active {
     transform: scale(0.9);
     box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.15);
 }

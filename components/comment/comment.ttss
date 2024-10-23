@@ -17,15 +17,12 @@
     bottom: 0;
     background-color: #ffffff;
     z-index: 1000;
-    /* 确保在其他内容之上 */
     transition: transform 0.3s ease;
     transform: translateY(100%);
-    /* 默认隐藏 */
 }
 
 .comment-scroll-pane.show {
     transform: translateY(0);
-    /* 显示时的状态 */
 }
 
 .pane-top-bar {

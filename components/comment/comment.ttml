@@ -32,7 +32,7 @@
   <block tt:if="{{ !is_sub && subs.length > 0 }}">
     <view class="comment-scroll-pane {{ show_sub ? 'show' : '' }}">
       <view class="pane-top-bar">
-        <view class="close-pane-button" bindtap="closePane">x</view>
+        <view class="close-pane-button" bindtap="closePane">❎</view>
       </view>
       <scroll-view class="comment-list">
         <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>

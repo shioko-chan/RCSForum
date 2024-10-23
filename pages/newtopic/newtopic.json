@@ -2,7 +2,7 @@
     "usingComponents": {
         "comment": "../../components/comment/comment",
         "navbar": "../../components/navigator_bar/navigator_bar",
-        "emoji": "../../components/emoji/emoji",
+        "sticker": "../../components/sticker/sticker",
         "image-selector": "../../components/image_selector/image_selector"
     }
 }
