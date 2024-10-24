@@ -215,34 +215,35 @@ App({
       });
     });
   },
-  _login_once() {
-    return new Promise((resolve, reject) => {
-      tt.login({
-        success: async (res) => {
-          try {
-            const res1 = await this._request({
-              url: `${this.url}/login`,
-              method: "POST",
-              header: { "Content-Type": "application/json; charset=utf-8" },
-              data: { code: res.code }
-            });
-            if (res1.statusCode === 200) {
-              this.token = res1.header.authorization;
-              this.username = res1.data.name;
-              this.avatar = res1.data.avatar;
-              this.is_admin = res1.data.is_admin;
-              this.open_id = res1.data.open_id;
-            }
-            resolve(res1);
-          } catch (exception) {
-            reject(exception);
+  async _login_once() {
+    try {
+      const code = await new Promise((resolve, reject) => {
+        tt.login({
+          success: res => {
+            resolve(res.code);
+          },
+          fail: res => {
+            reject({ mes: "tt.login api error", res });
           }
-        },
-        fail(res) {
-          reject({ mes: "tt.login api error", res });
-        }
+        });
       });
-    });
+      const res = await this._request({
+        url: `${this.url}/login`,
+        method: "POST",
+        header: { "Content-Type": "application/json; charset=utf-8" },
+        data: { code }
+      });
+      if (res.statusCode === 200) {
+        this.token = res.header.authorization;
+        this.username = res.data.name;
+        this.avatar = res.data.avatar;
+        this.is_admin = res.data.is_admin;
+        this.open_id = res.data.open_id;
+      }
+      return res;
+    } catch (exception) {
+      throw exception;
+    }
   },
   _login() {
     let prev_promise = this.login_promise;
@@ -338,28 +339,24 @@ App({
     var getStorage = key => {
       return new Promise((resolve, reject) => {
         tt.getStorage({
-          "key": key,
-          success: res => {
-            if (res.data) {
+          key, success: res => {
+            if (res.data !== undefined) {
               resolve(res.data);
             } else {
-              reject("no data in storage");
+              reject(`no ${key} in storage`);
             }
-          },
-          fail(res) {
-            reject("getStorage fail");
-          }
+          }, fail: reject
         });
       })
-    }
-    Promise.all([getStorage("Azazel"), getStorage("Ariel"), getStorage("Asbeel"), getStorage("Samyaza"), getStorage("Samael")])
-      .then(([token, username, avatar, is_admin, open_id]) => {
+    };
+    const name = ["Azazel", "Ariel", "Asbeel", "Samyaza", "Samael"];
+    const refKeys = ["token", "username", "avatar", "is_admin", "open_id"];
+    Promise.all(name.map(item => getStorage(item))).
+      then(items => {
         console.info("get info from local storage");
-        this.token = token;
-        this.username = username;
-        this.avatar = avatar;
-        this.is_admin = is_admin;
-        this.open_id = open_id;
+        items.forEach((item, index) => {
+          this[refKeys[index]] = item;
+        });
       })
       .catch(err => {
         console.warn("load data from local storage failed, ", err);
@@ -368,9 +365,7 @@ App({
           if (res.statusCode !== 200) {
             throw { mes: "failed to login", res };
           }
-        }).catch(() => {
-          console.error("failed to login");
-        });
+        }).catch(() => console.error("failed to login"));
       });
     tt.hideTabBar({
       animation: false,
@@ -386,20 +381,15 @@ App({
   async storageInfo() {
     var setStorage = (key, data) => {
       return new Promise((resolve, reject) => {
-        tt.setStorage({
-          key: key,
-          data: data,
-          success: res => {
-            resolve();
-          },
-          fail(res) {
-            reject(res);
-          }
-        });
+        tt.setStorage({ key, data, success: resolve, fail: reject });
       });
     };
     try {
-      await Promise.all([setStorage("Azazel", this.token), setStorage("Ariel", this.username), setStorage("Asbeel", this.avatar), setStorage("Samyaza", this.is_admin), setStorage("Samael", this.open_id)]);
+      const name = ["Azazel", "Ariel", "Asbeel", "Samyaza", "Samael"];
+      await Promise.all(
+        [this.token, this.username, this.avatar, this.is_admin, this.open_id]
+          .map((item, index) => setStorage(name[index], item))
+      );
     } catch (res) {
       console.error("failed to storage user data", res);
     }

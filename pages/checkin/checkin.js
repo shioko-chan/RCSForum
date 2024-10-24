@@ -116,7 +116,7 @@ Page({
       return;
     }
     getApp().request({
-      url: `${this.data.url}/checkin/ranksacc`,
+      url: `${getApp().url}/checkin/ranksacc`,
       header: { "Content-Type": "application/json; charset=utf-8" },
       method: "GET",
     }).then(data => {
@@ -126,13 +126,18 @@ Page({
       getApp().show_network_error_modal("请检查网络连接，需要连接至校园网或实验室网络")
     );
   },
+  hideAccumulate() {
+    this.setData({
+      is_accumulate: false
+    });
+  },
   showSidebar() {
     if (this.data.ranks_timestamp + 5 * 60 * 1000 > Date.now() && this.data.ranks.length > 0) {
       this.setData({ is_sidebar_open: true });
       return;
     }
     getApp().request({
-      url: `${this.data.url}/checkin/ranks`,
+      url: `${getApp().url}/checkin/ranks`,
       header: { "Content-Type": "application/json; charset=utf-8" },
       method: "GET",
     }).then(data => {

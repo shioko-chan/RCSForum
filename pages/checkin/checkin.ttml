@@ -1,21 +1,21 @@
 <view class="sidebar {{ is_sidebar_open ? 'open' : 'closed' }}">
-  <view class="sidebar-title">🏆 本周排行榜(每周一04:00更新)</view>
-  <view class="sidebar-item" tt:for="{{ ranks }}">
+  <view class="sidebar-title" bindtap="hideAccumulate">🏆 本周排行榜(每周一04:00更新)</view>
+  <view class="sidebar-item" tt:for="{{ ranks }}" hidden="{{ is_accumulate }}">
     <view class="image-view">
       <image class="avatar" src="{{ item.avatar }}" mode="aspectFill" />
       <view class="text-group">
         <text class="name">{{ item.name }}</text>
-        <text class="time">{{ item.time }} min</text>
+        <text class="time">本周在实验室卷了 {{ item.time }} min</text>
       </view>
     </view>
   </view>
-  <view class="sidebar-title" bindtap="showAccumulate">🏆 累计排行榜</view>
-  <view class="sidebar-item" tt:for="{{ ranks_acc }}">
+  <view class="sidebar-title-2 {{ is_accumulate ? 'active' : 'inactive' }}" bindtap="showAccumulate">🏆 累计排行榜</view>
+  <view class="sidebar-item" tt:for="{{ ranks_acc }}" hidden="{{ !is_accumulate }}">
     <view class="image-view">
       <image class="avatar" src="{{ item.avatar }}" mode="aspectFill" />
       <view class="text-group">
         <text class="name">{{ item.name }}</text>
-        <text class="time">{{ item.time }} min</text>
+        <text class="time">总共在实验室卷了 {{ item.time }} min</text>
       </view>
     </view>
   </view>

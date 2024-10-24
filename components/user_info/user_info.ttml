@@ -7,7 +7,8 @@
   </view>
 </view>
 <view class="user-publish">
-  <view class="user-publish-title">{{ is_me? "我的帖子" : "TA的帖子" }}</view>
+  <image class="user-publish-title" src="{{ is_me? '/assets/images/myposter.png' : '/assets/images/otherposter.png' }}"
+    mode="aspectFit" />
   <block tt:for="{{ list }}" tt:key="pid">
     <poster title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
       likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
