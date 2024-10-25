@@ -8,48 +8,46 @@ Component({
   data: {
     defaultStates: {},
     no_image: false,
-    skip: 0,
     focus: false,
     reply: "",
+    skip: 0,
     is_anonymous: false,
     display_index: 0,
     emojis: [
       "😀", "😊", "😎", "😇", "🧐", "🤓", "🤡", "🥹", "🫨", "🤭", "👿", "🤔",
       "😢", "🤯", "🥳", "😴", "😡", "🤮", "😱", "😓", "😥", "🤐", "🤤", "🤣",
-      "🥵", "😘", "😂", "😅", "😭", "😊", "😒", "🤗",
-      "🤩", "🫡", "🤨", "😐", "😑", "😣", "🥱", "🙃", "❤️", "✅", "❎", "⚠️",
-      "👏", "✌️", "🤞", "🤟", "🙌", "👊", "👋", "🙏", "🤙", "🤘", "🐶", "🐱",
-      "🐰", "🦊", "🐻", "🐼", "🐨", "🦁", "🐯", "🐷", "🍎", "🍌", "🍕", "🍩",
-      "🍔", "🍣", "🍤", "🍜", "🍫", "☕", "🏀", "⚽", "🏈", "🎾", "🏐", "🏓",
-      "🎱", "🏸", "⛳", "🏊", "☀️", "🌧️", "💕", "💞", "❣️", "💔", "💖", "💝",
-      "💗", "💓", "💌", "💟", "🌈", "🌍", "🌙", "🌊", "⛄", "🌸", "🍳", "👍",
-      "🍂", "🍀", "🚗", "🚕", "🚙", "🚀", "🚲", "✈️", "🚤", "🚊", "🚉", "🚁",
-      "🎂", "🎉", "🎊", "🕯️", "🎁", "🎄", "🎃", "🧧", "🕎", "🕊️", "📱", "💻",
-      "🖥️", "🖨️", "⌚", "📷", "🎥", "🎧", "📚", "🖊️",
+      "🥵", "😘", "😂", "😅", "😭", "😊", "😒", "🤗", "🤩", "🫡", "🤨", "😐",
+      "😑", "😣", "🥱", "🙃", "❤️", "✅", "❎", "⚠️", "👏", "✌️", "🤞", "🤟",
+      "🙌", "👊", "👋", "🙏", "🤙", "🤘", "🐶", "🐱", "🐰", "🦊", "🐻", "🐼",
+      "🐨", "🦁", "🐯", "🐷", "🍎", "🍌", "🍕", "🍩", "🍔", "🍣", "🍤", "🍜",
+      "🍫", "☕", "🏀", "⚽", "🏈", "🎾", "🏐", "🏓", "🎱", "🏸", "⛳", "🏊",
+      "☀️", "🌧️", "💕", "💞", "❣️", "💔", "💖", "💝", "💗", "💓", "💌", "💟",
+      "🌈", "🌍", "🌙", "🌊", "⛄", "🌸", "🍳", "👍", "🍂", "🍀", "🚗", "🚕",
+      "🚙", "🚀", "🚲", "✈️", "🚤", "🚊", "🚉", "🚁", "🎂", "🎉", "🎊", "🕯️",
+      "🎁", "🎄", "🎃", "🧧", "🕎", "🕊️", "📱", "💻", "🖥️", "🖨️", "⌚", "📷",
+      "🎥", "🎧", "📚", "🖊️",
     ],
-    toward: "",
+    prefix: "",
     index_1: null,
   },
   methods: {
     focusReply({ toward = null, index_1 = null, index_2 = null }) {
+      this.setData({ "focus": false });
       this.setData({ "focus": true, "no_image": index_1 !== null });
       this.data.index_1 = index_1;
-      if (index_2 === null || toward === null || toward === this.data.toward || toward === "") { return; }
-      const old_prefix = `回复 ${this.data.toward}: `;
-      const new_prefix = `回复 ${toward}: `;
-      const skip = Math.max(this.data.skip - old_prefix.length + new_prefix.length, 0);
+      if (index_2 === null || toward === null) { return; }
+      const prefix = `回复 ${toward}: `;
+      const skip = Math.max(this.data.skip - this.data.prefix.length + prefix.length, 0);
       const reply = (() => {
-        if (this.data.reply.startsWith(old_prefix)) {
-          return this.data.reply.slice(old_prefix.length);
+        if (this.data.reply.startsWith(this.data.prefix)) {
+          return this.data.reply.slice(this.data.prefix.length);
         } else {
           return this.data.reply;
         }
       })();
-      this.setData({
-        reply: new_prefix + reply,
-        skip: skip
-      });
-      this.data.toward = toward;
+      this.setData({ reply: "", skip: 0 });
+      this.setData({ reply: prefix + reply, skip: skip });
+      this.data.prefix = prefix;
     },
     handleShowEmojiArea() {
       this.setData({ display_index: this.data.display_index !== 1 ? 1 : 0 });
@@ -140,8 +138,8 @@ Component({
     setInput(item) {
       let { skip, reply } = this.data;
       this.setData({
-        "reply": reply.slice(0, skip) + item + reply.slice(skip),
-        "skip": skip + item.length
+        reply: reply.slice(0, skip) + item + reply.slice(skip),
+        skip: skip + item.length
       });
     },
     handleEmojiInput(event) {
@@ -156,6 +154,7 @@ Component({
     },
     handleBlur(event) {
       this.data.skip = event.detail.cursor;
+      console.log("skip", event.detail);
     },
   }
 })

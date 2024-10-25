@@ -5,7 +5,7 @@
       bindblur="handleContentBlur" id="content-box" value="{{ content }}" cursor="{{ cursor }}"></textarea>
   </view>
   <view class="anonymous-check-box" bindtap="handleAnonymous">
-    <text class="anonymous-check-box-icon {{ is_anonymous? 'checked' : 'unchecked' }}">{{ is_anonymous? "✅" :
+    <text class="anonymous-check-box-icon {{ is_anonymous ? 'checked' : 'unchecked' }}">{{ is_anonymous ? "✅" :
       ""}}</text>
     <text class="anonymous-check-box-text">启用匿名发布</text>
   </view>

@@ -1,7 +1,7 @@
 <view class="sidebar {{ is_sidebar_open ? 'open' : 'closed' }}">
   <view class="sidebar-title" bindtap="hideAccumulate">🏆 本周排行榜(每周一04:00更新)</view>
-  <view class="sidebar-item" tt:for="{{ ranks }}" hidden="{{ is_accumulate }}">
-    <view class="image-view">
+  <view class="sidebar-item-list {{ is_accumulate ? 'inactive' : 'active' }}" tt:for="{{ ranks }}">
+    <view class="sidebar-item">
       <image class="avatar" src="{{ item.avatar }}" mode="aspectFill" />
       <view class="text-group">
         <text class="name">{{ item.name }}</text>
@@ -9,9 +9,10 @@
       </view>
     </view>
   </view>
-  <view class="sidebar-title-2 {{ is_accumulate ? 'active' : 'inactive' }}" bindtap="showAccumulate">🏆 累计排行榜</view>
-  <view class="sidebar-item" tt:for="{{ ranks_acc }}" hidden="{{ !is_accumulate }}">
-    <view class="image-view">
+  <view style="height: 30rpx;"></view>
+  <view class="sidebar-title {{ is_accumulate ? 'active' : 'inactive' }}" bindtap="showAccumulate">🏆 累计排行榜</view>
+  <view class="sidebar-item-list {{ is_accumulate ? 'active' : 'inactive' }}" tt:for="{{ ranks_acc }}">
+    <view class="sidebar-item">
       <image class="avatar" src="{{ item.avatar }}" mode="aspectFill" />
       <view class="text-group">
         <text class="name">{{ item.name }}</text>

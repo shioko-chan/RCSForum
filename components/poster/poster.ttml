@@ -6,12 +6,12 @@
     </view>
   </view>
   <text class="title">{{ title }}</text>
-  <text-with-img class="{{ is_digest? 'limit-height' : '' }}" content="{{ content }}"
+  <text-with-img class="{{ is_digest ? 'limit-height' : '' }}" content="{{ content }}"
     is_digest="{{ is_digest }}"></text-with-img>
   <view class="image-display-container">
     <block tt:for="{{ imageList }}">
       <image-web
-        class="image {{ !is_digest?'once':(imageList.length>=3?'triple':(imageList.length==1?'once':(imageList.length==2?'double':''))) }}"
+        class="image {{ !is_digest ?'once':(imageList.length>=3?'triple':(imageList.length==1?'once':(imageList.length==2?'double':''))) }}"
         src="{{ item }}" mode="aspectFill" catchtap="previewImage" data-index="{{ index }}"
         catch:imageLoaded="imageLoaded"></image-web>
     </block>
@@ -19,7 +19,7 @@
   <view class="action-bar">
     <view class="like-reply-section">
       <view class="like-section" catchtap="handleLike">
-        <image class="like-icon" src="{{ liked? '/assets/images/liked.png' : '/assets/images/like.png' }}" />
+        <image class="like-icon" src="{{ liked ? '/assets/images/liked.png' : '/assets/images/like.png' }}" />
         <text class="like-count">{{ likes }}</text>
       </view>
       <text tt:if="{{ already_detail }}" class="reply-button" catchtap="handleReply">回复</text>

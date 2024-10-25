@@ -378,7 +378,7 @@ App({
       content: '若发现bug或有功能方面的建议，可点击右上角反馈',
     });
   },
-  async storageInfo() {
+  async _storage_info() {
     var setStorage = (key, data) => {
       return new Promise((resolve, reject) => {
         tt.setStorage({ key, data, success: resolve, fail: reject });
@@ -395,14 +395,14 @@ App({
     }
   },
   async onHide() {
-    await this.storageInfo();
+    await this._storage_info();
   },
   async onUnload() {
-    await this.storageInfo();
+    await this._storage_info();
   },
   onPageNotFound() {
     tt.redirectTo({
       url: 'pages/index/index'
-    })
+    });
   },
 })

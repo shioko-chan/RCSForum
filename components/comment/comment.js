@@ -76,9 +76,9 @@ Component({
     previewImageList: [],
     show_sub: false,
     digests: [],
+    last_like: 0,
   },
   methods: {
-    stop() { },
     closePane() {
       this.setData({
         show_sub: false,
@@ -115,6 +115,8 @@ Component({
       });
     },
     handleLike() {
+      if (this.data.last_like + 500 > Date.now()) { return; }
+      this.data.last_like = Date.now();
       let url = null;
       if (this.data.liked) {
         this.setData({ liked: false });
@@ -149,5 +151,8 @@ Component({
         shouldShowSaveOption: true,
       })
     },
+    propagateReply(event) {
+      this.triggerEvent("reply", { ...event.detail });
+    }
   }
 })

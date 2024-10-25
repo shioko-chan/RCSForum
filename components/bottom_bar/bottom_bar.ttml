@@ -18,7 +18,7 @@
     <image class="icon" src="/assets/images/me.png" bindtap="handleShowStickerArea"></image>
     <image class="icon" src="/assets/images/image.png" bindtap="handleShowImageArea" hidden="{{ no_image }}"></image>
     <view class="anonymous-check-box" bindtap="handleToggleAnonymous">
-      <text class="anonymous-check-box-icon {{ is_anonymous? 'checked' : 'unchecked' }}">{{ is_anonymous? "✅" :
+      <text class="anonymous-check-box-icon {{ is_anonymous ? 'checked' : 'unchecked' }}">{{ is_anonymous ? "✅" :
         ""}}</text>
       <text class="anonymous-check-box-text">启用匿名发布</text>
     </view>

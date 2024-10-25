@@ -1,27 +1,26 @@
 <template name="comment-detail">
-  <view class="comment">
-    <view class="userprofile" catchtap="navToUser">
-      <image class="avatar" src="{{ avatar }}"></image>
-      <view class="userinfo">
-        <text class="username">{{ username }}</text>
-      </view>
+  <view class="userprofile" catchtap="navToUser">
+    <image class="avatar" src="{{ avatar }}"></image>
+    <view class="userinfo">
+      <text class="username">{{ username }}</text>
     </view>
-    <text-with-img content="{{ content }}"></text-with-img>
-    <block tt:if="{{ !is_sub }}">
-      <view class="image-display-container">
-        <block tt:for="{{ imageList }}">
-          <image-web class="image" src="{{ item }}" mode="aspectFill" catchtap="previewImage" data-index="{{ index }}"
-            catch:imageLoaded="imageLoaded"></image-web>
-        </block>
-      </view>
-    </block>
   </view>
+  <text-with-img content="{{ content }}"></text-with-img>
+  <block tt:if="{{ !is_sub }}">
+    <view class="image-display-container">
+      <block tt:for="{{ imageList }}">
+        <image-web class="image" src="{{ item }}" mode="aspectFill" catchtap="previewImage" data-index="{{ index }}"
+          catch:imageLoaded="imageLoaded"></image-web>
+      </block>
+    </view>
+  </block>
 </template>
+
 <template name="action-bar">
   <view class="action-bar">
     <view class="like-reply-section">
       <view class="like-section" catchtap="handleLike">
-        <image class="like-icon" src="{{ liked? '/assets/images/liked.png' : '/assets/images/like.png' }}" />
+        <image class="like-icon" src="{{ liked ? '/assets/images/liked.png' : '/assets/images/like.png' }}" />
         <text class="like-count">{{ likes }}</text>
       </view>
       <text class="reply-button" catchtap="handleReply">回复</text>
@@ -30,23 +29,29 @@
   </view>
 </template>
 
-<template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
 <view class="comment" bindtap="navToDetail">
+  <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
   <block tt:if="{{ !is_sub && subs.length > 0 }}">
-    <view class="comment-scroll-pane {{ show_sub ? 'show' : '' }}" catchtap="stop">
+    <view class="comment-scroll-pane {{ show_sub ? 'show' : '' }}" catchtap="stop" catchtouchmovge="stop"
+      catchtouchstart="stop" catchtouchend="stop">
+      <view class="close-area" catchtap="closePane"></view>
       <view class="pane-top-bar">
-        <view class="close-pane-button" bindtap="closePane">X</view>
+        <image class="close-pane-button" src="/assets/images/cancel.png" mode="aspectFill" bindtap="closePane">
+        </image>
       </view>
       <scroll-view class="comment-list">
-        <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
-        <template is="action-bar" data="{{ liked, likes, timestamp }}"></template>
+        <view class="comment">
+          <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
+          <template is="action-bar" data="{{ liked, likes, timestamp }}"></template>
+        </view>
         <block tt:for="{{ subs }}">
           <comment content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
             likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
             pid="{{ item.pid }}" uid="{{ item.uid }}" index_1="{{ index_1 }}" index_2="{{ index }}"
-            subs="{{ item.subs }}" is_sub>
+            subs="{{ item.subs }}" is_sub catch:reply="propagateReply">
           </comment>
         </block>
+        <view style="height: 200rpx;"></view>
       </scroll-view>
     </view>
     <view class="comment-digest" hidden="{{ show_sub }}" bindtap="toggleComments">

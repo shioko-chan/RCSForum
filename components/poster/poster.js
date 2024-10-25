@@ -66,6 +66,7 @@ Component({
     defaultStates: {},
     imageList: [],
     previewImageList: [],
+    last_like: 0,
   },
   methods: {
     handleReply() {
@@ -97,6 +98,8 @@ Component({
       });
     },
     handleLike() {
+      if (this.data.last_like + 500 > Date.now()) { return; }
+      this.data.last_like = Date.now();
       let url = null;
       if (this.data.liked) {
         this.setData({ liked: false });

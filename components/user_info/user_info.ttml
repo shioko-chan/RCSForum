@@ -7,7 +7,7 @@
   </view>
 </view>
 <view class="user-publish">
-  <image class="user-publish-title" src="{{ is_me? '/assets/images/myposter.png' : '/assets/images/otherposter.png' }}"
+  <image class="user-publish-title" src="{{ is_me ? '/assets/images/myposter.png' : '/assets/images/otherposter.png' }}"
     mode="aspectFit" />
   <block tt:for="{{ list }}" tt:key="pid">
     <poster title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
