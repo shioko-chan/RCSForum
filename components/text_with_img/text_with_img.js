@@ -21,7 +21,7 @@ Component({
 
         const raw_str = new_val;
         let start = 0;
-        this.setData({ "itemList": [] });
+        this.setData({ itemList: [] });
 
         for (let i = 0; i < raw_str.length; i++) {
           if (raw_str[i] !== "[") continue;
@@ -55,7 +55,7 @@ Component({
             text: raw_str.slice(start),
           });
         }
-        this.setData({ "itemList": this.data.itemList });
+        this.setData({ itemList: this.data.itemList });
       }
     },
   },

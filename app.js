@@ -11,170 +11,170 @@ App({
   modal_promise: null,
   stickers: [
     {
-      "name": "I_AM_TRASH",
-      "url": "/assets/sticker/trashbin.png"
+      name: "I_AM_TRASH",
+      url: "/assets/sticker/trashbin.png"
     },
     {
-      "name": "CAR",
-      "url": "/assets/sticker/car.jpg"
+      name: "CAR",
+      url: "/assets/sticker/car.jpg"
     },
     {
-      "name": "SHOW_IT_TO_ME",
-      "url": "/assets/sticker/show.jpg"
+      name: "SHOW_IT_TO_ME",
+      url: "/assets/sticker/show.jpg"
     },
     {
-      "name": "LYING_FLAT",
-      "url": "/assets/sticker/lyingflat.jpg"
+      name: "LYING_FLAT",
+      url: "/assets/sticker/lyingflat.jpg"
     },
     {
-      "name": "I_AM_DEPRESSED",
-      "url": "/assets/sticker/depress.jpg"
+      name: "I_AM_DEPRESSED",
+      url: "/assets/sticker/depress.jpg"
     },
     {
-      "name": "LUCKY",
-      "url": "/assets/sticker/lucky.gif"
+      name: "LUCKY",
+      url: "/assets/sticker/lucky.gif"
     },
     {
-      "name": "NO_PROBLEM",
-      "url": "/assets/sticker/noproblem.jpg"
+      name: "NO_PROBLEM",
+      url: "/assets/sticker/noproblem.jpg"
     },
     {
-      "name": "BLANK_BRAIN",
-      "url": "/assets/sticker/brainblank.jpg"
+      name: "BLANK_BRAIN",
+      url: "/assets/sticker/brainblank.jpg"
     },
     {
-      "name": "SELF_CONSCIOUS",
-      "url": "/assets/sticker/selfconscious.jpg"
+      name: "SELF_CONSCIOUS",
+      url: "/assets/sticker/selfconscious.jpg"
     },
     {
-      "name": "NOW_WONDERING",
-      "url": "/assets/sticker/nowimaging.jpg"
+      name: "NOW_WONDERING",
+      url: "/assets/sticker/nowimaging.jpg"
     },
     {
-      "name": "ME_QMARK",
-      "url": "/assets/sticker/itsmeqmark.jpg"
+      name: "ME_QMARK",
+      url: "/assets/sticker/itsmeqmark.jpg"
     },
     {
-      "name": "S_ATTRIBUTE",
-      "url": "/assets/sticker/sattribute.jpg"
+      name: "S_ATTRIBUTE",
+      url: "/assets/sticker/sattribute.jpg"
     },
     {
-      "name": "CALM_DOWN",
-      "url": "/assets/sticker/calm.jpg"
+      name: "CALM_DOWN",
+      url: "/assets/sticker/calm.jpg"
     },
     {
-      "name": "SPEECHLESS",
-      "url": "/assets/sticker/speechless.jpg"
+      name: "SPEECHLESS",
+      url: "/assets/sticker/speechless.jpg"
     },
     {
-      "name": "LICKING",
-      "url": "/assets/sticker/licking.gif"
+      name: "LICKING",
+      url: "/assets/sticker/licking.gif"
     },
     {
-      "name": "INNOCENT",
-      "url": "/assets/sticker/innocent.gif"
+      name: "INNOCENT",
+      url: "/assets/sticker/innocent.gif"
     },
     {
-      "name": "WONDERING",
-      "url": "/assets/sticker/wondering.gif"
+      name: "WONDERING",
+      url: "/assets/sticker/wondering.gif"
     },
     {
-      "name": "CRY",
-      "url": "/assets/sticker/cry.png"
+      name: "CRY",
+      url: "/assets/sticker/cry.png"
     },
     {
-      "name": "PLEASANT",
-      "url": "/assets/sticker/pleased.gif"
+      name: "PLEASANT",
+      url: "/assets/sticker/pleased.gif"
     },
     {
-      "name": "OH_CAPITAL",
-      "url": "/assets/sticker/ohcapital.png"
+      name: "OH_CAPITAL",
+      url: "/assets/sticker/ohcapital.png"
     },
     {
-      "name": "LAUGHING",
-      "url": "/assets/sticker/laughing.gif"
+      name: "LAUGHING",
+      url: "/assets/sticker/laughing.gif"
     },
     {
-      "name": "SCRATCH_HEAD",
-      "url": "/assets/sticker/scratch.gif"
+      name: "SCRATCH_HEAD",
+      url: "/assets/sticker/scratch.gif"
     },
     {
-      "name": "SHOCKED",
-      "url": "/assets/sticker/shocking.gif"
+      name: "SHOCKED",
+      url: "/assets/sticker/shocking.gif"
     },
     {
-      "name": "QUESTION",
-      "url": "/assets/sticker/question.jpg"
+      name: "QUESTION",
+      url: "/assets/sticker/question.jpg"
     },
     {
-      "name": "WOW",
-      "url": "/assets/sticker/wow.gif"
+      name: "WOW",
+      url: "/assets/sticker/wow.gif"
     },
     {
-      "name": "LOVE",
-      "url": "/assets/sticker/love.gif"
+      name: "LOVE",
+      url: "/assets/sticker/love.gif"
     },
     {
-      "name": "FORGE_IRON",
-      "url": "/assets/sticker/forgeiron.png"
+      name: "FORGE_IRON",
+      url: "/assets/sticker/forgeiron.png"
     },
     {
-      "name": "WTF_MEME",
-      "url": "/assets/sticker/wtfmeme.png"
+      name: "WTF_MEME",
+      url: "/assets/sticker/wtfmeme.png"
     },
     {
-      "name": "ADMIRE",
-      "url": "/assets/sticker/admire.jpg"
+      name: "ADMIRE",
+      url: "/assets/sticker/admire.jpg"
     },
     {
-      "name": "IS_THAT_PRACTICAL",
-      "url": "/assets/sticker/practical.png"
+      name: "IS_THAT_PRACTICAL",
+      url: "/assets/sticker/practical.png"
     },
     {
-      "name": "EMBARRASSED",
-      "url": "/assets/sticker/embarrassed.jpg"
+      name: "EMBARRASSED",
+      url: "/assets/sticker/embarrassed.jpg"
     },
     {
-      "name": "YOU_ARE_EXTRAORDINARY",
-      "url": "/assets/sticker/extraordinary.jpg"
+      name: "YOU_ARE_EXTRAORDINARY",
+      url: "/assets/sticker/extraordinary.jpg"
     },
     {
-      "name": "DONT_WANT_WORK",
-      "url": "/assets/sticker/nowork.jpg"
+      name: "DONT_WANT_WORK",
+      url: "/assets/sticker/nowork.jpg"
     },
     {
-      "name": "TANG",
-      "url": "/assets/sticker/tang.jpg"
+      name: "TANG",
+      url: "/assets/sticker/tang.jpg"
     },
     {
-      "name": "NERD",
-      "url": "/assets/sticker/nerdy.jpg"
+      name: "NERD",
+      url: "/assets/sticker/nerdy.jpg"
     },
     {
-      "name": "HAVE_PARTY",
-      "url": "/assets/sticker/party.jpg"
+      name: "HAVE_PARTY",
+      url: "/assets/sticker/party.jpg"
     },
     {
-      "name": "LOYAL",
-      "url": "/assets/sticker/loyal.jpg"
+      name: "LOYAL",
+      url: "/assets/sticker/loyal.jpg"
     },
     {
-      "name": "TEHEBERINKO",
-      "url": "/assets/sticker/teheberinko.jpg"
+      name: "TEHEBERINKO",
+      url: "/assets/sticker/teheberinko.jpg"
     },
     {
-      "name": "EXP_INC_3",
-      "url": "/assets/sticker/expinc3.jpg"
+      name: "EXP_INC_3",
+      url: "/assets/sticker/expinc3.jpg"
     },
     {
-      "name": "ULTRA_SKILL",
-      "url": "/assets/sticker/ultraskill.gif"
+      name: "ULTRA_SKILL",
+      url: "/assets/sticker/ultraskill.gif"
     }, {
-      "name": "WONDERING_2",
-      "url": "/assets/sticker/wondering.jpg"
+      name: "WONDERING_2",
+      url: "/assets/sticker/wondering.jpg"
     }, {
-      "name": "SPEECHLESS_2",
-      "url": "/assets/sticker/speechless2.jpg"
+      name: "SPEECHLESS_2",
+      url: "/assets/sticker/speechless2.jpg"
     }
   ],
   set_once_storage(data) {
@@ -239,6 +239,11 @@ App({
         this.avatar = res.data.avatar;
         this.is_admin = res.data.is_admin;
         this.open_id = res.data.open_id;
+        try {
+          await this._storage_info();
+        } catch (exception) {
+          console.error("Storage info local failed, ", exception);
+        }
       }
       return res;
     } catch (exception) {
@@ -271,9 +276,15 @@ App({
       try {
         let res = null;
         if (this.token === "") {
-          res = await this._login();
-          if (res.statusCode !== 200) {
-            throw { mes: "failed to login", res };
+          try {
+            res = await this._get_info_local();
+          } catch (err) {
+            console.warn("load data from local storage failed, ", err);
+            console.info("get info from server");
+            res = await this._login();
+            if (res.statusCode !== 200) {
+              throw { mes: "failed to login", res };
+            }
           }
         }
         if (obj.header === undefined) {
@@ -335,12 +346,12 @@ App({
   show_network_error_modal(mes) {
     this._show_modal({ title: "已断开与服务器的连接", content: mes, });
   },
-  onLaunch() {
+  _get_info_local() {
     var getStorage = key => {
       return new Promise((resolve, reject) => {
         tt.getStorage({
           key, success: res => {
-            if (res.data !== undefined) {
+            if (res.data !== undefined && res.data !== "") {
               resolve(res.data);
             } else {
               reject(`no ${key} in storage`);
@@ -351,22 +362,14 @@ App({
     };
     const name = ["Azazel", "Ariel", "Asbeel", "Samyaza", "Samael"];
     const refKeys = ["token", "username", "avatar", "is_admin", "open_id"];
-    Promise.all(name.map(item => getStorage(item))).
-      then(items => {
-        console.info("get info from local storage");
-        items.forEach((item, index) => {
-          this[refKeys[index]] = item;
-        });
-      })
-      .catch(err => {
-        console.warn("load data from local storage failed, ", err);
-        console.info("get info from server");
-        this._login().then(res => {
-          if (res.statusCode !== 200) {
-            throw { mes: "failed to login", res };
-          }
-        }).catch(() => console.error("failed to login"));
+    return Promise.all(name.map(item => getStorage(item))).then(items => {
+      console.info("get info from local storage");
+      items.forEach((item, index) => {
+        this[refKeys[index]] = item;
       });
+    });
+  },
+  onLaunch() {
     tt.hideTabBar({
       animation: false,
       fail(res) {
@@ -378,21 +381,17 @@ App({
       content: '若发现bug或有功能方面的建议，可点击右上角反馈',
     });
   },
-  async _storage_info() {
+  _storage_info() {
     var setStorage = (key, data) => {
       return new Promise((resolve, reject) => {
         tt.setStorage({ key, data, success: resolve, fail: reject });
       });
     };
-    try {
-      const name = ["Azazel", "Ariel", "Asbeel", "Samyaza", "Samael"];
-      await Promise.all(
-        [this.token, this.username, this.avatar, this.is_admin, this.open_id]
-          .map((item, index) => setStorage(name[index], item))
-      );
-    } catch (res) {
-      console.error("failed to storage user data", res);
-    }
+    const name = ["Azazel", "Ariel", "Asbeel", "Samyaza", "Samael"];
+    Promise.all(
+      [this.token, this.username, this.avatar, this.is_admin, this.open_id]
+        .map((item, index) => setStorage(name[index], item))
+    );
   },
   async onHide() {
     await this._storage_info();

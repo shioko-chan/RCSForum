@@ -62,10 +62,10 @@ Component({
       observer(newVal, _) {
         const url = getApp().url;
         this.setData({
-          "imageList": newVal.map(
+          imageList: newVal.map(
             image_name => `${url}/image/${image_name}`
           ),
-          "previewImageList": new Array(newVal.length),
+          previewImageList: new Array(newVal.length),
         });
       },
     }
@@ -108,7 +108,7 @@ Component({
       if (this.data.uid === "") return;
       getApp().set_once_storage(this.data);
       tt.navigateTo({
-        "url": `../../pages/user/user?uid=${this.data.uid}`,
+        url: `../../pages/user/user?uid=${this.data.uid}`,
         fail() {
           console.error("failed to navigate to user");
         },
@@ -134,7 +134,7 @@ Component({
         header: {
           "Content-Type": "application/json; charset=utf-8",
         },
-        data: { "pid": this.data.pid, ...this.getIndex() },
+        data: { pid: this.data.pid, ...this.getIndex() },
       }).then(() => {
         console.info("like request success");
       }).catch(res => {

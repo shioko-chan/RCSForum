@@ -29,17 +29,16 @@
   </view>
 </template>
 
-<view class="comment" bindtap="navToDetail">
+<view class="comment">
   <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
   <block tt:if="{{ !is_sub && subs.length > 0 }}">
-    <view class="comment-scroll-pane {{ show_sub ? 'show' : '' }}" catchtap="stop" catchtouchmovge="stop"
-      catchtouchstart="stop" catchtouchend="stop">
+    <view class="comment-scroll-pane {{ show_sub ? 'show' : '' }}">
       <view class="close-area" catchtap="closePane"></view>
       <view class="pane-top-bar">
         <image class="close-pane-button" src="/assets/images/cancel.png" mode="aspectFill" bindtap="closePane">
         </image>
       </view>
-      <scroll-view class="comment-list">
+      <scroll-view class="comment-list" scroll-y scroll-with-animation>
         <view class="comment">
           <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
           <template is="action-bar" data="{{ liked, likes, timestamp }}"></template>
@@ -47,11 +46,11 @@
         <block tt:for="{{ subs }}">
           <comment content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
             likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
-            pid="{{ item.pid }}" uid="{{ item.uid }}" index_1="{{ index_1 }}" index_2="{{ index }}"
-            subs="{{ item.subs }}" is_sub catch:reply="propagateReply">
+            pid="{{ pid }}" uid="{{ item.uid }}" index_1="{{ index_1 }}" index_2="{{ index }}" subs="{{ item.subs }}"
+            is_sub catch:reply="propagateReply">
           </comment>
         </block>
-        <view style="height: 200rpx;"></view>
+        <view style="height: 240rpx;"></view>
       </scroll-view>
     </view>
     <view class="comment-digest" hidden="{{ show_sub }}" bindtap="toggleComments">

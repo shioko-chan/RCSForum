@@ -27,7 +27,7 @@ Component({
           }
         });
         this.setData({
-          "list": newVal,
+          list: newVal,
         });
       }
     }

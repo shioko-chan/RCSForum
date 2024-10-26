@@ -40,25 +40,25 @@ Page({
     return Promise.all(
       promises.map(
         promise => promise
-          .then(value => ({ "status": "fulfilled", "value": value }))
-          .catch(reason => ({ "status": "rejected", "value": reason }))
+          .then(value => ({ status: "fulfilled", status: value }))
+          .catch(reason => ({ status: "rejected", status: reason }))
       )
     );
   },
   async handlePublish() {
     if (this.data.title.length === 0) {
       tt.showToast({
-        "title": "多少写个标题呗",
-        "icon": "none",
-        "duration": 2500,
+        title: "多少写个标题呗",
+        icon: "none",
+        duration: 2500,
       });
       return;
     }
     if (this.data.content.length === 0) {
       tt.showToast({
-        "title": "多少写点内容呗",
-        "icon": "none",
-        "duration": 2500,
+        title: "多少写点内容呗",
+        icon: "none",
+        duration: 2500,
       });
       return;
     }
@@ -81,16 +81,16 @@ Page({
           }
         }).then(() => {
           tt.showModal({
-            "title": "发布成功✅",
-            "showCancel": false,
+            title: "发布成功✅",
+            showCancel: false,
           });
           this.clearAll();
         }).catch(res => {
           console.error("request failed with error", res);
           tt.showModal({
-            "title": "发布失败😴",
-            "content": "请检查网络连接，该功能需要连接至校园网或实验室网络",
-            "showCancel": false,
+            title: "发布失败😴",
+            content: "请检查网络连接，该功能需要连接至校园网或实验室网络",
+            showCancel: false,
           });
         }).finally(() => { tt.hideLoading(); });
       });

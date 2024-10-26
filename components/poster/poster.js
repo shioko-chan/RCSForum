@@ -54,10 +54,10 @@ Component({
       observer(newVal, _) {
         const url = getApp().url;
         this.setData({
-          "imageList": newVal.map(
+          imageList: newVal.map(
             image_name => `${url}/image/${image_name}`
           ),
-          "previewImageList": new Array(newVal.length),
+          previewImageList: new Array(newVal.length),
         });
       },
     }
@@ -81,7 +81,7 @@ Component({
       if (this.data.already_detail) return;
       getApp().set_once_storage(this.data);
       tt.navigateTo({
-        "url": `../../pages/topic/topic?pid=${this.data.pid}`,
+        url: `../../pages/topic/topic?pid=${this.data.pid}`,
         fail() {
           console.error("failed to navigate to topic");
         },
@@ -89,9 +89,10 @@ Component({
     },
     navToUser() {
       if (this.data.already_user) return;
+      if (this.data.uid === "") return;
       getApp().set_once_storage(this.data);
       tt.navigateTo({
-        "url": `../../pages/user/user?uid=${this.data.uid}`,
+        url: `../../pages/user/user?uid=${this.data.uid}`,
         fail() {
           console.error("failed to navigate to user");
         },
@@ -117,7 +118,7 @@ Component({
         header: {
           "Content-Type": "application/json; charset=utf-8",
         },
-        data: { "pid": this.data.pid },
+        data: { pid: this.data.pid },
       }).then(() => {
         console.info("like request success");
       }).catch(res => {

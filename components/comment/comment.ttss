@@ -9,13 +9,18 @@
     align-items: stretch;
 }
 
+.refresh-button {
+    height: 75rpx;
+    width: 75rpx;
+}
+
 .comment-scroll-pane {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     height: 100vh;
-    z-index: 1000;
+    z-index: 1001;
     transition: transform 0.5s ease;
     transform: translateY(100%);
     background-color: rgba(150, 150, 150, 0.25);
@@ -30,13 +35,15 @@
 }
 
 .close-area {
+    height: 200rpx;
     flex-grow: 1;
 }
 
 .pane-top-bar {
     border-radius: 50rpx 50rpx 0 0;
-    height: 80rpx;
+    height: 100rpx;
     display: flex;
+    flex-direction: row;
     justify-content: flex-end;
     align-items: center;
     padding: 0 20rpx;
@@ -52,7 +59,7 @@
 
 .comment-list {
     background-color: #ffffff;
-    overflow-y: scroll;
+    height: 85vh;
 }
 
 .comment-list-box {
@@ -74,11 +81,13 @@
 }
 
 .digest {
+    background-color: #f1f1f1;
     font-size: 24rpx;
     color: #333333;
 }
 
 .show-sub-button {
+    background-color: #f1f1f1;
     font-size: 24rpx;
     color: #007aff;
     cursor: pointer;
@@ -181,15 +190,4 @@
     border: none;
     outline: none;
     margin-left: 15rpx;
-}
-
-.show-sub-button {
-    outline: none;
-    border: none;
-    cursor: pointer;
-    padding: 5rpx 0;
-    color: #3333ff;
-    background-color: white;
-    font-size: 26rpx;
-    transition: background-color 0.2s ease, color 0.2s ease;
 }

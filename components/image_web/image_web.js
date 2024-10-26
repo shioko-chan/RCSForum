@@ -10,7 +10,7 @@ Component({
         const targetFilePath = `ttfile://user/${filename}`
         const setSrcLocal = path => {
           this.triggerEvent("imageLoaded", { src_local: path });
-          this.setData({ "src_local": path });
+          this.setData({ src_local: path });
         };
         try {
           let path = await new Promise((resolve, reject) => {

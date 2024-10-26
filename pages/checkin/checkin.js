@@ -37,6 +37,7 @@ Page({
     }
     if (!this.data.is_active) {
       this.setData({ is_processing: true });
+      tt.showLoading({ title: "正连接至打卡服务器...", mask: true });
       this.sendMessage(`${this.data.url}/checkin/hello`)
         .then(() => {
           this.startTimer();
@@ -46,6 +47,7 @@ Page({
         })
         .finally(() => {
           this.setData({ is_processing: false });
+          tt.hideLoading();
         });
     }
     else {

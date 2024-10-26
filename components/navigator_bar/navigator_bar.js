@@ -11,7 +11,7 @@ Component({
     methods: {
         handleCheckIn() {
             tt.switchTab({
-                "url": "../../pages/checkin/checkin",
+                url: "../../pages/checkin/checkin",
                 fail(res) {
                     console.error(`navigateTo fail: ${JSON.stringify(res)}`);
                 }
@@ -19,7 +19,7 @@ Component({
         },
         handleProfile() {
             tt.switchTab({
-                "url": "../../pages/space/space",
+                url: "../../pages/space/space",
                 fail(res) {
                     console.error(`navigateTo fail: ${JSON.stringify(res)}`);
                 }
@@ -27,7 +27,7 @@ Component({
         },
         handleMainPage() {
             tt.switchTab({
-                "url": "../../pages/index/index",
+                url: "../../pages/index/index",
                 fail(res) {
                     console.error(`navigateTo fail: ${JSON.stringify(res)}`);
                 }
@@ -35,7 +35,7 @@ Component({
         },
         handleNewTopic() {
             tt.switchTab({
-                "url": "../../pages/newtopic/newtopic",
+                url: "../../pages/newtopic/newtopic",
                 fail(res) {
                     console.error(`navigateTo fail: ${JSON.stringify(res)}`);
                 }

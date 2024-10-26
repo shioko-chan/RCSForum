@@ -1,15 +1,20 @@
 <view style="width: 750rpx;">
-  <poster title="{{ poster.title }}" content="{{ poster.content }}" username="{{ poster.username }}"
-    timestamp="{{ poster.timestamp }}" likes="{{ poster.likes }}" avatar="{{ poster.avatar }}"
-    liked="{{ poster.liked }}" images="{{ poster.images }}" uid="{{ poster.uid }}" pid="{{ poster.pid }}"
-    catch:reply="handleReply" already_detail>
-  </poster>
-  <block tt:for="{{ comment_list }}">
-    <comment content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
-      likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
-      pid="{{ item.pid }}" uid="{{ item.uid }}" index_1="{{ index }}" subs="{{ item.subs }}" catch:reply="handleReply">
+  <scroll-view style="height: 100vh;" bindscrolltolower="handleScrollUpdate" scroll-y scroll-top="{{ scroll_top }}"
+    scroll-with-animation bindscroll="handleScroll">
+    <poster title="{{ poster.title }}" content="{{ poster.content }}" username="{{ poster.username }}"
+      timestamp="{{ poster.timestamp }}" likes="{{ poster.likes }}" avatar="{{ poster.avatar }}"
+      liked="{{ poster.liked }}" images="{{ poster.images }}" uid="{{ poster.uid }}" pid="{{ poster.pid }}"
+      catch:reply="handleReply" already_detail>
+    </poster>
+    <comment tt:for="{{ comment_list }}" content="{{ item.content }}" username="{{ item.name }}"
+      timestamp="{{ item.time }}" likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}"
+      images="{{ item.images }}" pid="{{ poster.pid }}" uid="{{ item.uid }}" index_1="{{ index }}"
+      subs="{{ item.subs }}" catch:reply="handleReply">
     </comment>
-  </block>
+  </scroll-view>
+  <view class="refresh-box" bindtap="handleRefresh" hidden="{{ top<=500 }}">
+    <image class="refresh-button" src="/assets/images/refresh.png" />
+  </view>
   <view style="height: 200rpx;"></view>
 </view>
-<bottom-bar pid="{{ poster.pid }}" id="bottom-bar"></bottom-bar>
+<bottom-bar pid="{{ poster.pid }}" id="bottom-bar" catch:comment="handleComment"></bottom-bar>

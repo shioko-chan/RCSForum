@@ -32,8 +32,8 @@ Component({
   },
   methods: {
     focusReply({ toward = null, index_1 = null, index_2 = null }) {
-      this.setData({ "focus": false });
-      this.setData({ "focus": true, "no_image": index_1 !== null });
+      this.setData({ focus: false });
+      this.setData({ focus: true, focus: index_1 !== null });
       this.data.index_1 = index_1;
       if (index_2 === null || toward === null) { return; }
       const prefix = `回复 ${toward}: `;
@@ -74,9 +74,9 @@ Component({
     async handleSend() {
       if (this.data.reply.length === 0) {
         tt.showToast({
-          "title": "多少写点内容呗",
-          "icon": "none",
-          "duration": 2500,
+          title: "多少写点内容呗",
+          icon: "none",
+          duration: 2500,
         });
         return;
       }
@@ -88,18 +88,18 @@ Component({
         image_list = await this.selectComponent("#image-selector").uploadImage().catch(() => null);
         if (image_list === null) {
           tt.showToast({
-            "title": "图片上传失败",
-            "icon": "error",
-            "duration": 2500,
+            title: "图片上传失败",
+            icon: "error",
+            duration: 2500,
           });
           return;
         }
       }
       let data = {
-        "content": this.data.reply,
-        "is_anonymous": this.data.is_anonymous,
-        "pid": this.data.pid,
-        "images": image_list,
+        content: this.data.reply,
+        is_anonymous: this.data.is_anonymous,
+        pid: this.data.pid,
+        images: image_list,
       }
       if (this.data.index_1 !== null) {
         data.index_1 = this.data.index_1;
@@ -119,21 +119,27 @@ Component({
         this.clearAll();
         tt.hideLoading();
         tt.showToast({
-          "title": "评论成功✅",
-          "icon": "success",
-          "duration": 2500,
+          title: "评论成功✅",
+          icon: "success",
+          duration: 2500,
         });
-      }).catch(() => {
+        if (!data.is_anonymous) {
+          data.name = getApp().username;
+          data.avatar = getApp().avatar;
+        }
+        this.triggerEvent("comment", data);
+      }).catch(err => {
+        console.log(err);
         tt.hideLoading();
         tt.showToast({
-          "title": "评论发布失败",
-          "icon": "error",
-          "duration": 2500,
+          title: "评论发布失败",
+          icon: "error",
+          duration: 2500,
         });
       });
     },
     handleToggleAnonymous() {
-      this.setData({ "is_anonymous": !this.data.is_anonymous });
+      this.setData({ is_anonymous: !this.data.is_anonymous });
     },
     setInput(item) {
       let { skip, reply } = this.data;
@@ -154,7 +160,6 @@ Component({
     },
     handleBlur(event) {
       this.data.skip = event.detail.cursor;
-      console.log("skip", event.detail);
     },
   }
 })
