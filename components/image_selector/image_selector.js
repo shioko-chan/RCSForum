@@ -6,25 +6,13 @@ Component({
     images: [],
   },
   methods: {
-    allSettled(promises) {
-      return Promise.all(
-        promises.map(
-          promise => promise
-            .then(value => ({ status: "fulfilled", status: value }))
-            .catch(reason => ({ status: "rejected", status: reason }))
-        )
-      );
-    },
     chooseImage() {
       const showImageTooManyToast = () => {
         tt.showToast({
           title: "上传图片上限9张",
           duration: 2500,
           icon: "none",
-          mask: true,
-          fail(res) {
-            console.error(`showToast fail: ${JSON.stringify(res)}`);
-          }
+          mask: true
         });
       };
       if (this.data.images.length >= 9) {
@@ -41,17 +29,17 @@ Component({
           let compress_promises = result.tempFiles.map(
             (tempFile, index) => new Promise((resolve, reject) => {
               if (that.data.images.length + index >= 9) {
-                reject({ mes: "too many images", mes: index });
+                reject({ mes: "too many images", index });
                 return;
               }
               const selected_image_path = tempFile.path;
               const image_size = tempFile.size;
               if (!['jpg', 'jpeg'].includes(selected_image_path.split('.').pop())) {
                 if (image_size > max_image_size * 1024 * 1024) {
-                  reject({ mes: "too large", mes: index });
+                  reject({ mes: "too large", index });
                 }
                 else {
-                  resolve({ path: selected_image_path, path: image_size });
+                  resolve({ path: selected_image_path, size: image_size });
                 }
                 return;
               }
@@ -64,27 +52,27 @@ Component({
                     filePath: compressed_image_path,
                     success: res => {
                       if (res.size > max_image_size * 1024 * 1024) {
-                        reject({ mes: "too large", mes: index });
+                        reject({ mes: "too large", index });
                       }
                       else {
-                        resolve({ path: compressed_image_path, path: res.size });
+                        resolve({ path: compressed_image_path, size: res.size });
                       }
                     },
                     fail: res => {
                       console.error("getFileInfo after compress failed", res, compressed_image_path);
-                      reject({ mes: "compress failed", mes: index });
+                      reject({ mes: "compress failed", index });
                     },
                   });
                 },
                 fail: res => {
                   console.error('compressImage failed', res, selected_image_path)
-                  reject({ mes: "compress failed", mes: index });
+                  reject({ mes: "compress failed", index });
                 }
               });
             })
           );
           Promise.all(compress_promises).then(values => {
-            values.forEach(({ path, size }) => {
+            values.forEach(({ path, _ }) => {
               that.data.images.push(path);
             });
             that.setData({ images: that.data.images });

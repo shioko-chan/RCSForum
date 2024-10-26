@@ -77,24 +77,30 @@ Component({
     show_sub: false,
     digests: [],
     last_like: 0,
+    scroll_top: 0,
   },
   methods: {
+    scrollToBottom() {
+      console.log("scrolling to bottom comment");
+      this.setData({ show_sub: true, scroll_top: 0 });
+      this.setData({ scroll_top: 99999999 });
+    },
     closePane() {
       this.setData({
         show_sub: false,
       });
     },
-    toggleComments() {
-      const show_sub = !this.data.show_sub;
+    openPane() {
       this.setData({
-        show_sub,
+        show_sub: true,
       });
+      this.triggerEvent("reply", { toward: this.data.username, ...this.getIndex() });
     },
     getIndex() {
       if (this.data.is_sub) {
-        return { "index_1": this.data.index_1, "index_2": this.data.index_2 };
+        return { index_1: this.data.index_1, index_2: this.data.index_2 };
       }
-      return { "index_1": this.data.index_1 };
+      return { index_1: this.data.index_1 };
     },
     handleReply() {
       this.triggerEvent("reply", { toward: this.data.username, ...this.getIndex() });

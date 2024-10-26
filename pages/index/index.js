@@ -19,7 +19,7 @@ Page({
         url: `${getApp().url}/topic`,
         method: "GET",
         header: { "Content-Type": "application/json; charset=utf-8" },
-        data: { page: page }
+        data: { page }
       });
       return data.topics;
     } catch (exception) {

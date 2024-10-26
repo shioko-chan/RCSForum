@@ -1,6 +1,6 @@
 <view style="width: 750rpx;">
   <scroll-view style="height: 100vh;" bindscrolltolower="handleScrollUpdate" scroll-y scroll-top="{{ scroll_top }}"
-    scroll-with-animation bindscroll="handleScroll">
+    scroll-into-view="{{scroll_into_view }}" scroll-with-animation bindscroll="handleScroll" id="scroll-view">
     <poster title="{{ poster.title }}" content="{{ poster.content }}" username="{{ poster.username }}"
       timestamp="{{ poster.timestamp }}" likes="{{ poster.likes }}" avatar="{{ poster.avatar }}"
       liked="{{ poster.liked }}" images="{{ poster.images }}" uid="{{ poster.uid }}" pid="{{ poster.pid }}"
@@ -9,7 +9,7 @@
     <comment tt:for="{{ comment_list }}" content="{{ item.content }}" username="{{ item.name }}"
       timestamp="{{ item.time }}" likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}"
       images="{{ item.images }}" pid="{{ poster.pid }}" uid="{{ item.uid }}" index_1="{{ index }}"
-      subs="{{ item.subs }}" catch:reply="handleReply">
+      subs="{{ item.subs }}" catch:reply="handleReply" id="index{{ index }}">
     </comment>
   </scroll-view>
   <view class="refresh-box" bindtap="handleRefresh" hidden="{{ top<=500 }}">

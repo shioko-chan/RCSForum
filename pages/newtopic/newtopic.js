@@ -36,15 +36,6 @@ Page({
     });
     this.selectComponent("#image-selector").clearImage();
   },
-  allSettled(promises) {
-    return Promise.all(
-      promises.map(
-        promise => promise
-          .then(value => ({ status: "fulfilled", status: value }))
-          .catch(reason => ({ status: "rejected", status: reason }))
-      )
-    );
-  },
   async handlePublish() {
     if (this.data.title.length === 0) {
       tt.showToast({

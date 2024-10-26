@@ -4,6 +4,8 @@ Page({
     comment_list: [],
     index_1: -1,
     toward: "",
+    scroll_top: 0,
+    scroll_into_view: "",
   },
   onLoad() {
     const data = getApp().once_storage;
@@ -14,16 +16,22 @@ Page({
     this.selectComponent("#bottom-bar").focusReply(event.detail);
   },
   handleComment(event) {
-    const data = event.detail;
-    this.data.comment_list.push(data);
-    this.setData({ comment_list: this.data.comment_list });
+    this.handleRefresh().finally(() => {
+      if (event.detail.index_1 === null) {
+        this.setData({ scroll_top: 0 });
+        this.setData({ scroll_top: 99999999 });
+      } else {
+        this.setData({ scroll_into_view: `#index${event.detail.index_1}` });
+        this.selectComponent(`#index${event.detail.index_1}`).scrollToBottom();
+      }
+    });
   },
   handleRefresh() {
     tt.showLoading({
       title: '获取评论中...',
       mask: true,
     });
-    getApp().request_with_authentication({
+    return getApp().request_with_authentication({
       url: `${getApp().url}/comment/${this.data.poster.pid}`,
       method: "GET",
       header: { "Content-Type": "application/json; charset=utf-8" },

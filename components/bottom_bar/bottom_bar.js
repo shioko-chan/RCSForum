@@ -33,7 +33,7 @@ Component({
   methods: {
     focusReply({ toward = null, index_1 = null, index_2 = null }) {
       this.setData({ focus: false });
-      this.setData({ focus: true, focus: index_1 !== null });
+      this.setData({ focus: true, no_image: index_1 !== null });
       this.data.index_1 = index_1;
       if (index_2 === null || toward === null) { return; }
       const prefix = `回复 ${toward}: `;
@@ -123,11 +123,7 @@ Component({
           icon: "success",
           duration: 2500,
         });
-        if (!data.is_anonymous) {
-          data.name = getApp().username;
-          data.avatar = getApp().avatar;
-        }
-        this.triggerEvent("comment", data);
+        this.triggerEvent("comment", { index_1: data.index_1 });
       }).catch(err => {
         console.log(err);
         tt.hideLoading();

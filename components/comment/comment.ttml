@@ -38,7 +38,7 @@
         <image class="close-pane-button" src="/assets/images/cancel.png" mode="aspectFill" bindtap="closePane">
         </image>
       </view>
-      <scroll-view class="comment-list" scroll-y scroll-with-animation>
+      <scroll-view class="comment-list" scroll-y scroll-with-animation scrollTop="{{ scroll_top }}">
         <view class="comment">
           <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
           <template is="action-bar" data="{{ liked, likes, timestamp }}"></template>
@@ -53,7 +53,7 @@
         <view style="height: 240rpx;"></view>
       </scroll-view>
     </view>
-    <view class="comment-digest" hidden="{{ show_sub }}" bindtap="toggleComments">
+    <view class="comment-digest" hidden="{{ show_sub }}" bindtap="openPane">
       <block tt:for="{{ digests }}">
         <text class="digest">{{ item.name }}: {{ item.content }}</text>
       </block>
