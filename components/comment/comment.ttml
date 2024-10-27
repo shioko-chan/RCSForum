@@ -32,9 +32,17 @@
   </view>
 </template>
 
+
 <view class="comment">
-  <template is="comment-detail"
-    data="{{ avatar, username, content, is_sub, imageList, show_delete_button }}"></template>
+  <view tt:if="{{ is_deleted }}">
+    <view class="comment-deleted">
+      <text class="deleted-text">该评论已被删除</text>
+    </view>
+  </view>
+  <block tt:else>
+    <template is="comment-detail"
+      data="{{ avatar, username, content, is_sub, imageList, show_delete_button }}"></template>
+  </block>
   <block tt:if="{{ !is_sub && subs.length > 0 }}">
     <view class="comment-scroll-pane {{ show_sub ? 'show' : '' }}">
       <view class="close-area" catchtap="closePane"></view>
@@ -51,7 +59,7 @@
           <comment content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
             likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
             pid="{{ pid }}" uid="{{ item.uid }}" index_1="{{ index_1 }}" index_2="{{ index }}" subs="{{ item.subs }}"
-            is_sub catch:reply="propagateReply">
+            is_deleted="{{ !!item.is_deleted }}" is_sub catch:reply="propagateReply" catch:delete="propagateDelete">
           </comment>
         </block>
         <view style="height: 240rpx;"></view>
@@ -66,5 +74,7 @@
       </block>
     </view>
   </block>
-  <template is="action-bar" data="{{ liked, likes, timestamp }}"></template>
+  <block tt:if="{{ !is_deleted }}">
+    <template is="action-bar" data="{{ liked, likes, timestamp }}"></template>
+  </block>
 </view>

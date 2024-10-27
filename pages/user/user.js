@@ -6,6 +6,10 @@ Page({
     topic_list: [],
     is_me: false,
   },
+  deleteFromList(event) {
+    this.data.topic_list.splice(this.data.topic_list.findIndex(item => item.pid === event.detail.pid), 1);
+    this.setData({ topic_list: this.data.topic_list });
+  },
   onLoad({ uid }) {
     tt.showLoading({ title: "加载中...", mask: true });
     getApp().request_with_authentication({

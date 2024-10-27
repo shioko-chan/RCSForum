@@ -5,6 +5,10 @@ Page({
     nav_item2: true,
     topic_list: [],
   },
+  deleteFromList(event) {
+    this.data.topic_list.splice(this.data.topic_list.findIndex(item => item.pid === event.detail.pid), 1);
+    this.setData({ topic_list: this.data.topic_list });
+  },
   onLoad() {
     var app = getApp();
     this.setData({

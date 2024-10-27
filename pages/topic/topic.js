@@ -13,8 +13,13 @@ Page({
     this.handleRefresh();
   },
   deleteFromList(event) {
-    this.data.topic_list.splice(this.data.topic_list.findIndex(item => item.pid === event.detail.pid), 1);
-    this.setData({ topic_list: this.data.topic_list });
+    const { index_1, index_2 = null } = event.detail;
+    if (index_2 === null) {
+      this.data.comment_list[index_1].is_deleted = true;
+    } else {
+      this.data.comment_list[index_1].comments[index_2].is_deleted = true;
+    }
+    this.setData({ comment_list: this.data.comment_list });
   },
   handleReply(event) {
     this.selectComponent("#bottom-bar").focusReply(event.detail);
@@ -43,6 +48,7 @@ Page({
       const comments = data.comments;
       this.setData({
         comment_list: comments.map(comment => {
+          if (comment.is_deleted) { return comment; }
           if (comment.is_anonymous) {
             comment.avatar = "/assets/images/anon.png";
             comment.name = "anonymous";

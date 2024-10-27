@@ -37,6 +37,8 @@ Component({
     defaultStates: {},
   },
   methods: {
-
+    propagateDelete(event){
+      this.triggerEvent('delete', event.detail);
+    }
   }
 })

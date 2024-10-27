@@ -1,5 +1,6 @@
 Component({
   properties: {
+    is_deleted: { type: Boolean, value: false },
     subs: {
       type: Array,
       value: [],
@@ -83,8 +84,12 @@ Component({
     last_like: 0,
     scroll_top: 0,
     show_delete_button: false,
+    deleted: false,
   },
   methods: {
+    propagateDelete(event) {
+      this.triggerEvent("delete", event.detail);
+    },
     deleteComment() {
       const promise = new Promise((resolve, reject) => {
         tt.showModal({
@@ -108,7 +113,7 @@ Component({
           data: { pid: this.data.pid, ...this.getIndex() },
         }).then(() => {
           tt.showModal({ title: "成功", content: "删除成功", showCancel: false, icon: "none" });
-          this.triggerEvent("delete", { pid: this.data.pid });
+          this.triggerEvent("delete", this.getIndex());
         }).catch(res => {
           tt.showModal({ title: "失败", content: "删除失败", showCancel: false, icon: "none" });
           console.error("delete request failed", res);

@@ -11,7 +11,7 @@
     mode="aspectFit" />
   <block tt:for="{{ list }}" tt:key="pid">
     <poster title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
-      likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
+      likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}" bind:delete="propagateDelete"
       pid="{{ item.pid }}" uid="{{ item.uid }}" is_digest>
     </poster>
   </block>
