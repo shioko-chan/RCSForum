@@ -358,7 +358,6 @@ App({
         tt.getStorage({
           key, success: res => {
             if (res.data !== undefined && res.data !== "") {
-              console.log(`get ${key} from storage,value: ${res.data}`);
               resolve(res.data);
             } else {
               reject(`no ${key} in storage`);
@@ -405,7 +404,7 @@ App({
       });
       setInterval(() => updateManager.triggerCheckUpdate(), 60 * 60 * 1000)
     } catch (error) {
-      console.log(`getUpdateManager fail: ${JSON.stringify(error)}`);
+      console.error(`getUpdateManager fail: ${JSON.stringify(error)}`);
     }
   },
   _storage_info([token, username, avatar, is_admin, open_id]) {
@@ -419,12 +418,6 @@ App({
     return Promise.all(
       value.map((item, index) => setStorage(name[index], item))
     );
-  },
-  async onHide() {
-    await this._storage_info();
-  },
-  async onUnload() {
-    await this._storage_info();
   },
   onPageNotFound() {
     tt.redirectTo({

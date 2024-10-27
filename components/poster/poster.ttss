@@ -9,6 +9,16 @@
     align-items: stretch;
 }
 
+.admin-title {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 24rpx;
+    font-weight: bold;
+    padding: 0rpx 10rpx;
+    border-radius: 10rpx;
+    text-align: center;
+    margin-left: 10rpx;
+}
 
 .limit-height {
     max-height: 200rpx;
@@ -37,7 +47,12 @@
 }
 
 .userinfo {
+    margin-top: 15rpx;
     margin-left: 25rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
 }
 
 .username {

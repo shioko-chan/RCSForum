@@ -9,8 +9,7 @@
     <comment tt:for="{{ comment_list }}" content="{{ item.content }}" username="{{ item.name }}"
       timestamp="{{ item.time }}" likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}"
       images="{{ item.images }}" pid="{{ poster.pid }}" uid="{{ item.uid }}" index_1="{{ index }}"
-      subs="{{ item.subs }}" catch:reply="handleReply" id="index{{ index }}" is_deleted="{{ !!item.is_deleted }}"
-      catch:delete="deleteFromList">
+      subs="{{ item.subs }}" is_deleted="{{ item.is_deleted }}" catch:reply="handleReply" id="index{{ index }}">
     </comment>
     <view style="height: 200rpx;"></view>
   </scroll-view>

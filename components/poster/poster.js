@@ -25,6 +25,15 @@ Component({
       value: "",
       observer(new_val, _) {
         this.setData({ show_delete_button: new_val === getApp().open_id || getApp().is_admin });
+        if (new_val === "" || new_val === undefined || new_val === null) return;
+        getApp().request({
+          url: `${getApp().url}/ifuseradmin/${new_val}`,
+          method: "GET",
+        }).then(data => {
+          this.setData({ is_admin: data.is_admin });
+        }).catch(res => {
+          console.error("is_admin request failed", res);
+        });
       },
     },
     content: {
@@ -71,6 +80,7 @@ Component({
     previewImageList: [],
     last_like: 0,
     show_delete_button: false,
+    is_admin: false,
   },
   methods: {
     deletePoster() {
@@ -102,7 +112,7 @@ Component({
           tt.showModal({ title: "失败", content: "删除失败", showCancel: false, icon: "none" });
           console.error("delete request failed", res);
         }).finally(() => tt.hideLoading());
-      });
+      }).catch(() => { });
     },
     handleReply() {
       this.triggerEvent("reply", {});

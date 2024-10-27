@@ -12,15 +12,6 @@ Page({
     this.setData({ poster: data });
     this.handleRefresh();
   },
-  deleteFromList(event) {
-    const { index_1, index_2 = null } = event.detail;
-    if (index_2 === null) {
-      this.data.comment_list[index_1].is_deleted = true;
-    } else {
-      this.data.comment_list[index_1].comments[index_2].is_deleted = true;
-    }
-    this.setData({ comment_list: this.data.comment_list });
-  },
   handleReply(event) {
     this.selectComponent("#bottom-bar").focusReply(event.detail);
   },
@@ -46,19 +37,36 @@ Page({
       header: { "Content-Type": "application/json; charset=utf-8" },
     }).then(data => {
       const comments = data.comments;
-      this.setData({
-        comment_list: comments.map(comment => {
-          if (comment.is_deleted) { return comment; }
+      comments.forEach(comment => {
+        if (comment.is_deleted) { return; }
+        if (comment.is_anonymous) {
+          comment.avatar = "/assets/images/anon.png";
+          comment.name = "anonymous";
+          if (!getApp().is_admin && comment.uid !== getApp().open_id) {
+            comment.uid = '';
+          }
+        }
+        comment.subs.forEach(comment => {
+          if (comment.is_deleted) { return; }
           if (comment.is_anonymous) {
             comment.avatar = "/assets/images/anon.png";
             comment.name = "anonymous";
+            if (!getApp().is_admin && comment.uid !== getApp().open_id) {
+              comment.uid = '';
+            }
           }
-          return comment;
-        })
+        });
+      })
+      this.setData({
+        comment_list: comments
       });
     }).catch(({ mes, res }) => {
       console.error(mes, res);
-      getApp()._show_modal({ title: "获取评论失败", content: "" });
+      if (res.statusCode === 404) {
+        getApp()._show_modal({ title: "获取评论失败", content: "该帖子已被删除" });
+      } else {
+        getApp()._show_modal({ title: "获取评论失败", content: "" });
+      }
     }).finally(() => tt.hideLoading());
   }
 })

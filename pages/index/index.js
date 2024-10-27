@@ -31,12 +31,11 @@ Page({
     }
   },
   handleTopicList(topics) {
-    const is_admin = getApp().is_admin;
     topics.forEach(topic => {
       if (topic.is_anonymous) {
         topic.avatar = '/assets/images/anon.png';
         topic.name = 'anonymous';
-        if (!is_admin) {
+        if (!getApp().is_admin && topic.uid !== getApp().open_id) {
           topic.uid = '';
         }
       }

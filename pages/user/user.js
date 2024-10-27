@@ -7,7 +7,9 @@ Page({
     is_me: false,
   },
   deleteFromList(event) {
-    this.data.topic_list.splice(this.data.topic_list.findIndex(item => item.pid === event.detail.pid), 1);
+    this.data.topic_list.splice(this.data.topic_list.findIndex(
+      item => item.pid === event.detail.pid
+    ), 1);
     this.setData({ topic_list: this.data.topic_list });
   },
   onLoad({ uid }) {
@@ -18,9 +20,14 @@ Page({
       header: { "Content-Type": "application/json; charset=utf-8" }
     })
       .then(data => {
-        this.setData({ avatar: data.avatar, name: data.name, is_me: uid === getApp().open_id });
-        this.setData({ topic_list: data.topics });
+        this.setData({
+          avatar: data.avatar, name: data.name, is_me: uid === getApp().open_id,
+          topic_list: data.topics.map(topic => {
+            topic.uid = uid;
+            return topic;
+          })
+        });
       })
-      .catch(({ mes, res }) => console.error("Error msg: ", mes, "result: ", res)).finally(() => tt.hideLoading());
+      .finally(() => tt.hideLoading());
   },
 })

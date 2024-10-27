@@ -1,13 +1,13 @@
 Component({
   properties: {
-    is_deleted: { type: Boolean, value: false },
     subs: {
       type: Array,
       value: [],
       observer(new_val, _) {
+        if (new_val === undefined || new_val === null) return;
         this.setData({
           digests:
-            new_val.slice(0, 3).map(
+            new_val.filter(item => !item.is_deleted).slice(0, 3).map(
               ({ name, content }) => ({ content: Array.from(content).slice(0, 25).join(""), name })
             )
         })
@@ -33,8 +33,16 @@ Component({
       type: String,
       value: "",
       observer(new_val, _) {
-        console.log("new_val: ", new_val)
         this.setData({ show_delete_button: new_val === getApp().open_id || getApp().is_admin });
+        if (new_val === "" || new_val === undefined || new_val === null) return;
+        getApp().request({
+          url: `${getApp().url}/ifuseradmin/${new_val}`,
+          method: "GET",
+        }).then(data => {
+          this.setData({ is_admin: data.is_admin });
+        }).catch(res => {
+          console.error("is_admin request failed", res);
+        });
       },
     },
     content: {
@@ -73,6 +81,10 @@ Component({
           previewImageList: new Array(newVal.length),
         });
       },
+    },
+    is_deleted: {
+      type: Boolean,
+      value: false,
     }
   },
   data: {
@@ -84,12 +96,9 @@ Component({
     last_like: 0,
     scroll_top: 0,
     show_delete_button: false,
-    deleted: false,
+    is_admin: false,
   },
   methods: {
-    propagateDelete(event) {
-      this.triggerEvent("delete", event.detail);
-    },
     deleteComment() {
       const promise = new Promise((resolve, reject) => {
         tt.showModal({
@@ -113,12 +122,12 @@ Component({
           data: { pid: this.data.pid, ...this.getIndex() },
         }).then(() => {
           tt.showModal({ title: "成功", content: "删除成功", showCancel: false, icon: "none" });
-          this.triggerEvent("delete", this.getIndex());
+          this.setData({ is_deleted: true, show_delete_button: false });
         }).catch(res => {
           tt.showModal({ title: "失败", content: "删除失败", showCancel: false, icon: "none" });
           console.error("delete request failed", res);
         }).finally(() => tt.hideLoading());
-      });
+      }).catch(() => { });
     },
     scrollToBottom() {
       this.setData({ show_sub: true, scroll_top: 0 });

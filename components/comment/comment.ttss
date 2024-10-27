@@ -15,12 +15,15 @@
     text-align: center;
 }
 
-.comment-deleted::before {
-    content: "⚠️";
-    font-size: 20px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
+.admin-title {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 24rpx;
+    font-weight: bold;
+    padding: 0rpx 10rpx;
+    border-radius: 10rpx;
+    text-align: center;
+    margin-left: 10rpx;
 }
 
 .comment {
@@ -135,6 +138,7 @@
     margin-bottom: 15rpx;
 }
 
+
 .avatar {
     width: 80rpx;
     height: 80rpx;
@@ -142,7 +146,12 @@
 }
 
 .userinfo {
+    margin-top: 15rpx;
     margin-left: 25rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
 }
 
 .username {

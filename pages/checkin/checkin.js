@@ -37,7 +37,7 @@ Page({
     }
     if (!this.data.is_active) {
       this.setData({ is_processing: true });
-      tt.showLoading({ title: "正连接至打卡服务器...", mask: true });
+      tt.showLoading({ title: "打卡中...", mask: true });
       this.sendMessage(`${this.data.url}/checkin/hello`)
         .then(() => {
           this.startTimer();
@@ -117,6 +117,7 @@ Page({
       this.setData({ is_accumulate: true, is_sidebar_open: true, });
       return;
     }
+    tt.showLoading({ title: "正在加载排行榜", mask: true });
     getApp().request({
       url: `${getApp().url}/checkin/ranksacc`,
       header: { "Content-Type": "application/json; charset=utf-8" },
@@ -126,7 +127,7 @@ Page({
       this.data.ranks_acc_timestamp = Date.now();
     }).catch(() =>
       getApp().show_network_error_modal("请检查网络连接，需要连接至校园网或实验室网络")
-    );
+    ).finally(() => tt.hideLoading());
   },
   hideAccumulate() {
     this.setData({
@@ -138,6 +139,7 @@ Page({
       this.setData({ is_sidebar_open: true });
       return;
     }
+    tt.showLoading({ title: "正在加载排行榜", mask: true });
     getApp().request({
       url: `${getApp().url}/checkin/ranks`,
       header: { "Content-Type": "application/json; charset=utf-8" },
@@ -147,6 +149,6 @@ Page({
       this.data.ranks_timestamp = Date.now();
     }).catch(() =>
       getApp().show_network_error_modal("请检查网络连接，需要连接至校园网或实验室网络")
-    );
+    ).finally(() => tt.hideLoading());
   }
 });

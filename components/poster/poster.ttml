@@ -3,9 +3,10 @@
     <image class="avatar" src="{{ avatar }}"></image>
     <view class="userinfo">
       <text class="username">{{ username }}</text>
+      <text tt:if="{{ is_admin }}" class="admin-title">管理员</text>
     </view>
     <block tt:if="{{ show_delete_button }}">
-      <image class="delete-button" src="/assets/images/cancel.png" mode="aspectFill" catchtap="deletePoster"></image>
+      <image class="delete-button" src="/assets/images/delete.png" mode="aspectFill" catchtap="deletePoster"></image>
     </block>
   </view>
   <text class="title">{{ title }}</text>

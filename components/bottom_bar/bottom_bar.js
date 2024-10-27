@@ -123,7 +123,6 @@ Component({
         });
         this.triggerEvent("comment", { index_1: data.index_1 });
       }).catch(err => {
-        console.log(err);
         tt.hideLoading();
         tt.showToast({
           title: "评论发布失败",

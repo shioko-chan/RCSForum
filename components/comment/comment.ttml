@@ -3,9 +3,10 @@
     <image class="avatar" src="{{ avatar }}"></image>
     <view class="userinfo">
       <text class="username">{{ username }}</text>
+      <text tt:if="{{ is_admin }}" class="admin-title">管理员</text>
     </view>
     <block tt:if="{{ show_delete_button }}">
-      <image class="delete-button" src="/assets/images/cancel.png" mode="aspectFill" catchtap="deleteComment"></image>
+      <image class="delete-button" src="/assets/images/delete.png" mode="aspectFill" catchtap="deleteComment"></image>
     </block>
   </view>
   <text-with-img content="{{ content }}"></text-with-img>
@@ -36,14 +37,14 @@
 <view class="comment">
   <view tt:if="{{ is_deleted }}">
     <view class="comment-deleted">
-      <text class="deleted-text">该评论已被删除</text>
+      <text class="deleted-text">⚠️该评论已被删除</text>
     </view>
   </view>
   <block tt:else>
     <template is="comment-detail"
-      data="{{ avatar, username, content, is_sub, imageList, show_delete_button }}"></template>
+      data="{{ avatar, username, content, is_sub, imageList, show_delete_button, is_admin }}"></template>
   </block>
-  <block tt:if="{{ !is_sub && subs.length > 0 }}">
+  <block tt:if="{{ !is_sub && (subs != null || subs != undefined) &&subs.length > 0 }}">
     <view class="comment-scroll-pane {{ show_sub ? 'show' : '' }}">
       <view class="close-area" catchtap="closePane"></view>
       <view class="pane-top-bar">
@@ -52,14 +53,22 @@
       </view>
       <scroll-view class="comment-list" scroll-y scroll-with-animation scrollTop="{{ scroll_top }}">
         <view class="comment">
-          <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
-          <template is="action-bar" data="{{ liked, likes, timestamp }}"></template>
+          <view tt:if="{{ is_deleted }}">
+            <view class="comment-deleted">
+              <text class="deleted-text">⚠️该评论已被删除</text>
+            </view>
+          </view>
+          <block tt:else>
+            <template is="comment-detail"
+              data="{{ avatar, username, content, is_sub, imageList, show_delete_button,is_admin }}"></template>
+            <template is="action-bar" data="{{ liked, likes, timestamp }}"></template>
+          </block>
         </view>
         <block tt:for="{{ subs }}">
           <comment content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
             likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
             pid="{{ pid }}" uid="{{ item.uid }}" index_1="{{ index_1 }}" index_2="{{ index }}" subs="{{ item.subs }}"
-            is_deleted="{{ !!item.is_deleted }}" is_sub catch:reply="propagateReply" catch:delete="propagateDelete">
+            is_sub catch:reply="propagateReply">
           </comment>
         </block>
         <view style="height: 240rpx;"></view>
