@@ -61,14 +61,12 @@ Component({
     clearAll() {
       this.setData({ reply: "foo", skip: 3 });
       this.setData({
-        is_anonymous: false,
         reply: "",
         skip: 0,
         focus: false,
         display_index: 0,
       });
       this.data.toward = "";
-      this.data.index_1 = null;
       this.selectComponent("#image-selector").clearImage();
     },
     async handleSend() {

@@ -4,6 +4,9 @@
     <view class="userinfo">
       <text class="username">{{ username }}</text>
     </view>
+    <block tt:if="{{ show_delete_button }}">
+      <image class="delete-button" src="/assets/images/cancel.png" mode="aspectFill" catchtap="deletePoster"></image>
+    </block>
   </view>
   <text class="title">{{ title }}</text>
   <text-with-img class="{{ is_digest ? 'limit-height' : '' }}" content="{{ content }}"

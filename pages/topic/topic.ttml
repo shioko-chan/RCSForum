@@ -11,10 +11,10 @@
       images="{{ item.images }}" pid="{{ poster.pid }}" uid="{{ item.uid }}" index_1="{{ index }}"
       subs="{{ item.subs }}" catch:reply="handleReply" id="index{{ index }}">
     </comment>
+    <view style="height: 200rpx;"></view>
   </scroll-view>
   <view class="refresh-box" bindtap="handleRefresh" hidden="{{ top<=500 }}">
     <image class="refresh-button" src="/assets/images/refresh.png" />
   </view>
-  <view style="height: 200rpx;"></view>
 </view>
 <bottom-bar pid="{{ poster.pid }}" id="bottom-bar" catch:comment="handleComment"></bottom-bar>

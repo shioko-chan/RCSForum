@@ -31,6 +31,10 @@ Component({
     uid: {
       type: String,
       value: "",
+      observer(new_val, _) {
+        console.log("new_val: ", new_val)
+        this.setData({ show_delete_button: new_val === getApp().open_id || getApp().is_admin });
+      },
     },
     content: {
       type: String,
@@ -78,10 +82,40 @@ Component({
     digests: [],
     last_like: 0,
     scroll_top: 0,
+    show_delete_button: false,
   },
   methods: {
+    deleteComment() {
+      const promise = new Promise((resolve, reject) => {
+        tt.showModal({
+          title: "警告", content: "删除后将不可恢复，是否继续", showCancel: true, icon: "none", success: res => {
+            if (res.confirm) {
+              resolve();
+            } else {
+              reject();
+            }
+          }, fail: reject
+        })
+      });
+      promise.then(() => {
+        tt.showLoading({ title: "删除中...", mask: true });
+        getApp().request_with_authentication({
+          url: `${getApp().url}/delete/comment`,
+          method: "POST",
+          header: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          data: { pid: this.data.pid, ...this.getIndex() },
+        }).then(() => {
+          tt.showModal({ title: "成功", content: "删除成功", showCancel: false, icon: "none" });
+          this.triggerEvent("delete", { pid: this.data.pid });
+        }).catch(res => {
+          tt.showModal({ title: "失败", content: "删除失败", showCancel: false, icon: "none" });
+          console.error("delete request failed", res);
+        }).finally(() => tt.hideLoading());
+      });
+    },
     scrollToBottom() {
-      console.log("scrolling to bottom comment");
       this.setData({ show_sub: true, scroll_top: 0 });
       this.setData({ scroll_top: 99999999 });
     },
@@ -89,6 +123,7 @@ Component({
       this.setData({
         show_sub: false,
       });
+      this.triggerEvent("reply", {});
     },
     openPane() {
       this.setData({

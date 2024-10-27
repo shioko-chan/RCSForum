@@ -2,9 +2,9 @@
   <scroll-view style="height: 100vh;" scroll-y scroll-top="{{ scroll_top }}" scroll-with-animation
     bindscroll="handleScroll">
     <block tt:for="{{ topic_list }}" tt:key="pid">
-      <poster id="item_{{ index }}" title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}"
+      <poster title="{{ item.title }}" content="{{ item.content }}" username="{{ item.name }}"
         timestamp="{{ item.time }}" likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}"
-        images="{{ item.images }}" pid="{{ item.pid }}" uid="{{ item.uid }}" is_digest>
+        images="{{ item.images }}" pid="{{ item.pid }}" uid="{{ item.uid }}" is_digest bind:delete="deleteFromList">
       </poster>
     </block>
   </scroll-view>

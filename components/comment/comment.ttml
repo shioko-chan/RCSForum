@@ -4,6 +4,9 @@
     <view class="userinfo">
       <text class="username">{{ username }}</text>
     </view>
+    <block tt:if="{{ show_delete_button }}">
+      <image class="delete-button" src="/assets/images/cancel.png" mode="aspectFill" catchtap="deleteComment"></image>
+    </block>
   </view>
   <text-with-img content="{{ content }}"></text-with-img>
   <block tt:if="{{ !is_sub }}">
@@ -30,7 +33,8 @@
 </template>
 
 <view class="comment">
-  <template is="comment-detail" data="{{ avatar, username, content, is_sub, imageList }}"></template>
+  <template is="comment-detail"
+    data="{{ avatar, username, content, is_sub, imageList, show_delete_button }}"></template>
   <block tt:if="{{ !is_sub && subs.length > 0 }}">
     <view class="comment-scroll-pane {{ show_sub ? 'show' : '' }}">
       <view class="close-area" catchtap="closePane"></view>

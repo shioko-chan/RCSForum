@@ -6,6 +6,10 @@ Page({
     top: 0,
     scroll_top: 0,
   },
+  deleteFromList(event) {
+    this.data.topic_list.splice(this.data.topic_list.findIndex(item => item.pid === event.detail.pid), 1);
+    this.setData({ topic_list: this.data.topic_list });
+  },
   showModalAllFinished() {
     tt.showModal({
       title: "已加载全部内容",

@@ -34,7 +34,11 @@ Component({
               }
               const selected_image_path = tempFile.path;
               const image_size = tempFile.size;
-              if (!['jpg', 'jpeg'].includes(selected_image_path.split('.').pop())) {
+              const ext = selected_image_path.split('.').pop();
+              if (!["jpg", "jpeg", "png", "bmp", "gif", "webp"].includes(ext)) {
+                reject({ mes: "not support", index: { index, ext } });
+              }
+              if (!['jpg', 'jpeg'].includes(ext)) {
                 if (image_size > max_image_size * 1024 * 1024) {
                   reject({ mes: "too large", index });
                 }
@@ -91,6 +95,13 @@ Component({
               tt.showModal({
                 title: `第${index + 1}个图片上传失败`,
                 content: `图片大小上限${max_image_size}MB`,
+                icon: "none",
+                showCancel: false,
+              });
+            } else if (mes === "not support") {
+              tt.showModal({
+                title: `第${index.index + 1}个图片上传失败`,
+                content: `不支持${index.ext}图片格式`,
                 icon: "none",
                 showCancel: false,
               });

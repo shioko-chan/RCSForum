@@ -12,16 +12,20 @@ Page({
     this.setData({ poster: data });
     this.handleRefresh();
   },
+  deleteFromList(event) {
+    this.data.topic_list.splice(this.data.topic_list.findIndex(item => item.pid === event.detail.pid), 1);
+    this.setData({ topic_list: this.data.topic_list });
+  },
   handleReply(event) {
     this.selectComponent("#bottom-bar").focusReply(event.detail);
   },
   handleComment(event) {
     this.handleRefresh().finally(() => {
-      if (event.detail.index_1 === null) {
+      if (event.detail.index_1 === null || event.detail.index_1 === undefined) {
         this.setData({ scroll_top: 0 });
         this.setData({ scroll_top: 99999999 });
       } else {
-        this.setData({ scroll_into_view: `#index${event.detail.index_1}` });
+        this.setData({ scroll_into_view: `index${event.detail.index_1}` });
         this.selectComponent(`#index${event.detail.index_1}`).scrollToBottom();
       }
     });

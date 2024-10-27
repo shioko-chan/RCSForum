@@ -227,25 +227,12 @@ App({
           }
         });
       });
-      const res = await this._request({
+      return await this._request({
         url: `${this.url}/login`,
         method: "POST",
         header: { "Content-Type": "application/json; charset=utf-8" },
         data: { code }
       });
-      if (res.statusCode === 200) {
-        this.token = res.header.authorization;
-        this.username = res.data.name;
-        this.avatar = res.data.avatar;
-        this.is_admin = res.data.is_admin;
-        this.open_id = res.data.open_id;
-        try {
-          await this._storage_info();
-        } catch (exception) {
-          console.error("Storage info local failed, ", exception);
-        }
-      }
-      return res;
     } catch (exception) {
       throw exception;
     }
@@ -273,6 +260,18 @@ App({
   },
   _with_authentication(fun) {
     return async (obj) => {
+      const set_info = ([token, username, avatar, is_admin, open_id]) => {
+        const ref_keys = ["token", "username", "avatar", "is_admin", "open_id"];
+        const value = [token, username, avatar, is_admin, open_id];
+        ref_keys.forEach((ref_key, index) => {
+          this[ref_key] = value[index];
+        });
+      };
+      const solve_res = res => {
+        const authentication = res.header.authentication;
+        const { name, avatar, is_admin, open_id } = res.data;
+        return [authentication, name, avatar, is_admin, open_id];
+      };
       try {
         let res = null;
         if (this.token === "") {
@@ -285,6 +284,9 @@ App({
             if (res.statusCode !== 200) {
               throw { mes: "failed to login", res };
             }
+            const list = solve_res(res);
+            set_info(list);
+            this._storage_info(list);
           }
         }
         if (obj.header === undefined) {
@@ -303,6 +305,10 @@ App({
         if (res.statusCode !== 200) {
           throw { mes: "failed to login", res };
         }
+        const list = solve_res(res);
+        set_info(list);
+        this._storage_info(list);
+
         obj.header.authentication = this.token;
         res = await fun(obj);
         if (res.statusCode === 200) {
@@ -352,6 +358,7 @@ App({
         tt.getStorage({
           key, success: res => {
             if (res.data !== undefined && res.data !== "") {
+              console.log(`get ${key} from storage,value: ${res.data}`);
               resolve(res.data);
             } else {
               reject(`no ${key} in storage`);
@@ -361,11 +368,11 @@ App({
       })
     };
     const name = ["Azazel", "Ariel", "Asbeel", "Samyaza", "Samael"];
-    const refKeys = ["token", "username", "avatar", "is_admin", "open_id"];
+    const ref_keys = ["token", "username", "avatar", "is_admin", "open_id"];
     return Promise.all(name.map(item => getStorage(item))).then(items => {
       console.info("get info from local storage");
       items.forEach((item, index) => {
-        this[refKeys[index]] = item;
+        this[ref_keys[index]] = item;
       });
     });
   },
@@ -380,17 +387,37 @@ App({
       title: '欢迎使用RCS论坛',
       content: '若发现bug或有功能方面的建议，可点击右上角反馈',
     });
+    try {
+      const updateManager = tt.getUpdateManager();
+      updateManager.onUpdateReady(async () => {
+        this._show_modal({
+          title: '存在更新',
+          content: '将要重启小程序以应用更新',
+        });
+        await this.modal_promise;
+        updateManager.applyUpdate();
+      });
+      updateManager.onUpdateFailed(() => {
+        this._show_modal({
+          title: '更新失败',
+          content: '小程序获取更新失败，请检查网络连接',
+        });
+      });
+      setInterval(() => updateManager.triggerCheckUpdate(), 60 * 60 * 1000)
+    } catch (error) {
+      console.log(`getUpdateManager fail: ${JSON.stringify(error)}`);
+    }
   },
-  _storage_info() {
+  _storage_info([token, username, avatar, is_admin, open_id]) {
     var setStorage = (key, data) => {
       return new Promise((resolve, reject) => {
         tt.setStorage({ key, data, success: resolve, fail: reject });
       });
     };
     const name = ["Azazel", "Ariel", "Asbeel", "Samyaza", "Samael"];
-    Promise.all(
-      [this.token, this.username, this.avatar, this.is_admin, this.open_id]
-        .map((item, index) => setStorage(name[index], item))
+    const value = [token, username, avatar, is_admin, open_id];
+    return Promise.all(
+      value.map((item, index) => setStorage(name[index], item))
     );
   },
   async onHide() {

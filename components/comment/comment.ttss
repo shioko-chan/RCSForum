@@ -39,6 +39,13 @@
     flex-grow: 1;
 }
 
+.delete-button {
+    width: 45rpx;
+    height: 45rpx;
+    margin-left: auto;
+    margin-right: 25rpx;
+}
+
 .pane-top-bar {
     border-radius: 50rpx 50rpx 0 0;
     height: 100rpx;
