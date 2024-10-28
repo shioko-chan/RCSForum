@@ -37,11 +37,6 @@
     align-items: stretch;
 }
 
-.refresh-button {
-    height: 75rpx;
-    width: 75rpx;
-}
-
 .comment-scroll-pane {
     position: fixed;
     left: 0;

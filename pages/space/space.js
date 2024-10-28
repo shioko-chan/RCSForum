@@ -11,11 +11,7 @@ Page({
     ), 1);
     this.setData({ topic_list: this.data.topic_list });
   },
-  onLoad() {
-    this.setData({
-      avatar: getApp().avatar,
-      name: getApp().username,
-    });
+  handleRefresh() {
     tt.showLoading({ title: "加载中...", mask: true });
     getApp().request_with_authentication({
       url: `${getApp().url}/user/${getApp().open_id}`,
@@ -29,5 +25,12 @@ Page({
         })
       });
     }).finally(() => tt.hideLoading());
+  },
+  onLoad() {
+    this.setData({
+      avatar: getApp().avatar,
+      name: getApp().username,
+    });
+    this.handleRefresh();
   },
 })

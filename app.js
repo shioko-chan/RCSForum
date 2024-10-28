@@ -375,7 +375,54 @@ App({
       });
     });
   },
+  _check_filesystem_size() {
+    const fileSystemManager = tt.getFileSystemManager();
+    const path = "ttfile://user/image";
+    (new Promise((resolve, reject) => {
+      fileSystemManager.access({
+        path,
+        success: resolve,
+        fail: reject,
+      });
+    })).then(() => {
+      return new Promise((resolve, reject) => {
+        fileSystemManager.stat({
+          path,
+          success: resolve,
+          fail: reject,
+        });
+      });
+    }).then(res => {
+      if (res.stat.size >= 200 * 1024 * 1024) {
+        fileSystemManager.rmdir({
+          dirPath: path,
+          recursive: true,
+          success(res) {
+            console.log(`rmdir success: ${JSON.stringify(res)}`);
+          },
+          fail(res) {
+            console.error(`rmdir fail: ${JSON.stringify(res)}`);
+          }
+        });
+        throw {};
+      }
+    }).catch(() =>
+      fileSystemManager.mkdir({
+        dirPath: path,
+        recursive: false,
+        success(_res) {
+          console.log(`${path} 创建成功`);
+        },
+        fail(res) {
+          console.log(`${path} 创建失败`, res.errMsg);
+        }
+      })
+    )
+
+
+  },
   onLaunch() {
+    this._check_filesystem_size();
     tt.hideTabBar({
       animation: false,
       fail(res) {

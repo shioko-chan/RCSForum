@@ -7,7 +7,7 @@ Component({
         const src = newVal;
         const filename = src.split('/').slice(-1)[0];
         const fileSystemManager = tt.getFileSystemManager();
-        const targetFilePath = `ttfile://user/${filename}`
+        const targetFilePath = `ttfile://user/image/${filename}`;
         const setSrcLocal = path => {
           this.triggerEvent("imageLoaded", { src_local: path });
           this.setData({ src_local: path });

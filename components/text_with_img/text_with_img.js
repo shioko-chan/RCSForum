@@ -68,13 +68,43 @@ Component({
     this.setData({ stickers: getApp().stickers });
   },
   methods: {
-    previewSticker(event) {
-      const currentImage = event.currentTarget.dataset.src;
-      tt.previewImage({
-        urls: [currentImage],
-        current: currentImage,
-        shouldShowSaveOption: true,
-      });
+    async previewSticker(event) {
+      const src = event.currentTarget.dataset.src;
+      const filename = src.split('/').slice(-1)[0];
+      const fileSystemManager = tt.getFileSystemManager();
+      const targetFilePath = `ttfile://user/image/${filename}`;
+      const preview = path => {
+        tt.previewImage({
+          urls: [path],
+          current: path,
+          shouldShowSaveOption: true,
+        });
+      };
+      try {
+        let path = await new Promise((resolve, reject) => {
+          fileSystemManager.access({
+            path: targetFilePath,
+            success: _ => {
+              resolve(targetFilePath);
+            },
+            fail: reject
+          });
+        });
+        preview(path);
+      } catch (res) {
+        console.info("no image local, try fetch from server", res);
+        tt.downloadFile({
+          url: `${getApp().url}/stickers/${filename}`,
+          filePath: targetFilePath,
+          header: { "Content-Type": "application/json; charset=utf-8" },
+          success: res => {
+            preview(res.tempFilePath);
+          },
+          fail: res => {
+            console.error("failed to download image: ", res);
+          },
+        });
+      };
     },
     handleSticker(event) {
       const index = event.currentTarget.dataset.index;

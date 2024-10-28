@@ -1,3 +1,6 @@
-<user-info tt:if="{{ topic_list.length>0 }}" name="{{ name }}" avatar="{{ avatar }}" topic_list="{{ topic_list }}" is_me
+<user-info name="{{ name }}" avatar="{{ avatar }}" topic_list="{{ topic_list }}" is_me
   bind:delete="deleteFromList"></user-info>
+<view class="refresh-box" bindtap="handleRefresh">
+  <image class="refresh-button" src="/assets/images/refresh.png" />
+</view>
 <navbar nav_item2="{{ nav_item2 }}"></navbar>
