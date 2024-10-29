@@ -67,8 +67,8 @@
         <block tt:for="{{ subs }}">
           <comment content="{{ item.content }}" username="{{ item.name }}" timestamp="{{ item.time }}"
             likes="{{ item.likes }}" avatar="{{ item.avatar }}" liked="{{ item.liked }}" images="{{ item.images }}"
-            pid="{{ pid }}" uid="{{ item.uid }}" index_1="{{ index_1 }}" index_2="{{ index }}" subs="{{ item.subs }}"
-            is_sub catch:reply="propagateReply">
+            pid="{{ pid }}" uid="{{ item.uid }}" index_1="{{ index_1 }}" index_2="{{ index }}"
+            is_deleted="{{ item.is_deleted }}" is_sub catch:reply="propagateReply">
           </comment>
         </block>
         <view style="height: 240rpx;"></view>
