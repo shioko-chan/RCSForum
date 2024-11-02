@@ -16,7 +16,9 @@ Component({
           else {
             array = this.data.stickers;
           }
-          return array.find(e => e.name === sticker_name)?.url || null;
+          const res = array.find(e => e.name === sticker_name);
+          if (res) return res.url;
+          return null;
         };
 
         const raw_str = new_val;

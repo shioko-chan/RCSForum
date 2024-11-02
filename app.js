@@ -344,9 +344,10 @@ App({
           fail: reject,
         })
       );
-    this.modal_promise?.then(() => new_promise());
-    if (this.modal_promise === null) {
+    if (this.modal_promise == null) {
       this.modal_promise = new_promise().finally(() => { this.modal_promise = null });
+    } else {
+      this.modal_promise.then(() => new_promise());
     }
   },
   show_network_error_modal(mes) {
