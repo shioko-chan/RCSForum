@@ -5,14 +5,14 @@
     background-color: #ffffff;
     border-radius: 12rpx;
     box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.1);
-    height: 200rpx;
+    height: 260rpx;
     overflow: scroll;
     width: 100%;
 }
 
 .sticker {
-    width: 120rpx;
-    height: 120rpx;
+    width: 155rpx;
+    height: 155rpx;
     margin: 8rpx;
     border-radius: 8rpx;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
