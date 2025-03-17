@@ -7,7 +7,10 @@ Page({
     scroll_top: 0,
   },
   deleteFromList(event) {
-    this.data.topic_list.splice(this.data.topic_list.findIndex(item => item.pid === event.detail.pid), 1);
+    this.data.topic_list.splice(
+      this.data.topic_list.findIndex((item) => item.pid === event.detail.pid),
+      1
+    );
     this.setData({ topic_list: this.data.topic_list });
   },
   showModalAllFinished() {
@@ -23,7 +26,7 @@ Page({
         url: `${getApp().url}/topic`,
         method: "GET",
         header: { "Content-Type": "application/json; charset=utf-8" },
-        data: { page }
+        data: { page },
       });
       return data.topics;
     } catch (exception) {
@@ -31,12 +34,12 @@ Page({
     }
   },
   handleTopicList(topics) {
-    topics.forEach(topic => {
+    topics.forEach((topic) => {
       if (topic.is_anonymous) {
-        topic.avatar = '/assets/images/anon.png';
-        topic.name = 'anonymous';
+        topic.avatar = "/assets/images/anon.png";
+        topic.name = "anonymous";
         if (!getApp().is_admin && topic.uid !== getApp().open_id) {
-          topic.uid = '';
+          topic.uid = "";
         }
       }
     });
@@ -57,26 +60,38 @@ Page({
   },
   getTopics() {
     tt.showLoading({
-      title: '加载中',
-      mask: true
+      title: "加载中",
+      mask: true,
     });
     return this.requestTopics(this.data.page)
-      .catch(res => {
+      .catch((res) => {
         console.error(res);
-        getApp().show_network_error_modal("请检查网络连接，需要连接至校园网或实验室网络");
+        getApp().show_network_error_modal(
+          "请检查网络连接，需要连接至实验室网络"
+        );
         return Promise.reject("network error");
       })
-      .finally(() => { tt.hideLoading(); });
+      .finally(() => {
+        tt.hideLoading();
+      });
   },
   onLoad() {
-    this.getTopics().then(topics => { this.setTopicList(topics); }).catch(() => null);
+    this.getTopics()
+      .then((topics) => {
+        this.setTopicList(topics);
+      })
+      .catch(() => null);
   },
   handleScrollUpdate() {
     if (this.data.finished) {
       this.showModalAllFinished();
       return;
     }
-    this.getTopics().then(topics => { this.pushTopicList(topics); }).catch(() => null);
+    this.getTopics()
+      .then((topics) => {
+        this.pushTopicList(topics);
+      })
+      .catch(() => null);
   },
   handleScroll(event) {
     this.setData({ top: event.detail.scrollTop });
@@ -86,12 +101,18 @@ Page({
     this.data.finished = false;
     this.setData({ scroll_top: this.data.top });
     this.setData({ scroll_top: 0 });
-    return this.getTopics().then(topics => { this.setTopicList(topics); }).catch(() => null);
+    return this.getTopics()
+      .then((topics) => {
+        this.setTopicList(topics);
+      })
+      .catch(() => null);
   },
   handleRefresh() {
     this.refresh();
   },
   onPullDownRefresh() {
-    this.refresh().finally(() => { tt.stopPullDownRefresh(); });
-  }
-})
+    this.refresh().finally(() => {
+      tt.stopPullDownRefresh();
+    });
+  },
+});

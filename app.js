@@ -1,7 +1,8 @@
 App({
   username: "Anonymous",
   avatar: "/assets/images/anon.png",
-  url: "http://10.26.4.71",
+  // url: "http://10.26.4.71",
+  url: "http://192.168.3.2",
   is_admin: false,
   token: "",
   page_size: 16,
@@ -12,170 +13,172 @@ App({
   stickers: [
     {
       name: "I_AM_TRASH",
-      url: "/assets/sticker/trashbin.png"
+      url: "/assets/sticker/trashbin.png",
     },
     {
       name: "CAR",
-      url: "/assets/sticker/car.jpg"
+      url: "/assets/sticker/car.jpg",
     },
     {
       name: "SHOW_IT_TO_ME",
-      url: "/assets/sticker/show.jpg"
+      url: "/assets/sticker/show.jpg",
     },
     {
       name: "LYING_FLAT",
-      url: "/assets/sticker/lyingflat.jpg"
+      url: "/assets/sticker/lyingflat.jpg",
     },
     {
       name: "I_AM_DEPRESSED",
-      url: "/assets/sticker/depress.jpg"
+      url: "/assets/sticker/depress.jpg",
     },
     {
       name: "LUCKY",
-      url: "/assets/sticker/lucky.gif"
+      url: "/assets/sticker/lucky.gif",
     },
     {
       name: "NO_PROBLEM",
-      url: "/assets/sticker/noproblem.jpg"
+      url: "/assets/sticker/noproblem.jpg",
     },
     {
       name: "BLANK_BRAIN",
-      url: "/assets/sticker/brainblank.jpg"
+      url: "/assets/sticker/brainblank.jpg",
     },
     {
       name: "SELF_CONSCIOUS",
-      url: "/assets/sticker/selfconscious.jpg"
+      url: "/assets/sticker/selfconscious.jpg",
     },
     {
       name: "NOW_WONDERING",
-      url: "/assets/sticker/nowimaging.jpg"
+      url: "/assets/sticker/nowimaging.jpg",
     },
     {
       name: "ME_QMARK",
-      url: "/assets/sticker/itsmeqmark.jpg"
+      url: "/assets/sticker/itsmeqmark.jpg",
     },
     {
       name: "S_ATTRIBUTE",
-      url: "/assets/sticker/sattribute.jpg"
+      url: "/assets/sticker/sattribute.jpg",
     },
     {
       name: "CALM_DOWN",
-      url: "/assets/sticker/calm.jpg"
+      url: "/assets/sticker/calm.jpg",
     },
     {
       name: "SPEECHLESS",
-      url: "/assets/sticker/speechless.jpg"
+      url: "/assets/sticker/speechless.jpg",
     },
     {
       name: "LICKING",
-      url: "/assets/sticker/licking.gif"
+      url: "/assets/sticker/licking.gif",
     },
     {
       name: "INNOCENT",
-      url: "/assets/sticker/innocent.gif"
+      url: "/assets/sticker/innocent.gif",
     },
     {
       name: "WONDERING",
-      url: "/assets/sticker/wondering.gif"
+      url: "/assets/sticker/wondering.gif",
     },
     {
       name: "CRY",
-      url: "/assets/sticker/cry.png"
+      url: "/assets/sticker/cry.png",
     },
     {
       name: "PLEASANT",
-      url: "/assets/sticker/pleased.gif"
+      url: "/assets/sticker/pleased.gif",
     },
     {
       name: "OH_CAPITAL",
-      url: "/assets/sticker/ohcapital.png"
+      url: "/assets/sticker/ohcapital.png",
     },
     {
       name: "LAUGHING",
-      url: "/assets/sticker/laughing.gif"
+      url: "/assets/sticker/laughing.gif",
     },
     {
       name: "SCRATCH_HEAD",
-      url: "/assets/sticker/scratch.gif"
+      url: "/assets/sticker/scratch.gif",
     },
     {
       name: "SHOCKED",
-      url: "/assets/sticker/shocking.gif"
+      url: "/assets/sticker/shocking.gif",
     },
     {
       name: "QUESTION",
-      url: "/assets/sticker/question.jpg"
+      url: "/assets/sticker/question.jpg",
     },
     {
       name: "WOW",
-      url: "/assets/sticker/wow.gif"
+      url: "/assets/sticker/wow.gif",
     },
     {
       name: "LOVE",
-      url: "/assets/sticker/love.gif"
+      url: "/assets/sticker/love.gif",
     },
     {
       name: "FORGE_IRON",
-      url: "/assets/sticker/forgeiron.png"
+      url: "/assets/sticker/forgeiron.png",
     },
     {
       name: "WTF_MEME",
-      url: "/assets/sticker/wtfmeme.png"
+      url: "/assets/sticker/wtfmeme.png",
     },
     {
       name: "ADMIRE",
-      url: "/assets/sticker/admire.jpg"
+      url: "/assets/sticker/admire.jpg",
     },
     {
       name: "IS_THAT_PRACTICAL",
-      url: "/assets/sticker/practical.png"
+      url: "/assets/sticker/practical.png",
     },
     {
       name: "EMBARRASSED",
-      url: "/assets/sticker/embarrassed.jpg"
+      url: "/assets/sticker/embarrassed.jpg",
     },
     {
       name: "YOU_ARE_EXTRAORDINARY",
-      url: "/assets/sticker/extraordinary.jpg"
+      url: "/assets/sticker/extraordinary.jpg",
     },
     {
       name: "DONT_WANT_WORK",
-      url: "/assets/sticker/nowork.jpg"
+      url: "/assets/sticker/nowork.jpg",
     },
     {
       name: "TANG",
-      url: "/assets/sticker/tang.jpg"
+      url: "/assets/sticker/tang.jpg",
     },
     {
       name: "NERD",
-      url: "/assets/sticker/nerdy.jpg"
+      url: "/assets/sticker/nerdy.jpg",
     },
     {
       name: "HAVE_PARTY",
-      url: "/assets/sticker/party.jpg"
+      url: "/assets/sticker/party.jpg",
     },
     {
       name: "LOYAL",
-      url: "/assets/sticker/loyal.jpg"
+      url: "/assets/sticker/loyal.jpg",
     },
     {
       name: "TEHEBERINKO",
-      url: "/assets/sticker/teheberinko.jpg"
+      url: "/assets/sticker/teheberinko.jpg",
     },
     {
       name: "EXP_INC_3",
-      url: "/assets/sticker/expinc3.jpg"
+      url: "/assets/sticker/expinc3.jpg",
     },
     {
       name: "ULTRA_SKILL",
-      url: "/assets/sticker/ultraskill.gif"
-    }, {
+      url: "/assets/sticker/ultraskill.gif",
+    },
+    {
       name: "WONDERING_2",
-      url: "/assets/sticker/wondering.jpg"
-    }, {
+      url: "/assets/sticker/wondering.jpg",
+    },
+    {
       name: "SPEECHLESS_2",
-      url: "/assets/sticker/speechless2.jpg"
-    }
+      url: "/assets/sticker/speechless2.jpg",
+    },
   ],
   set_once_storage(data) {
     this.once_storage = data;
@@ -183,9 +186,12 @@ App({
   _request({ url, method, header, data }) {
     return new Promise((resolve, reject) => {
       tt.request({
-        url, method, header, data,
+        url,
+        method,
+        header,
+        data,
         success: resolve,
-        fail: res => {
+        fail: (res) => {
           if (res.statusCode !== undefined) {
             resolve(res);
           } else {
@@ -203,9 +209,12 @@ App({
     header["Content-Type"] = "multipart/form-data";
     return new Promise((resolve, reject) => {
       tt.uploadFile({
-        url, filePath: file_path, name: "image", header,
+        url,
+        filePath: file_path,
+        name: "image",
+        header,
         success: resolve,
-        fail: res => {
+        fail: (res) => {
           if (res.statusCode !== undefined) {
             resolve(res);
           } else {
@@ -219,19 +228,19 @@ App({
     try {
       const code = await new Promise((resolve, reject) => {
         tt.login({
-          success: res => {
+          success: (res) => {
             resolve(res.code);
           },
-          fail: res => {
+          fail: (res) => {
             reject({ mes: "tt.login api error", res });
-          }
+          },
         });
       });
       return await this._request({
         url: `${this.url}/login`,
         method: "POST",
         header: { "Content-Type": "application/json; charset=utf-8" },
-        data: { code }
+        data: { code },
       });
     } catch (exception) {
       throw exception;
@@ -242,7 +251,9 @@ App({
     if (prev_promise !== null) {
       return prev_promise;
     }
-    let login_promise = this.login_promise = this._login_once().finally(() => { this.login_promise = null; });
+    let login_promise = (this.login_promise = this._login_once().finally(() => {
+      this.login_promise = null;
+    }));
     return login_promise;
   },
   _no_authentication(fun) {
@@ -256,7 +267,7 @@ App({
       } catch (exception) {
         throw exception;
       }
-    }
+    };
   },
   _with_authentication(fun) {
     return async (obj) => {
@@ -267,7 +278,7 @@ App({
           this[ref_key] = value[index];
         });
       };
-      const solve_res = res => {
+      const solve_res = (res) => {
         const authentication = res.header.authentication;
         const { name, avatar, is_admin, open_id } = res.data;
         return [authentication, name, avatar, is_admin, open_id];
@@ -318,16 +329,26 @@ App({
       } catch (exception) {
         throw exception;
       }
-    }
+    };
   },
   request({ url, method, header, data }) {
-    return this._no_authentication(this._request)({ url, method, header, data });
+    return this._no_authentication(this._request)({
+      url,
+      method,
+      header,
+      data,
+    });
   },
   upload({ url, file_path }) {
     return this._no_authentication(this._upload)({ url, file_path });
   },
   request_with_authentication({ url, method, header, data }) {
-    return this._with_authentication(this._request)({ url, method, header, data });
+    return this._with_authentication(this._request)({
+      url,
+      method,
+      header,
+      data,
+    });
   },
   upload_with_authentication({ url, file_path }) {
     return this._with_authentication(this._upload)({ url, file_path });
@@ -345,31 +366,35 @@ App({
         })
       );
     if (this.modal_promise == null) {
-      this.modal_promise = new_promise().finally(() => { this.modal_promise = null });
+      this.modal_promise = new_promise().finally(() => {
+        this.modal_promise = null;
+      });
     } else {
       this.modal_promise.then(() => new_promise());
     }
   },
   show_network_error_modal(mes) {
-    this._show_modal({ title: "已断开与服务器的连接", content: mes, });
+    this._show_modal({ title: "已断开与服务器的连接", content: mes });
   },
   _get_info_local() {
-    var getStorage = key => {
+    var getStorage = (key) => {
       return new Promise((resolve, reject) => {
         tt.getStorage({
-          key, success: res => {
+          key,
+          success: (res) => {
             if (res.data !== undefined && res.data !== "") {
               resolve(res.data);
             } else {
               reject(`no ${key} in storage`);
             }
-          }, fail: reject
+          },
+          fail: reject,
         });
-      })
+      });
     };
     const name = ["Azazel", "Ariel", "Asbeel", "Samyaza", "Samael"];
     const ref_keys = ["token", "username", "avatar", "is_admin", "open_id"];
-    return Promise.all(name.map(item => getStorage(item))).then(items => {
+    return Promise.all(name.map((item) => getStorage(item))).then((items) => {
       console.info("get info from local storage");
       items.forEach((item, index) => {
         this[ref_keys[index]] = item;
@@ -379,48 +404,49 @@ App({
   _check_filesystem_size() {
     const fileSystemManager = tt.getFileSystemManager();
     const path = "ttfile://user/image";
-    (new Promise((resolve, reject) => {
+    new Promise((resolve, reject) => {
       fileSystemManager.access({
         path,
         success: resolve,
         fail: reject,
       });
-    })).then(() => {
-      return new Promise((resolve, reject) => {
-        fileSystemManager.stat({
-          path,
-          success: resolve,
-          fail: reject,
+    })
+      .then(() => {
+        return new Promise((resolve, reject) => {
+          fileSystemManager.stat({
+            path,
+            success: resolve,
+            fail: reject,
+          });
         });
-      });
-    }).then(res => {
-      if (res.stat.size >= 200 * 1024 * 1024) {
-        fileSystemManager.rmdir({
-          dirPath: path,
-          recursive: true,
-          success(res) {
-            console.log(`rmdir success: ${JSON.stringify(res)}`);
-          },
-          fail(res) {
-            console.error(`rmdir fail: ${JSON.stringify(res)}`);
-          }
-        });
-        throw {};
-      }
-    }).catch(() =>
-      fileSystemManager.mkdir({
-        dirPath: path,
-        recursive: false,
-        success(_res) {
-          console.log(`${path} 创建成功`);
-        },
-        fail(res) {
-          console.log(`${path} 创建失败`, res.errMsg);
+      })
+      .then((res) => {
+        if (res.stat.size >= 200 * 1024 * 1024) {
+          fileSystemManager.rmdir({
+            dirPath: path,
+            recursive: true,
+            success(res) {
+              console.log(`rmdir success: ${JSON.stringify(res)}`);
+            },
+            fail(res) {
+              console.error(`rmdir fail: ${JSON.stringify(res)}`);
+            },
+          });
+          throw {};
         }
       })
-    )
-
-
+      .catch(() =>
+        fileSystemManager.mkdir({
+          dirPath: path,
+          recursive: false,
+          success(_res) {
+            console.log(`${path} 创建成功`);
+          },
+          fail(res) {
+            console.log(`${path} 创建失败`, res.errMsg);
+          },
+        })
+      );
   },
   onLaunch() {
     this._check_filesystem_size();
@@ -428,29 +454,29 @@ App({
       animation: false,
       fail(res) {
         console.error("hideTabBar fail", res);
-      }
+      },
     });
     this._show_modal({
-      title: '欢迎使用RCS论坛',
-      content: '若发现bug或有功能方面的建议，可点击右上角反馈',
+      title: "欢迎使用RCS论坛",
+      content: "若发现bug或有功能方面的建议，可点击右上角反馈",
     });
     try {
       const updateManager = tt.getUpdateManager();
       updateManager.onUpdateReady(async () => {
         this._show_modal({
-          title: '存在更新',
-          content: '将要重启小程序以应用更新',
+          title: "存在更新",
+          content: "将要重启小程序以应用更新",
         });
         await this.modal_promise;
         updateManager.applyUpdate();
       });
       updateManager.onUpdateFailed(() => {
         this._show_modal({
-          title: '更新失败',
-          content: '小程序获取更新失败，请检查网络连接',
+          title: "更新失败",
+          content: "小程序获取更新失败，请检查网络连接",
         });
       });
-      setInterval(() => updateManager.triggerCheckUpdate(), 60 * 60 * 1000)
+      setInterval(() => updateManager.triggerCheckUpdate(), 60 * 60 * 1000);
     } catch (error) {
       console.error(`getUpdateManager fail: ${JSON.stringify(error)}`);
     }
@@ -469,7 +495,7 @@ App({
   },
   onPageNotFound() {
     tt.redirectTo({
-      url: 'pages/index/index'
+      url: "pages/index/index",
     });
   },
-})
+});

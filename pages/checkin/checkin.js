@@ -1,6 +1,6 @@
 Page({
   data: {
-    display_text: '开工!',
+    display_text: "开工!",
     is_active: false,
     is_sidebar_open: false,
     is_accumulate: false,
@@ -14,7 +14,7 @@ Page({
     ranks_acc: [],
     ranks_timestamp: 0,
     ranks_acc_timestamp: 0,
-    url: "http://192.168.3.2"
+    url: "http://192.168.3.2",
   },
   sendMessage(url) {
     return getApp().request_with_authentication({
@@ -43,14 +43,15 @@ Page({
           this.startTimer();
         })
         .catch(() => {
-          getApp().show_network_error_modal("打卡功能需要连接至实验室网络才可使用");
+          getApp().show_network_error_modal(
+            "打卡功能需要连接至实验室网络才可使用"
+          );
         })
         .finally(() => {
           this.setData({ is_processing: false });
           tt.hideLoading();
         });
-    }
-    else {
+    } else {
       this.stopTimer();
     }
   },
@@ -71,8 +72,7 @@ Page({
       if (s + 1 >= 60) {
         s = 0;
         m += 1;
-      }
-      else {
+      } else {
         s += 1;
       }
       if (m >= 60) {
@@ -88,10 +88,11 @@ Page({
         this.keepAlive();
       }
       this.setData({
-        h: h, m: m, s: s,
+        h: h,
+        m: m,
+        s: s,
         display_text: this.formatTime(h, m, s),
       });
-
     }, 1000);
     this.setData({
       interval_id,
@@ -100,12 +101,14 @@ Page({
   formatTime(h, m, s) {
     let hours = 0;
     if (h >= 100) {
-      hours = String(h).padStart(3, '0');
+      hours = String(h).padStart(3, "0");
+    } else {
+      hours = String(h).padStart(2, "0");
     }
-    else {
-      hours = String(h).padStart(2, '0');
-    }
-    return `${hours}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    return `${hours}:${String(m).padStart(2, "0")}:${String(s).padStart(
+      2,
+      "0"
+    )}`;
   },
   hideSidebar() {
     this.setData({
@@ -113,42 +116,64 @@ Page({
     });
   },
   showAccumulate() {
-    if (this.data.ranks_acc_timestamp + 5 * 60 * 1000 > Date.now() && this.data.ranks.length > 0) {
-      this.setData({ is_accumulate: true, is_sidebar_open: true, });
+    if (
+      this.data.ranks_acc_timestamp + 5 * 60 * 1000 > Date.now() &&
+      this.data.ranks.length > 0
+    ) {
+      this.setData({ is_accumulate: true, is_sidebar_open: true });
       return;
     }
     tt.showLoading({ title: "正在加载排行榜", mask: true });
-    getApp().request({
-      url: `${getApp().url}/checkin/ranksacc`,
-      header: { "Content-Type": "application/json; charset=utf-8" },
-      method: "GET",
-    }).then(data => {
-      this.setData({ ranks_acc: data.rank, is_accumulate: true, is_sidebar_open: true, });
-      this.data.ranks_acc_timestamp = Date.now();
-    }).catch(() =>
-      getApp().show_network_error_modal("请检查网络连接，需要连接至校园网或实验室网络")
-    ).finally(() => tt.hideLoading());
+    getApp()
+      .request({
+        url: `${getApp().url}/checkin/ranksacc`,
+        header: { "Content-Type": "application/json; charset=utf-8" },
+        method: "GET",
+      })
+      .then((data) => {
+        this.setData({
+          ranks_acc: data.rank,
+          is_accumulate: true,
+          is_sidebar_open: true,
+        });
+        this.data.ranks_acc_timestamp = Date.now();
+      })
+      .catch(() =>
+        getApp().show_network_error_modal(
+          "请检查网络连接，需要连接至实验室网络"
+        )
+      )
+      .finally(() => tt.hideLoading());
   },
   hideAccumulate() {
     this.setData({
-      is_accumulate: false
+      is_accumulate: false,
     });
   },
   showSidebar() {
-    if (this.data.ranks_timestamp + 5 * 60 * 1000 > Date.now() && this.data.ranks.length > 0) {
+    if (
+      this.data.ranks_timestamp + 5 * 60 * 1000 > Date.now() &&
+      this.data.ranks.length > 0
+    ) {
       this.setData({ is_sidebar_open: true });
       return;
     }
     tt.showLoading({ title: "正在加载排行榜", mask: true });
-    getApp().request({
-      url: `${getApp().url}/checkin/ranks`,
-      header: { "Content-Type": "application/json; charset=utf-8" },
-      method: "GET",
-    }).then(data => {
-      this.setData({ ranks: data.rank, is_sidebar_open: true, });
-      this.data.ranks_timestamp = Date.now();
-    }).catch(() =>
-      getApp().show_network_error_modal("请检查网络连接，需要连接至校园网或实验室网络")
-    ).finally(() => tt.hideLoading());
-  }
+    getApp()
+      .request({
+        url: `${getApp().url}/checkin/ranks`,
+        header: { "Content-Type": "application/json; charset=utf-8" },
+        method: "GET",
+      })
+      .then((data) => {
+        this.setData({ ranks: data.rank, is_sidebar_open: true });
+        this.data.ranks_timestamp = Date.now();
+      })
+      .catch(() =>
+        getApp().show_network_error_modal(
+          "请检查网络连接，需要连接至实验室网络"
+        )
+      )
+      .finally(() => tt.hideLoading());
+  },
 });

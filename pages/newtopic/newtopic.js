@@ -12,8 +12,9 @@ Page({
   handleStickerInput(event) {
     let { cursor, content } = this.data;
     this.setData({
-      content: content.slice(0, cursor) + event.detail.sticker + content.slice(cursor),
-      cursor: cursor + event.detail.sticker.length
+      content:
+        content.slice(0, cursor) + event.detail.sticker + content.slice(cursor),
+      cursor: cursor + event.detail.sticker.length,
     });
   },
   handleTitleInput(event) {
@@ -55,35 +56,41 @@ Page({
     }
     this.selectComponent("#image-selector")
       .uploadImage()
-      .then(images => {
+      .then((images) => {
         tt.showLoading({
-          title: '发布中',
+          title: "发布中",
           mask: true,
         });
-        getApp().request_with_authentication({
-          url: `${getApp().url}/create/topic`,
-          header: { "Content-Type": "application/json; charset=utf-8", },
-          method: "POST",
-          data: {
-            title: this.data.title,
-            content: this.data.content,
-            is_anonymous: this.data.is_anonymous,
-            images,
-          }
-        }).then(() => {
-          tt.showModal({
-            title: "发布成功✅",
-            showCancel: false,
+        getApp()
+          .request_with_authentication({
+            url: `${getApp().url}/create/topic`,
+            header: { "Content-Type": "application/json; charset=utf-8" },
+            method: "POST",
+            data: {
+              title: this.data.title,
+              content: this.data.content,
+              is_anonymous: this.data.is_anonymous,
+              images,
+            },
+          })
+          .then(() => {
+            tt.showModal({
+              title: "发布成功✅",
+              showCancel: false,
+            });
+            this.clearAll();
+          })
+          .catch((res) => {
+            console.error("request failed with error", res);
+            tt.showModal({
+              title: "发布失败😴",
+              content: "请检查网络连接，该功能需要连接至实验室网络",
+              showCancel: false,
+            });
+          })
+          .finally(() => {
+            tt.hideLoading();
           });
-          this.clearAll();
-        }).catch(res => {
-          console.error("request failed with error", res);
-          tt.showModal({
-            title: "发布失败😴",
-            content: "请检查网络连接，该功能需要连接至校园网或实验室网络",
-            showCancel: false,
-          });
-        }).finally(() => { tt.hideLoading(); });
       });
-  }
-})
+  },
+});
