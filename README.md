@@ -1,82 +1,84 @@
 # RCSForum
 
-一个面向飞书/抖音开放平台小程序运行时的论坛客户端，与 `RCSForum_Server` 后端配套使用。客户端通过 `tt.*` API 完成登录、网络请求、图片上传和本地存储。
+[English](README.md) | [简体中文](README.zh-CN.md)
 
-## 功能
+A forum client for the Feishu/Douyin Open Platform mini-app runtime, used with the `RCSForum_Server` backend. The client uses `tt.*` APIs for login, network requests, image uploads, and local storage.
 
-- 平台账号登录
-- 主题浏览与发布
-- 评论、点赞与取消点赞
-- 匿名发帖
-- 图片上传与展示
-- 表情贴纸
-- 用户主页
-- 签到在线时长与排行榜
-- 管理员删除内容
+## Features
 
-## 页面
+- Platform account login
+- Browse and publish topics
+- Comments, likes, and removing likes
+- Anonymous posts
+- Image uploads and display
+- Emoji stickers
+- User profiles
+- Check-in online time tracking and leaderboards
+- Content deletion by administrators
+
+## Pages
 
 ```text
 pages/
-├── index/       # 主题列表
-├── space/       # 用户空间
-├── checkin/     # 签到与排行榜
-├── newtopic/    # 发布主题
-├── topic/       # 主题与评论详情
-└── user/        # 用户信息
+├── index/       # Topic list
+├── space/       # User space
+├── checkin/     # Check-in and leaderboard
+├── newtopic/    # Publish a topic
+├── topic/       # Topic and comment details
+└── user/        # User information
 ```
 
-## 运行要求
+## Requirements
 
-- 飞书或抖音小程序开发者工具
-- 已部署的 `RCSForum_Server`
-- 对应开放平台应用的登录权限
+- Feishu or Douyin mini-app developer tools
+- A deployed `RCSForum_Server`
+- Login permissions for the corresponding Open Platform application
 
-## 配置后端地址
+## Configure the backend URL
 
-客户端后端地址当前在 `app.js` 中直接配置：
+The client's backend URL is currently configured directly in `app.js`:
 
 ```js
 url: "http://192.168.3.2"
 ```
 
-导入项目后，应将其替换为实际 API 地址。真机或生产环境通常需要：
+After importing the project, replace it with your actual API URL. Running on a physical device or in production generally requires:
 
-- 可从设备访问的域名或 IP
+- A domain name or IP address accessible from the device
 - HTTPS
-- 在开放平台后台加入合法请求域名
-- 与后端上传大小和超时设置保持一致
+- Adding the domain to the allowed request domains in the Open Platform console
+- Consistency with the backend's upload size and timeout settings
 
-## 启动
+## Getting started
 
-1. 克隆仓库。
-2. 在小程序开发者工具中导入仓库根目录。
-3. 配置应用标识与权限。
-4. 修改 `app.js` 中的后端地址。
-5. 启动 `RCSForum_Server`。
-6. 在模拟器或真机中编译运行。
+1. Clone the repository.
+2. Import the repository root into the mini-app developer tools.
+3. Configure the application identifier and permissions.
+4. Update the backend URL in `app.js`.
+5. Start `RCSForum_Server`.
+6. Build and run in the simulator or on a physical device.
 
-项目不依赖常规浏览器 DOM，也不是普通 Web 应用，应在支持 `tt` API 的小程序环境中运行。
+The project does not depend on the regular browser DOM and is not a conventional web application. It must run in a mini-app environment that supports the `tt` API.
 
-## 与后端的关系
+## Backend integration
 
-客户端会调用后端完成：
+The client calls the backend for:
 
-- `/login` 平台身份交换
-- 主题和评论的创建、读取、点赞及删除
-- 图片上传和静态图片读取
-- 用户资料与管理员状态查询
-- 签到 keepalive 和排行榜查询
+- Platform identity exchange through `/login`
+- Creating, reading, liking, and deleting topics and comments
+- Image uploads and static image retrieval
+- User profile and administrator status queries
+- Check-in keepalive and leaderboard queries
 
-接口或认证字段发生变化时，需要同步修改前后端。
+Changes to API or authentication fields require corresponding updates to both the frontend and backend.
 
-## 当前注意事项
+## Current notes
 
-- 后端地址硬编码在源码中，建议改为环境配置或构建配置。
-- 当前开发地址使用明文 HTTP，仅适合可信局域网调试。
-- 客户端会保存认证信息，应避免在日志中输出令牌。
-- 上传文件、匿名内容和管理员操作仍应以后端权限校验为准，不能只依赖客户端界面控制。
+- The backend URL is hard-coded in the source. Moving it to environment or build configuration is recommended.
+- The current development URL uses plain HTTP and is only suitable for debugging on a trusted local network.
+- The client stores authentication information; avoid logging tokens.
+- Uploaded files, anonymous content, and administrator actions must still be subject to backend permission checks. Client-side interface controls alone are insufficient.
 
 ## License
 
-请参阅仓库中的 `LICENSE`。
+See `LICENSE` in the repository.
